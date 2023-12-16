@@ -29,7 +29,7 @@
 
 <!-- SHARING ON SOCIAL MEDIA -->
 <p align="center">
-  <a href="https://x.com/intent/tweet?hashtags=hashtag%2Chashtag&text=Check%20this%20GitHub%20repository%20out:%20social-media-grower!&url=https%3A%2F%2Fgithub.com%2Fsenathenu%2Fsocial-media-grower">
+  <a href="https://x.com/intent/tweet?social-media-bot=grow-followers%2Chashtag&text=Check%20this%20GitHub%20repository%20out:%20social-media-grower!&url=https%3A%2F%2Fgithub.com%2Fsenathenu%2Fsocial-media-grower">
     <img height=24 src="https://img.shields.io/badge/-share%20on%20x-black?labelColor=black&logo=x&logoColor=white&style=flat-square" alt="Share on X">
   </a>
 </p>
