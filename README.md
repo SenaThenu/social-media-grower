@@ -45,7 +45,6 @@
 - [Settings ⚙️](#settings-️)
 - [Contributing 👋](#contributing-)
 - [Current Contributors 🧙‍♂️](#current-contributors-️)
-- [Support 😍](#support-)
 - [Acknowledgments \\w 💝](#acknowledgments-w-)
 
 
@@ -158,12 +157,6 @@ _Let's show the power <img src="https://raw.githubusercontent.com/Tarikul-Islam-
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-<!-- SUPPORT -->
-## Support 😍
-<a href="https://www.buymeacoffee.com/senathenu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
-
-<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
 
 <!-- ACKNOWLEDGMENTS -->
 
