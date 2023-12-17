@@ -4,9 +4,8 @@
 <div align="center">
   <!-- PROJECT LOGO -->
   <a href="https://github.com/SenaThenu/social-media-grower">
-    <img src="https://github.com/SenaThenu/social-media-grower/blob/main/readme-assets/logo.png" alt="Logo" height="125">
+    <img src="https://github.com/SenaThenu/social-media-grower/blob/main/readme-assets/logo.png" alt="Logo" height="250">
   </a>
-
   <!-- PROJECT TITLE -->
   <h3 align="center"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel and places/Rocket.png" alt="Rocket" width="25" height="25" /> Social Media Grower <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel and places/Rocket.png" alt="Rocket" width="25" height="25" /></h3>
 
@@ -29,7 +28,7 @@
 
 <!-- SHARING ON SOCIAL MEDIA -->
 <p align="center">
-  <a href="https://x.com/intent/tweet?hashtags=hashtag%2Chashtag&text=Check%20this%20GitHub%20repository%20out:%20social-media-grower!&url=https%3A%2F%2Fgithub.com%2Fsenathenu%2Fsocial-media-grower">
+  <a href="https://x.com/intent/tweet?social-media-bot=grow-followers%2Chashtag&text=Check%20this%20GitHub%20repository%20out:%20social-media-grower!&url=https%3A%2F%2Fgithub.com%2Fsenathenu%2Fsocial-media-grower">
     <img height=24 src="https://img.shields.io/badge/-share%20on%20x-black?labelColor=black&logo=x&logoColor=white&style=flat-square" alt="Share on X">
   </a>
 </p>
@@ -59,11 +58,7 @@ This is currently a Work-in-Progress project!
 
 ### Built With 🔧
 
-<a href="https://www.python.org/">
-  <img src="https://img.shields.io/badge/Python-3570a0?style=for-the-badge&logo=python&logoColor=ffffff" alt="Python">
-</a>
-<img src="https://img.shields.io/badge/JavaScript-efd81d?style=for-the-badge&logo=javascript&logoColor=000" alt="JavaScript">
-<img src="https://img.shields.io/badge/Express.js-c3c3c3?style=for-the-badge&logo=express&logoColor=000" alt="Express.js">
+<img src="https://img.shields.io/badge/Python-3570a0?style=for-the-badge&logo=python&logoColor=ffffff" alt="Python"> <img src="https://img.shields.io/badge/JavaScript-efd81d?style=for-the-badge&logo=javascript&logoColor=000" alt="JavaScript"> <img src="https://img.shields.io/badge/Express.js-c3c3c3?style=for-the-badge&logo=express&logoColor=000" alt="Express.js">
 
 <p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
 
