@@ -1,3 +1,6 @@
+# Developer stuff
+dev_interface.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
