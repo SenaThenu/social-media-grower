@@ -22,7 +22,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-blue.svg?labelColor=003694&color=ffffff" alt="License">
   <img src="https://img.shields.io/github/contributors/SenaThenu/social-media-grower?labelColor=003694&color=ffffff" alt="GitHub contributors" >
-  <img src="https://img.shields.io/badge/version-0.0.0-yellow.svg?labelColor=003694&color=ffffff" alt="Version">
   <img src="https://img.shields.io/github/stars/SenaThenu/social-media-grower.svg?labelColor=003694&color=ffffff" alt="Stars">
   <img src="https://img.shields.io/github/forks/SenaThenu/social-media-grower.svg?labelColor=003694&color=ffffff" alt="Forks">
   <img src="https://img.shields.io/github/issues/SenaThenu/social-media-grower.svg?labelColor=003694&color=ffffff" alt="Issues">
