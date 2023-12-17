@@ -42,6 +42,7 @@
   - [Prerequisites 📋](#prerequisites-)
   - [Installation 🛠️](#installation-️)
 - [Usage 🚀](#usage-)
+- [Settings ⚙️](#settings-️)
 - [Contributing 👋](#contributing-)
 - [Current Contributors 🧙‍♂️](#current-contributors-️)
 - [Support 😍](#support-)
@@ -76,11 +77,39 @@ This is currently a Work-in-Progress project!
 
 ## Usage 🚀
 
+> \[!NOTE]
+>
+> Your logging details are stored locally on your computer and won't be shared with anyone else. You can find them in the `config.json` file in the settings folder. Your safety is our priority! You can even check the source code to make sure of this.
+
+> \[!NOTE]
+>
+> Most social media platforms have restrictions to minimise bots using them. This application is aware of those restrictions and is designed to mimic human engagements. That way, you won't be banned. Stull, you can change these via the `config.json` file. (we highly recommend you don't)
+
 <p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
 
 > \[!IMPORTANT]
 >
 > <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Glowing%20Star.png" alt="Glowing Star" width="20" height="20" /> **Star Us** to receive the latest updates of this project from GitHub!
+
+<!-- Settings -->
+## Settings ⚙️
+All the user preferences are stored locally in the: `user_preferences.json`
+
+| Name               | Default          | Description      |
+|--------------------|------------------|------------------|
+| n\_likes           | 375              | number of likes per day |
+| n\_follows         | 125              | number of accounts followed per day |
+| n\_comments        | 0                | number of comments per day |
+| unfollow\_all      | false            | whether to unfollow all the users apart from whitelist users |
+| dynamic\_unfollow  | true             | strategically unfollow users (more info below) |
+| unfollow_gap       | 7                | the minium time period to keep following a user (in days)
+| custom\_links      | []               | follows all the users in a given web page (of a specific social media platform)                 |
+| priority\_tags     | []               | prioritised tags to engage with   |
+
+> \[!NOTE]
+>
+> Dynamic Follow strategically unfollows all users who don't follow back after you following them for more than the `unfollow_gap`. Plus, it makes sure you don't reach the maximum number of accounts you can follow. Still, whitelisted accounts won't be affected.
+
 
 <!-- CONTRIBUTING -->
 ## Contributing 👋
