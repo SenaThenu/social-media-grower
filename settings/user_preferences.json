@@ -6,6 +6,7 @@
             "n_comments": 0,
             "unfollow_all": false,
             "dynamic_unfollow": true,
+            "unfollow_gap": 7,
             "custom_links": [],
             "priority_tags": []
         }
