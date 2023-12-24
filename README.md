@@ -107,7 +107,7 @@ All the user preferences are stored locally in the: `user_preferences.json`
 
 > \[!NOTE]
 >
-> Dynamic Follow strategically unfollows all users who don't follow back after you following them for more than the `unfollow_gap`. Plus, it makes sure you don't reach the maximum number of accounts you can follow. Still, whitelisted accounts won't be affected.
+> Dynamic Follow strategically unfollows all users who don't follow back after you following them for more than the `unfollow_gap`. Plus, it makes sure you don't reach the maximum number of accounts you can follow. During the process, whitelisted accounts won't be affected.
 
 
 <!-- CONTRIBUTING -->
