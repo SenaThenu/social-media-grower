@@ -1,1 +1,1 @@
-instapy
+webdriver-manager

@@ -1,4 +1,5 @@
 # Developer stuff
+.vscode
 dev_interface.py
 
 # Byte-compiled / optimized / DLL files
