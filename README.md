@@ -4,7 +4,7 @@
 <div align="center">
   <!-- PROJECT LOGO -->
   <a href="https://github.com/SenaThenu/social-media-grower">
-    <img src="https://github.com/SenaThenu/social-media-grower/blob/main/readme-assets/logo.svg" alt="Logo" height="250">
+    <img src="https://github.com/SenaThenu/social-media-grower/blob/main/readme-assets/logo.png" alt="Logo" height="250">
   </a>
   <!-- PROJECT TITLE -->
   <h3 align="center"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel and places/Rocket.png" alt="Rocket" width="25" height="25" /> Social Media Grower <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel and places/Rocket.png" alt="Rocket" width="25" height="25" /></h3>
