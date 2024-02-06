@@ -1,0 +1,5 @@
+# this keeps track of the engagements done today!
+date: "now" # this is checked to reset the following key-value pairs
+n_likes: 0
+n_follows: 0
+n_comments: 0

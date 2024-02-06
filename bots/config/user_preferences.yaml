@@ -1,0 +1,2 @@
+# time to wait before unfollowing a user if they don't follow you back! (used in dynamic unfollow)
+unfollow_gap: 7 # in days
