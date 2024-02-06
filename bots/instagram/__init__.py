@@ -9,6 +9,8 @@ from selenium.webdriver.common.by import By # locates elements within a web page
 
 import time
 import os
+import yaml
+import datetime
 
 def login(driver):      
     username_field = driver.find_element(By.XPATH, "//*[@id='loginForm']/div/div[1]/div/label/input")
@@ -28,6 +30,26 @@ def login(driver):
     turn_off_notifications_button = driver.find_element(By.XPATH, "/html/body/div[3]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/button[2]")
     turn_off_notifications_button.click()
 
+def load_today_actions():
+    with open(os.path.join("bots/instagram", "_today_actions.yaml")) as f:
+        actions = yaml.safe_load(f)
+        f.close()
+    
+    today = datetime.datetime.now().strftime("%d-%m-%Y")
+    if actions["date"] != today:
+        actions = {
+            "date": today,
+            "n_likes": 0,
+            "n_follows": 0,
+            "n_comments": 0
+        }
+    
+        with open(os.path.join("bots/instagram", "_today_actions.yaml"), "w") as f:
+            yaml.dump(actions, f)
+            f.close()
+    
+    return actions
+
 def instagram_bot(config):
     last_action_time = time.time()
 
@@ -39,7 +61,7 @@ def instagram_bot(config):
     # going to instagram.com
     driver.get("https://instagram.com")
 
-    login(driver)
+    today_actions = load_today_actions()
 
     time.sleep(100)
 
