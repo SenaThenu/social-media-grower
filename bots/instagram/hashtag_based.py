@@ -3,7 +3,7 @@ import math
 from selenium.webdriver.common.keys import Keys # provides keyboard elements
 from selenium.webdriver.common.by import By # locates elements within a web page
 
-def get_user_url_list(driver:object, user_list_container:object, max_users:int, n:int) -> list:
+def get_user_url_list(driver:object, user_list_container:object, n:int) -> list:
     """
     Scrolls down the list of users displayed as a floating panel in Instagram.
     Returns a list urls of n number of users from that!
@@ -11,7 +11,6 @@ def get_user_url_list(driver:object, user_list_container:object, max_users:int, 
     Args:
         driver (object): the gateway to interact with instagram.com
         user_list_container (object): div that contains the every user element as a child
-        max_users (int): the maximum number of children user elements in the user_list_container
         n (int): _description_
     """
 
@@ -29,11 +28,21 @@ def get_user_url_list(driver:object, user_list_container:object, max_users:int, 
     
     user_urls = _scrape_url_from_user_elements(user_elements, user_urls)
 
+    get_last_username = lambda user_elements: user_elements[-1].find_element(By.XPATH, "./div/div/div/div[2]/div/div/div/div/div/a/div/div/span").get_attribute("innerHTML")
+    last_username = get_last_username(user_elements)
+
     # the maximum number of user_elements that are available at a given time is 17
     # when you scroll a particular element into view, it becomes the middle one!
-    while (len(user_urls) < n) and (len(user_urls) < max_users):
+    while len(user_urls) < n:
         driver.execute_script("arguments[0].scrollIntoView(true);", user_elements[-1])
         user_elements = user_list_container.find_elements(By.XPATH, "./div")
+        
+        # making sure we haven't reached the end of the document
+        if last_username == get_last_username(user_elements):
+            break
+        else:
+            last_username = get_last_username(user_elements)
+
         if len(user_elements) == 17:
             user_elements = user_elements[-10:]
         else:
@@ -85,13 +94,14 @@ def follow_likers(driver:object, n:int, post_url:str) -> int:
         int: number of people we have successfully followed
     """
     driver.get(post_url)
-    likers = driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/div/div[3]/section/div/div/span/a")
-    max_users = likers.find_element(By.XPATH, "./span/span").get_attribute("innerHTML")
-    max_users = int(max_users.replace(",", ""))
+    try:
+        likers = driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/div/div[3]/section/div/div/span/a")
+    except:
+        likers = driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/div[2]/div/div[3]/section/div/div[2]/span/a[2]")
     likers.click()
 
     user_elements_container = driver.find_element(By.XPATH, "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div/div[2]/div/div")
-    print(get_user_url_list(driver, user_elements_container, max_users, n))
+    print(get_user_url_list(driver, user_elements_container, n))
     return n
 
 def like_the_latest_post_of_likers(driver, post_url):

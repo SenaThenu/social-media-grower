@@ -82,7 +82,8 @@ class InstagramBot:
     
     def _update_today_actions(self):
         with open(os.path.join("bots/instagram", "_today_actions.yaml"), "w") as f:
-            yaml.dump(self._today_actions)
+            yaml.dump(self._today_actions, f)
+            f.close()
 
     def quit(self):
         """
