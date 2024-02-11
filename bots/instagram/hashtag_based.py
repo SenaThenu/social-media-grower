@@ -1,64 +1,19 @@
 import math
 
-from selenium.webdriver.common.keys import Keys # provides keyboard elements
-from selenium.webdriver.common.by import By # locates elements within a web page
+from selenium.webdriver.common.keys import Keys  # provides keyboard elements
+from selenium.webdriver.common.by import By  # locates elements within a web page
 
-def get_user_url_list(driver:object, user_list_container:object, n:int) -> list:
+from .user_related_actions import perform_action_on_n_users
+
+
+def get_post_urls(driver: object, hashtag: str, n: int = 4) -> tuple:
     """
-    Scrolls down the list of users displayed as a floating panel in Instagram.
-    Returns a list urls of n number of users from that!
+    Grabbing URLs of upto n posts under specified hashtag.
 
     Args:
-        driver (object): the gateway to interact with instagram.com
-        user_list_container (object): div that contains the every user element as a child
-        n (int): _description_
-    """
-
-    user_elements = user_list_container.find_elements(By.XPATH, "./div")
-    user_urls = []
-
-    def _scrape_url_from_user_elements(user_elements, user_urls):
-        for user_element in user_elements:
-            anchor = user_element.find_element(By.XPATH, "./div/div/div/div[2]/div/div/div/div/div/a")
-            user_url = anchor.get_attribute("href")
-            if user_url not in user_urls:
-                user_urls.append(user_url)
-
-        return user_urls
-    
-    user_urls = _scrape_url_from_user_elements(user_elements, user_urls)
-
-    get_last_username = lambda user_elements: user_elements[-1].find_element(By.XPATH, "./div/div/div/div[2]/div/div/div/div/div/a/div/div/span").get_attribute("innerHTML")
-    last_username = get_last_username(user_elements)
-
-    # the maximum number of user_elements that are available at a given time is 17
-    # when you scroll a particular element into view, it becomes the middle one!
-    while len(user_urls) < n:
-        driver.execute_script("arguments[0].scrollIntoView(true);", user_elements[-1])
-        user_elements = user_list_container.find_elements(By.XPATH, "./div")
-        
-        # making sure we haven't reached the end of the document
-        if last_username == get_last_username(user_elements):
-            break
-        else:
-            last_username = get_last_username(user_elements)
-
-        if len(user_elements) == 17:
-            user_elements = user_elements[-10:]
-        else:
-            pass
-
-        user_urls = _scrape_url_from_user_elements(user_elements, user_urls)
-
-    return user_urls
-
-def get_post_urls(driver:object, hashtag:str) -> tuple:
-    """
-    Grabbing URLs of upto 10 posts under specified hashtag.
-
-    Args:
-        driver (object): _description_
-        hashtag (str): _description_
+        driver (object): gateway to interact with instagram.com
+        hashtag (str)
+        n (int, optional): the number of posts to query (10 is the maximum) [greater this is, more time it takes!]
 
     Returns:
         tuple: 2 lists of post urls
@@ -66,51 +21,86 @@ def get_post_urls(driver:object, hashtag:str) -> tuple:
     # we are grabbing urls of up to 10 posts to like and follow people (10 is the max number of posts it has per hashtag)
     # returns a list whose 1st index would be a list of posts to follow and the 2nd index is a list of posts to like
     driver.get(f"https://instagram.com/explore/tags/{hashtag}")
-    
+
     to_follow_urls = []
     to_like_urls = []
     try:
-        for i in range(1, 11):
-            to_follow = driver.find_element(By.XPATH, f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div/div/div[{i}]/div[1]/a")
+        for i in range(1, n + 1):
+            to_follow = driver.find_element(
+                By.XPATH,
+                f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div/div/div[{i}]/div[1]/a",
+            )
             to_follow_urls.append(to_follow.get_attribute("href"))
-            to_like = driver.find_element(By.XPATH, f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div/div/div[{i}]/div[2]/a")
+            to_like = driver.find_element(
+                By.XPATH,
+                f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div/div/div[{i}]/div[2]/a",
+            )
             to_like_urls.append(to_like.get_attribute("href"))
     except:
         pass
-    
+
     return to_follow_urls, to_like_urls
 
 
-def follow_likers(driver:object, n:int, post_url:str) -> int:
+def perform_action_on_likers(
+    action: str,
+    config: dict,
+    driver: object,
+    n: int,
+    post_url: str,
+    today_actions: dict,
+) -> int:
     """
     follow the likers of the given post url
 
     Args:
+        action (str): name of the action to perform
+        config (dict): configurations
         driver (object): gateway to interact with Instagram
         n (int): number of people to follow
         post_url (str): URL of the post (e.g. https://instagram.com/p/id)
+        today_actions (dict): the record of actions performed today
 
     Returns:
         int: number of people we have successfully followed
     """
     driver.get(post_url)
     try:
-        likers = driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/div/div[3]/section/div/div/span/a")
+        likers = driver.find_element(
+            By.XPATH,
+            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/div/div[3]/section/div/div/span/a",
+        )
     except:
-        likers = driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/div[2]/div/div[3]/section/div/div[2]/span/a[2]")
+        likers = driver.find_element(
+            By.XPATH,
+            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/div[2]/div/div[3]/section/div/div[2]/span/a[2]",
+        )
     likers.click()
 
-    user_elements_container = driver.find_element(By.XPATH, "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div/div[2]/div/div")
-    print(get_user_url_list(driver, user_elements_container, n))
-    return n
+    user_elements_container = driver.find_element(
+        By.XPATH,
+        "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div/div[2]/div/div",
+    )
 
-def like_the_latest_post_of_likers(driver, post_url):
-    pass
+    n_done = perform_action_on_n_users(
+        action, config, driver, user_elements_container, n, today_actions
+    )
+    return n_done
 
 
-def iterate_post_urls(driver:object, n_actions_to_do:int, urls:list, action:object) -> int:
+def iterate_post_urls(
+    config: dict,
+    driver: object,
+    n_actions_to_do: int,
+    urls: list,
+    action: str,
+    today_actions: dict,
+) -> int:
     """
-    Iterates over the urls given and performs the action function up to n_actions_to_do times for those who have liked that particular post.
+    Iterates over the urls given and performs the action up to n_actions_to_do times for those who have liked that particular post.
+    Supported actions:
+        * like - like the last post of the user
+        * follow - follow the user
 
     Returns:
         int: number of excess actions in case we don't have enough likers!
@@ -119,33 +109,55 @@ def iterate_post_urls(driver:object, n_actions_to_do:int, urls:list, action:obje
     current_index = 0
     n_done = 0
     while n_actions_to_do > 0:
-        n_done = action(driver, n_actions_to_do, urls[current_index])
+        n_done = perform_action_on_likers(
+            action, config, driver, n_actions_to_do, urls[current_index], today_actions
+        )
         n_actions_to_do -= n_done
         current_index += 1
         if current_index >= len(urls):
             break
-    
+
     return n_actions_to_do
 
 
-def like_follow_by_hashtag(driver, config, today_actions, only_follow=True, additional_hashtags=[]):
+def like_follow_by_hashtag(
+    driver, config, today_actions, only_follow=False, additional_hashtags=[]
+):
     hashtags = config["user_preferences"]["hashtags"] + additional_hashtags
-    n_follows_per_hashtag = math.floor((config["restrictions"]["instagram"]["n_follows"] - today_actions["n_follows"]) / len(hashtags))
-    n_likes_per_hashtag = math.floor((config["restrictions"]["instagram"]["n_likes"] - today_actions["n_likes"]) / len(hashtags))
+    n_follows_per_hashtag = math.floor(
+        (config["restrictions"]["instagram"]["n_follows"] - today_actions["n_follows"])
+        / len(hashtags)
+    )
+    n_likes_per_hashtag = math.floor(
+        (config["restrictions"]["instagram"]["n_likes"] - today_actions["n_likes"])
+        / len(hashtags)
+    )
 
     for i, hashtag in enumerate(hashtags):
         to_follow_urls, to_like_urls = get_post_urls(driver, hashtag)
-        
-        excess_follows = iterate_post_urls(driver, n_follows_per_hashtag, to_follow_urls, follow_likers)
+
+        excess_follows = iterate_post_urls(
+            config,
+            driver,
+            n_follows_per_hashtag,
+            to_follow_urls,
+            "follow",
+            today_actions,
+        )
 
         n_remaining_hashtags = len(hashtags) - i + 1
-        get_updated_count_per_hashtag = lambda excess: math.floor(((n_follows_per_hashtag * n_remaining_hashtags) + excess) / n_remaining_hashtags)
-                
-        if excess_follows > 0:    
+        get_updated_count_per_hashtag = lambda excess: math.floor(
+            ((n_follows_per_hashtag * n_remaining_hashtags) + excess)
+            / n_remaining_hashtags
+        )
+
+        if excess_follows > 0:
             n_follows_per_hashtag = get_updated_count_per_hashtag(excess_follows)
 
         if not only_follow:
-            excess_likes = iterate_post_urls(driver, n_likes_per_hashtag, to_like_urls, like_the_latest_post_of_likers)
+            excess_likes = iterate_post_urls(
+                config, driver, n_likes_per_hashtag, to_like_urls, "like", today_actions
+            )
             if excess_likes > 0:
                 n_likes_per_hashtag = get_updated_count_per_hashtag(excess_likes)
         else:
