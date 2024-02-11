@@ -61,7 +61,9 @@ def _meets_the_accepted_ratio(driver: object, accepted_ratio, is_not_private):
         driver.find_element(By.XPATH, n_following_xpath).get_attribute("innerHTML")
     )
 
-    return (n_following / (n_followers + 1)) >= accepted_ratio
+    current_ratio = n_following / (n_followers + 1)
+
+    return current_ratio >= accepted_ratio
 
 
 def _is_not_already_following(driver: object) -> bool:
@@ -104,7 +106,9 @@ def _not_private_account(driver: object) -> bool:
         return True
 
 
-def follow_a_user(driver: object, accepted_ratio: int, mute: bool) -> bool:
+def follow_a_user(
+    driver: object, accepted_ratio: int, mute: bool, follow_private_accounts: bool
+) -> bool:
     """
     Checks whether the user meets the accepted ratio. If so, follows and mutes them.
 
@@ -112,15 +116,19 @@ def follow_a_user(driver: object, accepted_ratio: int, mute: bool) -> bool:
         driver (object): gateway to interact with instagram.com
         accepted_ratio (int): n(following)/n(followers) threshold to perform the action
         mute (bool): whether to mute the user after following
+        follow_private_accounts (bool): whether to follow private accounts
 
     Returns:
         bool: whether the user was followed
     """
     is_not_private = _not_private_account(driver)
-    if (
-        is_not_private
-        and _meets_the_accepted_ratio(driver, accepted_ratio, is_not_private)
+    if _meets_the_accepted_ratio(
+        driver, accepted_ratio, is_not_private
     ) and _is_not_already_following(driver):
+
+        if not is_not_private and not follow_private_accounts:
+            return False
+
         follow_button = driver.find_element(
             By.XPATH,
             "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button",
@@ -128,8 +136,8 @@ def follow_a_user(driver: object, accepted_ratio: int, mute: bool) -> bool:
 
         follow_button.click()
 
-        time.sleep(1)
-        if mute:
+        time.sleep(2)
+        if mute and is_not_private:
             following_button = driver.find_element(
                 By.XPATH,
                 "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button",
@@ -181,10 +189,18 @@ def like_the_last_post_of_a_user(driver: object, accepted_ratio: int) -> bool:
         _meets_the_accepted_ratio(driver, accepted_ratio, is_not_private)
         and _is_not_already_following(driver)
     ) and (_user_has_posts(driver) and is_not_private):
-        last_post_link = driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[2]/div/div[1]/div[1]/a",
-        ).get_attribute("href")
+        try:
+            last_post_link = driver.find_element(
+                By.XPATH,
+                "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[2]/div/div[1]/div[1]/a",
+            ).get_attribute("href")
+        except:
+            # dealing with pinned posts!
+            time.sleep(1)
+            last_post_link = driver.find_element(
+                By.XPATH,
+                "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[3]/div/div[1]/div[1]/a",
+            ).get_attribute("href")
 
         driver.get(last_post_link)
 
@@ -311,6 +327,7 @@ def perform_action_on_n_users(
                         driver,
                         config["user_preferences"]["accepted_follow_ratio"],
                         config["user_preferences"]["automatic_muting"],
+                        config["user_preferences"]["follow_private_accounts"],
                     )
 
                     if was_successful:

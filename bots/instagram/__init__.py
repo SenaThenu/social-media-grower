@@ -23,7 +23,7 @@ class InstagramBot:
         self.driver = webdriver.Chrome(
             service=Service(ChromeDriverManager().install()), options=Options()
         )
-        self.driver.implicitly_wait(5)  # 5-second waiting till elements appear
+        self.driver.implicitly_wait(5)  # 6-second waiting till elements appear
 
         print("Going to instagram.com")
         self.driver.get("https://instagram.com")
@@ -61,12 +61,6 @@ class InstagramBot:
             "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/section/div/button",
         )
         save_login_info_button.click()
-
-        turn_off_notifications_button = self.driver.find_element(
-            By.XPATH,
-            "/html/body/div[3]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/button[2]",
-        )
-        turn_off_notifications_button.click()
 
     def _load_today_actions(self) -> dict:
         """

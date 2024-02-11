@@ -5,6 +5,8 @@ from selenium.webdriver.common.by import By  # locates elements within a web pag
 
 from .user_related_actions import perform_action_on_n_users
 
+import time
+
 
 def get_post_urls(driver: object, hashtag: str, n: int = 4) -> tuple:
     """
@@ -64,22 +66,11 @@ def perform_action_on_likers(
     Returns:
         int: number of people we have successfully followed
     """
-    driver.get(post_url)
-    try:
-        likers = driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/div/div[3]/section/div/div/span/a",
-        )
-    except:
-        likers = driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/div[2]/div/div[3]/section/div/div[2]/span/a[2]",
-        )
-    likers.click()
+    driver.get(post_url + "liked_by/")
 
     user_elements_container = driver.find_element(
         By.XPATH,
-        "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div/div[2]/div/div",
+        "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div[1]/div",
     )
 
     n_done = perform_action_on_n_users(
@@ -136,29 +127,30 @@ def like_follow_by_hashtag(
     for i, hashtag in enumerate(hashtags):
         to_follow_urls, to_like_urls = get_post_urls(driver, hashtag)
 
-        excess_follows = iterate_post_urls(
-            config,
-            driver,
-            n_follows_per_hashtag,
-            to_follow_urls,
-            "follow",
-            today_actions,
-        )
+        if len(to_follow_urls) > 0:
+            excess_follows = iterate_post_urls(
+                config,
+                driver,
+                n_follows_per_hashtag,
+                to_follow_urls,
+                "follow",
+                today_actions,
+            )
 
-        n_remaining_hashtags = len(hashtags) - i + 1
-        get_updated_count_per_hashtag = lambda excess: math.floor(
-            ((n_follows_per_hashtag * n_remaining_hashtags) + excess)
-            / n_remaining_hashtags
-        )
+            n_remaining_hashtags = len(hashtags) - i + 1
+            get_updated_count_per_hashtag = lambda excess: math.floor(
+                ((n_follows_per_hashtag * n_remaining_hashtags) + excess)
+                / n_remaining_hashtags
+            )
 
-        if excess_follows > 0:
-            n_follows_per_hashtag = get_updated_count_per_hashtag(excess_follows)
+            if excess_follows > 0:
+                n_follows_per_hashtag = get_updated_count_per_hashtag(excess_follows)
 
-        if not only_follow:
+        if not only_follow and len(to_like_urls):
             excess_likes = iterate_post_urls(
                 config, driver, n_likes_per_hashtag, to_like_urls, "like", today_actions
             )
             if excess_likes > 0:
                 n_likes_per_hashtag = get_updated_count_per_hashtag(excess_likes)
         else:
-            pass
+            continue

@@ -2,12 +2,15 @@
 unfollow_gap: 7 # in days
 
 # this is calculated for each user by n(following)/n(followers). the greater the more likely they would follow back!
-accepted_follow_ratio: 1.5 # only users with a ratio greater than the specified value will be followed
+accepted_follow_ratio: 1 # only users with a ratio greater than the specified value will be followed
 
 # whether to automatically mute the users the bot follows
 automatic_muting: true
 
+# whether to follow private accounts (NOTE: these can't be automatically muted)
+follow_private_accounts: true
+
 # hashtags the user is into
 hashtags:
-    - "landscapephotography"
-    - "robots"
+    - "inception"
+    - "worldofwarcraft"
