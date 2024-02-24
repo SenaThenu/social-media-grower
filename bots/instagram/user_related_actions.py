@@ -201,6 +201,41 @@ def follow_a_user(
         return False
 
 
+def unfollow_a_user(driver: object, user_link: str, whitelist: list) -> bool:
+    """
+    Unfollows the given user.
+
+    Args:
+        driver (object): gateway to interact with the browser
+        whitelist (list): a list of users who shouldn't be unfollowed
+        user_link (str): link to the profile of the user
+
+    Returns:
+        bool: whether the user was unfollowed
+    """
+    username = user_link[27:-1]
+    if username not in whitelist:
+        try:
+            # there are 2 versions of the xpath depending on the window size
+            following_btn_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button"
+            following_btn_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button"
+
+            try:
+                following_btn_landscape_xpath.click()
+            except:
+                following_btn_portrait_xpath.click()
+
+            unfollow_btn_xpath = "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]"
+
+            unfollow_btn_xpath.click()
+
+            return True
+        except:
+            return False
+    else:
+        return False
+
+
 def like_the_last_post_of_a_user(driver: object, accepted_ratio: int) -> bool:
     """
     Checks whether the user meets the accepted ratio. If so, likes their first post.
