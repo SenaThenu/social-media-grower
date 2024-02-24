@@ -4,7 +4,7 @@ import time
 
 config = load_config()
 
-instabot = InstagramBot()
+instabot = InstagramBot(config)
 time.sleep(1)
-instabot.like_and_follow_by_hashtag(config)
+instabot.like_and_follow_by_hashtag()
 time.sleep(100)

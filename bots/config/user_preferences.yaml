@@ -8,9 +8,15 @@ accepted_follow_ratio: 1 # only users with a ratio greater than the specified va
 automatic_muting: true
 
 # whether to follow private accounts (NOTE: these can't be automatically muted)
-follow_private_accounts: true
+follow_private_accounts: false
+
+# whether to only follow or to do both following and liking
+only_follow: false
 
 # hashtags the user is into
 hashtags:
-    - "inception"
-    - "worldofwarcraft"
+    - "visionpro"
+    - "mkbhd"
+    - "programming"
+    - "python"
+    - "automation"

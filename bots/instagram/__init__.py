@@ -16,14 +16,15 @@ from .hashtag_based import like_follow_by_hashtag
 
 
 class InstagramBot:
-    def __init__(self):
+    def __init__(self, config):
+        self.config = config
         self.last_action_time = time.time()
 
         print("Initialising the Driver!")
         self.driver = webdriver.Chrome(
             service=Service(ChromeDriverManager().install()), options=Options()
         )
-        self.driver.implicitly_wait(5)  # 6-second waiting till elements appear
+        self.driver.implicitly_wait(6)  # 6-second waiting till elements appear
 
         print("Going to instagram.com")
         self.driver.get("https://instagram.com")
@@ -34,9 +35,8 @@ class InstagramBot:
         # loading today's actions
         self._today_actions = self._load_today_actions()
 
-    def like_and_follow_by_hashtag(self, config):
-        like_follow_by_hashtag(self.driver, config, self._today_actions)
-        self._update_today_actions()
+    def like_and_follow_by_hashtag(self):
+        like_follow_by_hashtag(self)
 
     def _login(self):
         username_field = self.driver.find_element(
@@ -84,7 +84,8 @@ class InstagramBot:
 
         return actions
 
-    def _update_today_actions(self):
+    def _update_today_actions(self, today_actions):
+        self._today_actions = today_actions
         with open(os.path.join("bots/instagram", "_today_actions.yaml"), "w") as f:
             yaml.dump(self._today_actions, f)
             f.close()

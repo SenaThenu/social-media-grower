@@ -47,19 +47,40 @@ def convert_count(str_count: str) -> int:
 
 
 def _meets_the_accepted_ratio(driver: object, accepted_ratio, is_not_private):
+    # Since Instagram is responsive to resolution, there are 2 possible xpaths for each element (portrait & landscape)
     if is_not_private:
-        n_followers_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[2]/a/span/span"
-        n_following_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[3]/a/span/span"
+        n_followers_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[2]/a/span/span"
+        n_following_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[3]/a/span/span"
+        n_followers_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/ul/li[2]/a/span/span/span"
+        n_following_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/ul/li[3]/a/span/span/span"
     else:
-        n_followers_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[2]/span/span"
-        n_following_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[3]/span/span"
+        n_followers_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[2]/span/span"
+        n_following_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[3]/span/span"
+        n_followers_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/ul/li[2]/span/span/span"
+        n_following_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/ul/li[3]/span/span/span"
 
-    n_followers = convert_count(
-        driver.find_element(By.XPATH, n_followers_xpath).get_attribute("innerHTML")
-    )
-    n_following = convert_count(
-        driver.find_element(By.XPATH, n_following_xpath).get_attribute("innerHTML")
-    )
+    try:
+        n_followers = convert_count(
+            driver.find_element(By.XPATH, n_followers_landscape_xpath).get_attribute(
+                "innerHTML"
+            )
+        )
+        n_following = convert_count(
+            driver.find_element(By.XPATH, n_following_landscape_xpath).get_attribute(
+                "innerHTML"
+            )
+        )
+    except:
+        n_followers = convert_count(
+            driver.find_element(By.XPATH, n_followers_portrait_xpath).get_attribute(
+                "innerHTML"
+            )
+        )
+        n_following = convert_count(
+            driver.find_element(By.XPATH, n_following_portrait_xpath).get_attribute(
+                "innerHTML"
+            )
+        )
 
     current_ratio = n_following / (n_followers + 1)
 
@@ -121,56 +142,62 @@ def follow_a_user(
     Returns:
         bool: whether the user was followed
     """
-    is_not_private = _not_private_account(driver)
-    if _meets_the_accepted_ratio(
-        driver, accepted_ratio, is_not_private
-    ) and _is_not_already_following(driver):
+    try:
+        is_not_private = _not_private_account(driver)
+        if _meets_the_accepted_ratio(
+            driver, accepted_ratio, is_not_private
+        ) and _is_not_already_following(driver):
 
-        if not is_not_private and not follow_private_accounts:
+            if not is_not_private and not follow_private_accounts:
+                return False
+
+            try:
+                follow_button = driver.find_element(
+                    By.XPATH,
+                    "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button",
+                )
+
+                follow_button.click()
+            except:
+                return False
+
+            time.sleep(2)
+            if mute and is_not_private:
+                following_button = driver.find_element(
+                    By.XPATH,
+                    "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button",
+                )
+                following_button.click()
+
+                mute_button = driver.find_element(
+                    By.XPATH,
+                    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[6]",
+                )
+                mute_button.click()
+
+                mute_posts = driver.find_element(
+                    By.XPATH,
+                    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[1]",
+                )
+                mute_posts.click()
+
+                mute_stories = driver.find_element(
+                    By.XPATH,
+                    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[2]",
+                )
+                mute_stories.click()
+
+                save_button = driver.find_element(
+                    By.XPATH,
+                    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[4]/div",
+                )
+                save_button.click()
+
+            return True
+
+        else:
             return False
-
-        follow_button = driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button",
-        )
-
-        follow_button.click()
-
-        time.sleep(2)
-        if mute and is_not_private:
-            following_button = driver.find_element(
-                By.XPATH,
-                "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button",
-            )
-            following_button.click()
-
-            mute_button = driver.find_element(
-                By.XPATH,
-                "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[6]",
-            )
-            mute_button.click()
-
-            mute_posts = driver.find_element(
-                By.XPATH,
-                "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[1]",
-            )
-            mute_posts.click()
-
-            mute_stories = driver.find_element(
-                By.XPATH,
-                "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[2]",
-            )
-            mute_stories.click()
-
-            save_button = driver.find_element(
-                By.XPATH,
-                "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[4]/div",
-            )
-            save_button.click()
-
-        return True
-
-    else:
+    except:
         return False
 
 
@@ -184,34 +211,37 @@ def like_the_last_post_of_a_user(driver: object, accepted_ratio: int) -> bool:
     Returns:
         bool: _description_
     """
-    is_not_private = _not_private_account(driver)
-    if (
-        _meets_the_accepted_ratio(driver, accepted_ratio, is_not_private)
-        and _is_not_already_following(driver)
-    ) and (_user_has_posts(driver) and is_not_private):
-        try:
-            last_post_link = driver.find_element(
+    try:
+        is_not_private = _not_private_account(driver)
+        if (
+            _meets_the_accepted_ratio(driver, accepted_ratio, is_not_private)
+            and _is_not_already_following(driver)
+        ) and (_user_has_posts(driver) and is_not_private):
+            try:
+                last_post_link = driver.find_element(
+                    By.XPATH,
+                    "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[2]/div/div[1]/div[1]/a",
+                ).get_attribute("href")
+            except:
+                # dealing with pinned posts!
+                time.sleep(1)
+                last_post_link = driver.find_element(
+                    By.XPATH,
+                    "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[3]/div/div[1]/div[1]/a",
+                ).get_attribute("href")
+
+            driver.get(last_post_link)
+
+            like_button = driver.find_element(
                 By.XPATH,
-                "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[2]/div/div[1]/div[1]/a",
-            ).get_attribute("href")
-        except:
-            # dealing with pinned posts!
-            time.sleep(1)
-            last_post_link = driver.find_element(
-                By.XPATH,
-                "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[3]/div/div[1]/div[1]/a",
-            ).get_attribute("href")
+                "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/div/div[3]/div[1]/div[1]/span[1]/div",
+            )
+            like_button.click()
 
-        driver.get(last_post_link)
-
-        like_button = driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/div/div[3]/div[1]/div[1]/span[1]/div",
-        )
-        like_button.click()
-
-        return True
-    else:
+            return True
+        else:
+            return False
+    except:
         return False
 
 
@@ -280,6 +310,7 @@ def perform_action_on_n_users(
     user_elements_container: object,
     n: int,
     today_actions: dict,
+    today_actions_updater: object,
 ) -> int:
     """
     Performs the defined action on n users in the user_elements_container.
@@ -294,6 +325,7 @@ def perform_action_on_n_users(
         user_elements_container (object): the container which holds all the user elements
         n (int): number of users to perform the action on
         today_actions (dict): the record of actions performed today
+        today_actions_updater (function): a function that writes the today_actions to _today_actions.yaml
 
     Returns:
         int: number of users the action was successfully done to
@@ -332,10 +364,10 @@ def perform_action_on_n_users(
 
                     if was_successful:
                         FOLLOW_HISTORY[TODAY].append(user_url)
+                        _update_the_follow_history()
 
                 if was_successful:
                     n_done += 1
                     today_actions[f"n_{action}s"] += 1
-
-    _update_the_follow_history()
+                    today_actions_updater(today_actions)
     return n_done
