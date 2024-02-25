@@ -6,5 +6,6 @@ config = load_config()
 
 instabot = InstagramBot(config)
 time.sleep(1)
-instabot.like_and_follow_by_hashtag()
+instabot.whitelist_following_users()
+print("Done")
 time.sleep(100)

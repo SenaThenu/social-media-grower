@@ -13,6 +13,7 @@ import yaml
 import datetime
 
 from .hashtag_based import like_follow_by_hashtag
+from .user_related_actions import perform_action_on_n_users
 
 
 class InstagramBot:
@@ -34,9 +35,6 @@ class InstagramBot:
 
         # loading today's actions
         self._today_actions = self._load_today_actions()
-
-    def like_and_follow_by_hashtag(self):
-        like_follow_by_hashtag(self)
 
     def _login(self):
         username_field = self.driver.find_element(
@@ -89,6 +87,73 @@ class InstagramBot:
         with open(os.path.join("bots/instagram", "_today_actions.yaml"), "w") as f:
             yaml.dump(self._today_actions, f)
             f.close()
+
+    def like_and_follow_by_hashtag(self):
+        like_follow_by_hashtag(self)
+
+    def _get_following_users(self) -> object:
+        """
+        Goes to "https://www.instagram.com/logged_in_username/following"
+
+        Returns:
+            object -> The div container which contains the list of users.
+        """
+        following_link = (
+            f"https://www.instagram.com/{os.getenv('INSTAGRAM_USERNAME')}/following/"
+        )
+
+        self.driver.get(following_link)
+
+        time.sleep(5)
+
+        # there are 2 possibilities
+        try:
+            following_list = self.driver.find_element(
+                By.XPATH,
+                "/html/body/div[5]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[4]/div[1]/div",
+            )
+        except:
+            following_list = self.driver.find_element(
+                By.XPATH,
+                "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[4]/div[1]/div",
+            )
+
+        return following_list
+
+    def unfollow_users(self, n: int, mode: str):
+        """
+        Unfollows the specified number of users.
+
+        Args:
+            n (int): number of users to unfollow
+            mode (str): mode used to unfollow users (either dynamic or all)
+        """
+        if mode == "all":
+            following_list = self._get_following_users()
+            perform_action_on_n_users(
+                "unfollow",
+                self.config,
+                self.driver,
+                following_list,
+                n,
+                self._today_actions,
+                self._update_today_actions,
+            )
+
+    def whitelist_following_users(self):
+        """
+        Adds all the "following" users to the whitelist.
+        """
+        following_list = self._get_following_users()
+        perform_action_on_n_users(
+            "set_whitelist",
+            self.config,
+            self.driver,
+            following_list,
+            3750,
+            self._today_actions,
+            self._update_today_actions,
+        )
 
     def quit(self):
         """

@@ -27,6 +27,12 @@ def _update_the_follow_history():
         f.close()
 
 
+def _update_whitelist(new_whitelist):
+    with open(os.path.join("bots/config", "whitelist.yaml"), "w") as f:
+        yaml.dump(new_whitelist, f)
+        f.close()
+
+
 def convert_count(str_count: str) -> int:
     """
     Converts the readable numbers (e.g. 1,000, 100K, 10M) to integers!
@@ -201,33 +207,40 @@ def follow_a_user(
         return False
 
 
-def unfollow_a_user(driver: object, user_link: str, whitelist: list) -> bool:
+def unfollow_a_user(driver: object, user_url: str, whitelist: list) -> bool:
     """
     Unfollows the given user.
 
     Args:
         driver (object): gateway to interact with the browser
         whitelist (list): a list of users who shouldn't be unfollowed
-        user_link (str): link to the profile of the user
+        user_url (str): link to the profile of the user
 
     Returns:
         bool: whether the user was unfollowed
     """
-    username = user_link[27:-1]
-    if username not in whitelist:
+    driver.get(user_url)
+
+    if user_url not in whitelist:
         try:
             # there are 2 versions of the xpath depending on the window size
             following_btn_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button"
             following_btn_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button"
 
             try:
-                following_btn_landscape_xpath.click()
+                following_btn = driver.find_element(
+                    By.XPATH, following_btn_landscape_xpath
+                )
             except:
-                following_btn_portrait_xpath.click()
+                following_btn = driver.find_element(
+                    By.XPATH, following_btn_portrait_xpath
+                )
+
+            following_btn.click()
 
             unfollow_btn_xpath = "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]"
-
-            unfollow_btn_xpath.click()
+            unfollow_btn = driver.find_element(By.XPATH, unfollow_btn_xpath)
+            unfollow_btn.click()
 
             return True
         except:
@@ -300,6 +313,7 @@ def get_user_url_list(driver: object, user_elements_container: object, n: int) -
                 By.XPATH, "./div/div/div/div[2]/div/div/div/div/div/a"
             )
             user_url = anchor.get_attribute("href")
+            # making sure there are no duplicates
             if user_url not in user_urls:
                 user_urls.append(user_url)
 
@@ -320,6 +334,7 @@ def get_user_url_list(driver: object, user_elements_container: object, n: int) -
     # when you scroll a particular element into view, it becomes the middle one!
     while len(user_urls) < n:
         driver.execute_script("arguments[0].scrollIntoView(true);", user_elements[-1])
+        time.sleep(1)
         user_elements = user_elements_container.find_elements(By.XPATH, "./div")
 
         # making sure we haven't reached the end of the document
@@ -352,6 +367,8 @@ def perform_action_on_n_users(
     Supported actions:
         * like - like the last post of the user
         * follow - follow the user
+        * unfollow - unfollows the user
+        * set_whitelist - whitelists all the "following" users
 
     Args:
         action (str): name of the action to perform (defined above!)
@@ -373,6 +390,15 @@ def perform_action_on_n_users(
     last_action_time = time.time()
 
     for user_url in user_urls:
+        # we can perform some actions (set_whitelist) without navigating to the user_url
+        # plus, they don't even involve following/liking
+        # they don't have to go through the bot-masking security layers :)
+        if action == "set_whitelist":
+            if user_url not in config["whitelist"]["instagram"]:
+                config["whitelist"]["instagram"].append(user_url)
+            _update_whitelist(config["whitelist"])
+            continue
+
         elapsed_time = math.floor(time.time() - last_action_time)
         required_waiting_time = config["restrictions"]["instagram"][
             "min_time_between_actions"
@@ -382,12 +408,19 @@ def perform_action_on_n_users(
         else:
             last_action_time = time.time()
             if n_done >= n:
+                # breaking the loop once we have done the specified number of actions
                 break
             else:
+                # navigating to the user_url
                 driver.get(user_url)
+
                 if action == "like":
                     was_successful = like_the_last_post_of_a_user(
                         driver, config["user_preferences"]["accepted_follow_ratio"]
+                    )
+                elif action == "unfollow":
+                    was_successful = unfollow_a_user(
+                        driver, user_url, config["whitelist"]["instagram"]
                     )
                 else:
                     was_successful = follow_a_user(
@@ -396,13 +429,18 @@ def perform_action_on_n_users(
                         config["user_preferences"]["automatic_muting"],
                         config["user_preferences"]["follow_private_accounts"],
                     )
-
+                    # updating the follow history
                     if was_successful:
                         FOLLOW_HISTORY[TODAY].append(user_url)
                         _update_the_follow_history()
 
+                # updating the actions quota for today
                 if was_successful:
                     n_done += 1
-                    today_actions[f"n_{action}s"] += 1
+                    if action != "unfollow":
+                        today_actions[f"n_{action}s"] += 1
+                    else:
+                        # the number of unfollows goes under n_follows
+                        today_actions["n_follows"] += 1
                     today_actions_updater(today_actions)
     return n_done
