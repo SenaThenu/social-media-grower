@@ -167,7 +167,7 @@ def follow_a_user(
             except:
                 return False
 
-            time.sleep(2)
+            time.sleep(3)
             if mute and is_not_private:
                 following_button = driver.find_element(
                     By.XPATH,
@@ -207,13 +207,12 @@ def follow_a_user(
         return False
 
 
-def unfollow_a_user(driver: object, user_url: str, whitelist: list) -> bool:
+def unfollow_a_user(driver: object, user_url: str) -> bool:
     """
     Unfollows the given user.
 
     Args:
         driver (object): gateway to interact with the browser
-        whitelist (list): a list of users who shouldn't be unfollowed
         user_url (str): link to the profile of the user
 
     Returns:
@@ -237,7 +236,7 @@ def unfollow_a_user(driver: object, user_url: str, whitelist: list) -> bool:
         unfollow_btn = driver.find_element(By.XPATH, unfollow_btn_xpath)
         unfollow_btn.click()
 
-        time.sleep(2)
+        time.sleep(3)
 
         return True
     except:
@@ -267,7 +266,7 @@ def like_the_last_post_of_a_user(driver: object, accepted_ratio: int) -> bool:
                 ).get_attribute("href")
             except:
                 # dealing with pinned posts!
-                time.sleep(1)
+                time.sleep(1.5)
                 last_post_link = driver.find_element(
                     By.XPATH,
                     "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[3]/div/div[1]/div[1]/a",
@@ -329,7 +328,7 @@ def get_user_url_list(driver: object, user_elements_container: object, n: int) -
     # when you scroll a particular element into view, it becomes the middle one!
     while len(user_urls) < n:
         driver.execute_script("arguments[0].scrollIntoView(true);", user_elements[-1])
-        time.sleep(1)
+        time.sleep(2)
         user_elements = user_elements_container.find_elements(By.XPATH, "./div")
 
         # making sure we haven't reached the end of the document

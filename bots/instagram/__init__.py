@@ -25,7 +25,9 @@ class InstagramBot:
         self.driver = webdriver.Chrome(
             service=Service(ChromeDriverManager().install()), options=Options()
         )
-        self.driver.implicitly_wait(6)  # 6-second waiting till elements appear
+        self.driver.implicitly_wait(
+            self.config["user_preferences"]["base_waiting_time"]
+        )  # configuring waiting time period till elements appear
 
         print("Going to instagram.com")
         self.driver.get("https://instagram.com")
@@ -101,7 +103,7 @@ class InstagramBot:
 
         self.driver.get(following_link)
 
-        time.sleep(5)
+        time.sleep(self.config["user_preferences"]["base_waiting_time"] * 0.8)
 
         # there are 2 possibilities
         try:
