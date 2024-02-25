@@ -221,31 +221,26 @@ def unfollow_a_user(driver: object, user_url: str, whitelist: list) -> bool:
     """
     driver.get(user_url)
 
-    if user_url not in whitelist:
+    try:
+        # there are 2 versions of the xpath depending on the window size
+        following_btn_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button"
+        following_btn_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button"
+
         try:
-            # there are 2 versions of the xpath depending on the window size
-            following_btn_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button"
-            following_btn_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button"
-
-            try:
-                following_btn = driver.find_element(
-                    By.XPATH, following_btn_landscape_xpath
-                )
-            except:
-                following_btn = driver.find_element(
-                    By.XPATH, following_btn_portrait_xpath
-                )
-
-            following_btn.click()
-
-            unfollow_btn_xpath = "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]"
-            unfollow_btn = driver.find_element(By.XPATH, unfollow_btn_xpath)
-            unfollow_btn.click()
-
-            return True
+            following_btn = driver.find_element(By.XPATH, following_btn_landscape_xpath)
         except:
-            return False
-    else:
+            following_btn = driver.find_element(By.XPATH, following_btn_portrait_xpath)
+
+        following_btn.click()
+
+        unfollow_btn_xpath = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]"
+        unfollow_btn = driver.find_element(By.XPATH, unfollow_btn_xpath)
+        unfollow_btn.click()
+
+        time.sleep(2)
+
+        return True
+    except:
         return False
 
 
@@ -382,12 +377,22 @@ def perform_action_on_n_users(
     Returns:
         int: number of users the action was successfully done to
     """
-
-    # we query 2 times the n number of users for backup!
-    user_urls = get_user_url_list(driver, user_elements_container, n * 2)
+    if action != "unfollow" and action != "set_whitelist":
+        # we query 2 times the n number of users for backup!
+        user_urls = get_user_url_list(driver, user_elements_container, n * 2)
+    else:
+        # when it comes to unfollowing users, we can't rely on n*2...
+        user_urls = get_user_url_list(
+            driver,
+            user_elements_container,
+            config["restrictions"]["instagram"]["max_following"],
+        )
     n_done = 0
 
     last_action_time = time.time()
+
+    # removing the whitelisted user_urls
+    user_urls = list(set(user_urls) - set(config["whitelist"]["instagram"]))
 
     for user_url in user_urls:
         # we can perform some actions (set_whitelist) without navigating to the user_url

@@ -88,9 +88,6 @@ class InstagramBot:
             yaml.dump(self._today_actions, f)
             f.close()
 
-    def like_and_follow_by_hashtag(self):
-        like_follow_by_hashtag(self)
-
     def _get_following_users(self) -> object:
         """
         Goes to "https://www.instagram.com/logged_in_username/following"
@@ -119,6 +116,9 @@ class InstagramBot:
             )
 
         return following_list
+
+    def like_and_follow_by_hashtag(self):
+        like_follow_by_hashtag(self)
 
     def unfollow_users(self, n: int, mode: str):
         """
@@ -150,7 +150,7 @@ class InstagramBot:
             self.config,
             self.driver,
             following_list,
-            3750,
+            self.config["restrictions"]["instagram"]["max_following"],
             self._today_actions,
             self._update_today_actions,
         )
