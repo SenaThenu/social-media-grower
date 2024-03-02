@@ -6,6 +6,6 @@ config = load_config()
 
 instabot = InstagramBot(config)
 time.sleep(1)
-instabot.unfollow_users(3, "all")
+instabot.unfollow_users(3, "dynamic")
 print("Done")
 time.sleep(100)

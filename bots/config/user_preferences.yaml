@@ -11,7 +11,7 @@ automatic_muting: true
 follow_private_accounts: false
 
 # whether to only follow or to do both following and liking
-only_follow: false
+only_follow: true
 
 # we should wait till different elements appear. this is the approximate waiting time period (higher the slower. but make sure this is greater than 5 seconds)
 base_waiting_time: 6 # in seconds

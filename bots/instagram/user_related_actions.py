@@ -20,6 +20,10 @@ if TODAY not in FOLLOW_HISTORY.keys():
 else:
     pass
 
+# Common XPATHs
+LANDSCAPE_FOLLOW_BTN_XPATH = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button"
+PORTRAIT_FOLLOW_BTN_XPATH = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button"
+
 
 def _update_the_follow_history():
     with open(os.path.join("bots/instagram", "_follow_history.yaml"), "w") as f:
@@ -33,7 +37,7 @@ def _update_whitelist(new_whitelist):
         f.close()
 
 
-def convert_count(str_count: str) -> int:
+def _convert_count(str_count: str) -> int:
     """
     Converts the readable numbers (e.g. 1,000, 100K, 10M) to integers!
 
@@ -66,23 +70,23 @@ def _meets_the_accepted_ratio(driver: object, accepted_ratio, is_not_private):
         n_following_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/ul/li[3]/span/span/span"
 
     try:
-        n_followers = convert_count(
+        n_followers = _convert_count(
             driver.find_element(By.XPATH, n_followers_landscape_xpath).get_attribute(
                 "innerHTML"
             )
         )
-        n_following = convert_count(
+        n_following = _convert_count(
             driver.find_element(By.XPATH, n_following_landscape_xpath).get_attribute(
                 "innerHTML"
             )
         )
     except:
-        n_followers = convert_count(
+        n_followers = _convert_count(
             driver.find_element(By.XPATH, n_followers_portrait_xpath).get_attribute(
                 "innerHTML"
             )
         )
-        n_following = convert_count(
+        n_following = _convert_count(
             driver.find_element(By.XPATH, n_following_portrait_xpath).get_attribute(
                 "innerHTML"
             )
@@ -93,18 +97,35 @@ def _meets_the_accepted_ratio(driver: object, accepted_ratio, is_not_private):
     return current_ratio >= accepted_ratio
 
 
-def _is_not_already_following(driver: object) -> bool:
+def _follow_button_includes(keyword: str, driver: object) -> bool:
+    """
+    Checks whether the keyword is included in the follow_button!
+
+    Args:
+        keyword (str): _description_
+        driver (object): _description_
+
+    Returns:
+        bool: _description_
+    """
     try:
-        follow_button = driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button/div/div[1]",
-        )
-        if follow_button.get_attribute("innerHTML") == "Following":
-            return False
-        else:
+        # there are 2 possibilities for the follow button
+        follow_btn_landscape_xpath = f"{LANDSCAPE_FOLLOW_BTN_XPATH}/div/div[1]"
+        follow_btn_portrait_xpath = f"{PORTRAIT_FOLLOW_BTN_XPATH}/div/div"
+
+        # finding the element
+        try:
+            follow_button = driver.find_element(By.XPATH, follow_btn_landscape_xpath)
+        except:
+            follow_button = driver.find_element(By.XPATH, follow_btn_portrait_xpath)
+
+        # retrieving innerHTML
+        if follow_button.get_attribute("innerHTML").lower() == keyword.lower():
             return True
+        else:
+            return False
     except:
-        return True
+        return False
 
 
 def _user_has_posts(driver: object) -> bool:
@@ -115,7 +136,7 @@ def _user_has_posts(driver: object) -> bool:
         By.XPATH,
         "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[1]/span/span",
     ).get_attribute("innerHTML")
-    post_count = convert_count(post_count)
+    post_count = _convert_count(post_count)
     return post_count > 0
 
 
@@ -152,27 +173,36 @@ def follow_a_user(
         is_not_private = _not_private_account(driver)
         if _meets_the_accepted_ratio(
             driver, accepted_ratio, is_not_private
-        ) and _is_not_already_following(driver):
+        ) and _follow_button_includes("Follow", driver):
 
             if not is_not_private and not follow_private_accounts:
                 return False
 
+            # checking both the possibilities for the follow button
             try:
                 follow_button = driver.find_element(
                     By.XPATH,
-                    "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button",
+                    LANDSCAPE_FOLLOW_BTN_XPATH,
                 )
-
-                follow_button.click()
             except:
-                return False
+                follow_button = driver.find_element(
+                    By.XPATH,
+                    PORTRAIT_FOLLOW_BTN_XPATH,
+                )
+            follow_button.click()
 
             time.sleep(3)
             if mute and is_not_private:
-                following_button = driver.find_element(
-                    By.XPATH,
-                    "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button",
-                )
+                try:
+                    following_button = driver.find_element(
+                        By.XPATH,
+                        LANDSCAPE_FOLLOW_BTN_XPATH,
+                    )
+                except:
+                    following_button = driver.find_element(
+                        By.XPATH,
+                        PORTRAIT_FOLLOW_BTN_XPATH,
+                    )
                 following_button.click()
 
                 mute_button = driver.find_element(
@@ -221,24 +251,34 @@ def unfollow_a_user(driver: object, user_url: str) -> bool:
     driver.get(user_url)
 
     try:
-        # there are 2 versions of the xpath depending on the window size
-        following_btn_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button"
-        following_btn_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button"
+        is_following = _follow_button_includes("following", driver)
+        is_requested = _follow_button_includes("requested", driver)
+        if is_following or is_requested:
+            try:
+                following_btn = driver.find_element(
+                    By.XPATH,
+                    LANDSCAPE_FOLLOW_BTN_XPATH,
+                )
+            except:
+                following_btn = driver.find_element(
+                    By.XPATH,
+                    PORTRAIT_FOLLOW_BTN_XPATH,
+                )
 
-        try:
-            following_btn = driver.find_element(By.XPATH, following_btn_landscape_xpath)
-        except:
-            following_btn = driver.find_element(By.XPATH, following_btn_portrait_xpath)
+            following_btn.click()
 
-        following_btn.click()
+            if is_following:
+                unfollow_btn_xpath = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]"
+            else:
+                unfollow_btn_xpath = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div/div/button[1]"
 
-        unfollow_btn_xpath = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]"
-        unfollow_btn = driver.find_element(By.XPATH, unfollow_btn_xpath)
-        unfollow_btn.click()
+            unfollow_btn = driver.find_element(By.XPATH, unfollow_btn_xpath)
+            unfollow_btn.click()
 
-        time.sleep(3)
-
-        return True
+            time.sleep(3)
+            return True
+        else:
+            return False
     except:
         return False
 
@@ -257,7 +297,7 @@ def like_the_last_post_of_a_user(driver: object, accepted_ratio: int) -> bool:
         is_not_private = _not_private_account(driver)
         if (
             _meets_the_accepted_ratio(driver, accepted_ratio, is_not_private)
-            and _is_not_already_following(driver)
+            and _follow_button_includes("follow", driver)
         ) and (_user_has_posts(driver) and is_not_private):
             try:
                 last_post_link = driver.find_element(
@@ -423,9 +463,7 @@ def perform_action_on_n_users(
                         driver, config["user_preferences"]["accepted_follow_ratio"]
                     )
                 elif action == "unfollow":
-                    was_successful = unfollow_a_user(
-                        driver, user_url, config["whitelist"]["instagram"]
-                    )
+                    was_successful = unfollow_a_user(driver, user_url)
                 else:
                     was_successful = follow_a_user(
                         driver,

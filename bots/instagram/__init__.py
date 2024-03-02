@@ -13,7 +13,11 @@ import yaml
 import datetime
 
 from .hashtag_based import like_follow_by_hashtag
-from .user_related_actions import perform_action_on_n_users
+from .user_related_actions import (
+    perform_action_on_n_users,
+    unfollow_a_user,
+    get_user_url_list,
+)
 
 
 class InstagramBot:
@@ -90,7 +94,7 @@ class InstagramBot:
             yaml.dump(self._today_actions, f)
             f.close()
 
-    def _get_following_users(self) -> object:
+    def _get_following_users_container(self) -> object:
         """
         Goes to "https://www.instagram.com/logged_in_username/following"
 
@@ -119,6 +123,96 @@ class InstagramBot:
 
         return following_list
 
+    def _get_followers_container(self) -> object:
+        """
+        Goes to "https://www.instagram.com/logged_in_username/followers"
+
+        Returns:
+            object -> The div container which contains the list of users.
+        """
+        followers_link = (
+            f"https://www.instagram.com/{os.getenv('INSTAGRAM_USERNAME')}/followers/"
+        )
+
+        self.driver.get(followers_link)
+
+        time.sleep(self.config["user_preferences"]["base_waiting_time"] * 0.8)
+
+        # there are 2 possibilities
+        try:
+            followers_list = self.driver.find_element(
+                By.XPATH,
+                "/html/body/div[5]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div[1]/div",
+            )
+        except:
+            followers_list = self.driver.find_element(
+                By.XPATH,
+                "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div[1]/div",
+            )
+
+        return followers_list
+
+    def _perform_dynamic_unfollow(self, n: int):
+        """
+        Reads the follow history and dynamically unfollows n number of users who don't follow back!
+        """
+
+        def _update_follow_history(his):
+            with open(os.path.join("bots/instagram", "_follow_history.yaml"), "w") as f:
+                yaml.dump(his, f)
+                f.close()
+
+        with open("bots/instagram/_follow_history.yaml", "r") as f:
+            follow_history = yaml.safe_load(f)
+            f.close()
+
+        # sorting the follow history in the ascending order so that we can focus on the first element!
+        follow_history = {
+            k: v
+            for k, v in sorted(
+                follow_history.items(),
+                key=lambda item: datetime.datetime.strptime(list(item)[0], "%d-%m-%Y"),
+            )
+        }
+
+        # retrieving the links of users who are currently being followed
+        following_list = get_user_url_list(
+            self.driver,
+            self._get_followers_container(),
+            self.config["restrictions"]["instagram"]["max_following"],
+        )
+
+        if len(follow_history) > 0:
+            n_done = 0
+            while n_done < n:
+                # checking if there are users followed under the oldest date
+                oldest_date = list(follow_history.keys())[0]
+
+                if len(follow_history[oldest_date]) > 0:
+                    user_link = follow_history[oldest_date][0]
+
+                    if user_link not in following_list:
+                        was_successful = unfollow_a_user(self.driver, user_link)
+                        if was_successful:
+                            self._today_actions["n_follows"] += 1
+                            self._update_today_actions(self._today_actions)
+                            n_done += 1
+
+                    # removing this user_link because there's no further use of it!
+                    follow_history[oldest_date].pop(0)
+                else:
+                    follow_history.pop(oldest_date)
+
+                _update_follow_history(follow_history)
+
+                # we can't keep the _follow_history.yaml empty! So, we're gonna add an easter egg account!
+                if len(follow_history) <= 0:
+                    easter_egg_follow = {
+                        "14-03-2024": ["https://www.instagram.com/senathenu_bot/"]
+                    }
+                    _update_follow_history(easter_egg_follow)
+                    break
+
     def like_and_follow_by_hashtag(self):
         like_follow_by_hashtag(self)
 
@@ -131,7 +225,7 @@ class InstagramBot:
             mode (str): mode used to unfollow users (either dynamic or all)
         """
         if mode == "all":
-            following_list = self._get_following_users()
+            following_list = self._get_following_users_container()
             perform_action_on_n_users(
                 "unfollow",
                 self.config,
@@ -141,12 +235,15 @@ class InstagramBot:
                 self._today_actions,
                 self._update_today_actions,
             )
+        else:
+            # mode should be "dynamic" as there are only 2 modes
+            self._perform_dynamic_unfollow(n)
 
     def whitelist_following_users(self):
         """
         Adds all the "following" users to the whitelist.
         """
-        following_list = self._get_following_users()
+        following_list = self._get_following_users_container()
         perform_action_on_n_users(
             "set_whitelist",
             self.config,
