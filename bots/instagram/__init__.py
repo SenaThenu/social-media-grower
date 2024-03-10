@@ -60,6 +60,8 @@ class InstagramBot:
         )
         login_button.click()
 
+        time.sleep(self.config["user_preferences"]["base_time_waiting"])
+
         save_login_info_button = self.driver.find_element(
             By.XPATH,
             "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/section/div/button",
@@ -179,6 +181,7 @@ class InstagramBot:
         following_list = get_user_url_list(
             self.driver,
             self._get_followers_container(),
+            # we pass in the maximum following to ensure we get all the users!
             self.config["restrictions"]["instagram"]["max_following"],
         )
 

@@ -20,9 +20,56 @@ if TODAY not in FOLLOW_HISTORY.keys():
 else:
     pass
 
-# Common XPATHs
+# general user account xpaths (note: some xpaths depend on the resolution)
 LANDSCAPE_FOLLOW_BTN_XPATH = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button"
 PORTRAIT_FOLLOW_BTN_XPATH = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button"
+
+LIKE_BUTTON_OF_A_POST = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/div/div[3]/div[1]/div[1]/span[1]/div"
+POST_COUNT_OF_A_USER = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[1]/span/span"
+
+TOP_LEFT_POST_OF_A_USER_LANDSCAPE = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[3]/div/div[1]/div[1]/a"
+TOP_LEFT_POST_OF_A_USER_PORTRAIT = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[2]/div/div[1]/div[1]/a"
+
+PRIVATE_ACCOUNT_STATEMENT = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[1]/div/h2"
+
+UNFOLLOW_BUTTON_WHEN_FOLLOWING = (
+    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]"
+)
+UNFOLLOW_BUTTON_WHEN_REQUESTED_TO_FOLLOW = (
+    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div/div/button[1]"
+)
+
+# dynamic xpaths
+n_count_base = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/"  # just a repetitive path :)
+N_FOLLOWERS_LANDSCAPE = lambda is_not_private: (
+    n_count_base + "header/section/ul/li[2]/a/span/span"
+    if is_not_private
+    else n_count_base + "header/section/ul/li[2]/span/span"
+)
+N_FOLLOWING_LANDSCAPE = lambda is_not_private: (
+    n_count_base + "header/section/ul/li[3]/a/span/span"
+    if is_not_private
+    else n_count_base + "header/section/ul/li[3]/span/span"
+)
+
+N_FOLLOWERS_PORTRAIT = lambda is_not_private: (
+    n_count_base + "ul/li[2]/a/span/span/span"
+    if is_not_private
+    else n_count_base + "ul/li[2]/span/span/span"
+)
+N_FOLLOWING_PORTRAIT = lambda is_not_private: (
+    n_count_base + "ul/li[3]/a/span/span/span"
+    if is_not_private
+    else n_count_base + "ul/li[3]/span/span/span"
+)
+
+# muting related xpaths
+USER_MUTE_BUTTON_XPATH = (
+    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[6]"
+)
+MUTE_POSTS_BUTTON = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[1]"
+MUTE_STORIES_BUTTON = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[2]"
+MUTE_SETTINGS_SAVE_BUTTON_XPATH = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[4]/div"
 
 
 def _update_the_follow_history():
@@ -57,17 +104,10 @@ def _convert_count(str_count: str) -> int:
 
 
 def _meets_the_accepted_ratio(driver: object, accepted_ratio, is_not_private):
-    # Since Instagram is responsive to resolution, there are 2 possible xpaths for each element (portrait & landscape)
-    if is_not_private:
-        n_followers_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[2]/a/span/span"
-        n_following_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[3]/a/span/span"
-        n_followers_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/ul/li[2]/a/span/span/span"
-        n_following_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/ul/li[3]/a/span/span/span"
-    else:
-        n_followers_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[2]/span/span"
-        n_following_landscape_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[3]/span/span"
-        n_followers_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/ul/li[2]/span/span/span"
-        n_following_portrait_xpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/ul/li[3]/span/span/span"
+    n_followers_landscape_xpath = N_FOLLOWERS_LANDSCAPE(is_not_private)
+    n_following_landscape_xpath = N_FOLLOWING_LANDSCAPE(is_not_private)
+    n_followers_portrait_xpath = N_FOLLOWERS_PORTRAIT(is_not_private)
+    n_following_portrait_xpath = N_FOLLOWING_PORTRAIT(is_not_private)
 
     try:
         n_followers = _convert_count(
@@ -134,7 +174,7 @@ def _user_has_posts(driver: object) -> bool:
     """
     post_count = driver.find_element(
         By.XPATH,
-        "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[1]/span/span",
+        POST_COUNT_OF_A_USER,
     ).get_attribute("innerHTML")
     post_count = _convert_count(post_count)
     return post_count > 0
@@ -144,7 +184,7 @@ def _not_private_account(driver: object) -> bool:
     try:
         private_statement = driver.find_element(
             By.XPATH,
-            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[1]/div/h2",
+            PRIVATE_ACCOUNT_STATEMENT,
         ).get_attribute("innerHTML")
         if "private" in private_statement.lower():
             return False
@@ -207,25 +247,25 @@ def follow_a_user(
 
                 mute_button = driver.find_element(
                     By.XPATH,
-                    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[6]",
+                    USER_MUTE_BUTTON_XPATH,
                 )
                 mute_button.click()
 
                 mute_posts = driver.find_element(
                     By.XPATH,
-                    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[1]",
+                    MUTE_POSTS_BUTTON,
                 )
                 mute_posts.click()
 
                 mute_stories = driver.find_element(
                     By.XPATH,
-                    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[2]",
+                    MUTE_STORIES_BUTTON,
                 )
                 mute_stories.click()
 
                 save_button = driver.find_element(
                     By.XPATH,
-                    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[4]/div",
+                    MUTE_SETTINGS_SAVE_BUTTON_XPATH,
                 )
                 save_button.click()
 
@@ -268,9 +308,9 @@ def unfollow_a_user(driver: object, user_url: str) -> bool:
             following_btn.click()
 
             if is_following:
-                unfollow_btn_xpath = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]"
+                unfollow_btn_xpath = UNFOLLOW_BUTTON_WHEN_FOLLOWING
             else:
-                unfollow_btn_xpath = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div/div/button[1]"
+                unfollow_btn_xpath = UNFOLLOW_BUTTON_WHEN_REQUESTED_TO_FOLLOW
 
             unfollow_btn = driver.find_element(By.XPATH, unfollow_btn_xpath)
             unfollow_btn.click()
@@ -285,7 +325,7 @@ def unfollow_a_user(driver: object, user_url: str) -> bool:
 
 def like_the_last_post_of_a_user(driver: object, accepted_ratio: int) -> bool:
     """
-    Checks whether the user meets the accepted ratio. If so, likes their first post.
+    Checks whether the user meets the accepted ratio. If so, likes their their post. Here, the last post means the top-left post of a user.
 
     Args:
         accepted_ratio (int): n(following)/n(followers) threshold to perform the action
@@ -302,21 +342,20 @@ def like_the_last_post_of_a_user(driver: object, accepted_ratio: int) -> bool:
             try:
                 last_post_link = driver.find_element(
                     By.XPATH,
-                    "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[2]/div/div[1]/div[1]/a",
+                    TOP_LEFT_POST_OF_A_USER_LANDSCAPE,
                 ).get_attribute("href")
             except:
-                # dealing with pinned posts!
                 time.sleep(1.5)
                 last_post_link = driver.find_element(
                     By.XPATH,
-                    "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[3]/div/div[1]/div[1]/a",
+                    TOP_LEFT_POST_OF_A_USER_PORTRAIT,
                 ).get_attribute("href")
 
             driver.get(last_post_link)
 
             like_button = driver.find_element(
                 By.XPATH,
-                "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/div/div[3]/div[1]/div[1]/span[1]/div",
+                LIKE_BUTTON_OF_A_POST,
             )
             like_button.click()
 

@@ -7,6 +7,17 @@ from .user_related_actions import perform_action_on_n_users
 
 import time
 
+# hashtag based post xpaths (these are in respect to the row number (i))
+HASHTAG_BASED_FIRST_POST_XPATH = (
+    lambda i: f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div/div/div[{i}]/div[1]/a"
+)
+HASHTAG_BASED_SECOND_POST_XPATH = (
+    lambda i: f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div/div/div[{i}]/div[2]/a"
+)
+
+# other xpaths used for this module
+LIKERS_CONTAINER_OF_A_POST = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div[1]/div"
+
 
 def get_post_urls(driver: object, hashtag: str, n: int = 4) -> tuple:
     """
@@ -15,12 +26,11 @@ def get_post_urls(driver: object, hashtag: str, n: int = 4) -> tuple:
     Args:
         driver (object): gateway to interact with instagram.com
         hashtag (str)
-        n (int, optional): the number of posts to query (10 is the maximum) [greater this is, more time it takes!]
+        n (int, optional): the number of posts to query (10 is the maximum; limited by Instagram) [greater this is, more time it takes!]
 
     Returns:
         tuple: 2 lists of post urls (0 -> to_follow_urls, 1 -> to_like_urls)
     """
-    # we are grabbing urls of up to 10 posts to like and follow people (10 is the max number of posts it has per hashtag)
     # returns a list whose 1st index would be a list of posts to follow and the 2nd index is a list of posts to like
     driver.get(f"https://instagram.com/explore/tags/{hashtag}")
 
@@ -30,12 +40,12 @@ def get_post_urls(driver: object, hashtag: str, n: int = 4) -> tuple:
         for i in range(1, n + 1):
             to_follow = driver.find_element(
                 By.XPATH,
-                f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div/div/div[{i}]/div[1]/a",
+                HASHTAG_BASED_FIRST_POST_XPATH(i),
             )
             to_follow_urls.append(to_follow.get_attribute("href"))
             to_like = driver.find_element(
                 By.XPATH,
-                f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div/div/div[{i}]/div[2]/a",
+                HASHTAG_BASED_SECOND_POST_XPATH(i),
             )
             to_like_urls.append(to_like.get_attribute("href"))
     except:
@@ -72,7 +82,7 @@ def perform_action_on_likers(
 
     user_elements_container = driver.find_element(
         By.XPATH,
-        "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div[1]/div",
+        LIKERS_CONTAINER_OF_A_POST,
     )
 
     n_done = perform_action_on_n_users(
@@ -105,7 +115,6 @@ def iterate_post_urls(
     Returns:
         int: number of excess actions in case we don't have enough likers!
     """
-    print(f"Boom! We are iterating these posts: {urls}")
     current_index = 0
     n_done = 0
     while n_actions_to_do > 0:
