@@ -1,13 +1,13 @@
 instagram:
-    time_between_actions: 1 # second
-    likes_per_day: 400
-    comments_per_day: 150
-    follows_per_day: 200 # this contains n(unfollows) too!
+    min_time_between_actions: 5 # in seconds
+    n_likes: 150
+    n_comments: 150
+    n_follows: 100 # this contains n(unfollows) too!
     max_following: 7500
 
 x:
-    time_between_actions: 1
-    likes_per_day: 100
-    follows_per_day: 200
-    comments_per_day: 100
+    min_time_between_actions: 1
+    n_likes: 100
+    n_follows: 200
+    n_comments: 100
     max_following: 5000

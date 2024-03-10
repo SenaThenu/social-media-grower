@@ -1,5 +1,4 @@
-# this keeps track of the engagements done today!
-date: "now" # this is checked to reset the following key-value pairs
-n_likes: 0
-n_follows: 0
+date: 10-03-2024
 n_comments: 0
+n_follows: 8
+n_likes: 0
