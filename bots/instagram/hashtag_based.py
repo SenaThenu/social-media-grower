@@ -135,7 +135,16 @@ def iterate_post_urls(
     return n_actions_to_do
 
 
-def like_follow_by_hashtag(bot):
+def like_follow_by_hashtag(bot: object, n_likes: int, n_follows: int):
+    """
+    Follows and likes the last post of n users!
+
+    Args:
+        bot (object): an instance of the instagram bot class
+        n_likes (int): number of users whose posts should be liked
+        n_follows (int): number of users to follow
+        * NOTE: n_likes & n_follows have to be greater than the number of hashtags!
+    """
     # defining a few backbone variables
     driver = bot.driver
     config = bot.config
@@ -145,21 +154,18 @@ def like_follow_by_hashtag(bot):
     only_follow = config["user_preferences"]["only_follow"]
 
     hashtags = config["user_preferences"]["hashtags"]
-    n_follows_per_hashtag = math.floor(
-        (config["restrictions"]["instagram"]["n_follows"] - today_actions["n_follows"])
-        / len(hashtags)
-    )
-    n_likes_per_hashtag = math.floor(
-        (config["restrictions"]["instagram"]["n_likes"] - today_actions["n_likes"])
-        / len(hashtags)
-    )
+    n_follows_per_hashtag = n_follows // len(hashtags)
+    n_likes_per_hashtag = n_likes // len(hashtags)
 
     for i, hashtag in enumerate(hashtags):
         n_remaining_hashtags = len(hashtags) - i + 1
-        get_updated_count_per_hashtag = lambda excess: math.floor(
-            ((n_follows_per_hashtag * n_remaining_hashtags) + excess)
-            / n_remaining_hashtags
+
+        # a function to automatically update the number of remaining actions
+        get_updated_count_per_hashtag = (
+            lambda excess: ((n_follows_per_hashtag * n_remaining_hashtags) + excess)
+            // n_remaining_hashtags
         )
+
         try:
             to_follow_urls, to_like_urls = get_post_urls(driver, hashtag)
 

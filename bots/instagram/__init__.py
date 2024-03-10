@@ -216,8 +216,15 @@ class InstagramBot:
                     _update_follow_history(easter_egg_follow)
                     break
 
-    def like_and_follow_by_hashtag(self):
-        like_follow_by_hashtag(self)
+    def like_and_follow_by_hashtag(self, n_likes: int, n_follows: int):
+        """
+        Likes/follows n number of users!
+
+        Args:
+            n_likes (int): number of users whose posts should be liked
+            n_follows (int): number of users to follow
+        """
+        like_follow_by_hashtag(self, n_likes, n_follows)
 
     def unfollow_users(self, n: int, mode: str):
         """
