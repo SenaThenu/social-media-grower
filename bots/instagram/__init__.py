@@ -60,7 +60,7 @@ class InstagramBot:
         )
         login_button.click()
 
-        time.sleep(self.config["user_preferences"]["base_time_waiting"])
+        time.sleep(self.config["user_preferences"]["base_waiting_time"])
 
         save_login_info_button = self.driver.find_element(
             By.XPATH,
