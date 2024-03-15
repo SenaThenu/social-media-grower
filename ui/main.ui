@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Social Media Grower</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -59,6 +59,12 @@
        </property>
        <item>
         <widget class="QTabWidget" name="mainTabsWidget">
+         <property name="font">
+          <font>
+           <family>Titillium Web</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
          <property name="tabPosition">
           <enum>QTabWidget::North</enum>
          </property>
@@ -81,6 +87,12 @@
           <bool>false</bool>
          </property>
          <widget class="QWidget" name="instagram">
+          <property name="font">
+           <font>
+            <family>Titillium Web</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="cursor">
            <cursorShape>ArrowCursor</cursorShape>
           </property>
@@ -136,7 +148,7 @@
                  <enum>QTabWidget::Rounded</enum>
                 </property>
                 <property name="currentIndex">
-                 <number>3</number>
+                 <number>0</number>
                 </property>
                 <property name="elideMode">
                  <enum>Qt::ElideMiddle</enum>
@@ -145,6 +157,9 @@
                  <bool>false</bool>
                 </property>
                 <widget class="QWidget" name="instaLogin">
+                 <property name="statusTip">
+                  <string>Enter your credentials to access your account</string>
+                 </property>
                  <attribute name="title">
                   <string>Login</string>
                  </attribute>
@@ -218,6 +233,12 @@
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
                      </widget>
                     </item>
                    </layout>
@@ -278,6 +299,12 @@
                         <horstretch>50</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
                       </property>
                       <property name="contextMenuPolicy">
                        <enum>Qt::DefaultContextMenu</enum>
@@ -749,7 +776,7 @@
                 </widget>
                 <widget class="QWidget" name="instaUnfollow">
                  <property name="statusTip">
-                  <string>2 Modes: all (except whitelisted) or dynamic (accounts the bot followed a week ago that don't follow you back)</string>
+                  <string>2 Modes: all (except whitelisted) or dynamic (accounts the bot followed [unfollow_gap] ago that don't follow you back)</string>
                  </property>
                  <attribute name="title">
                   <string>Unfollow</string>
@@ -938,7 +965,7 @@
                            </font>
                           </property>
                           <property name="toolTip">
-                           <string>dynamic unfollow - unfollow accounts the bot followed a week ago that don't follow you back</string>
+                           <string>dynamic unfollow - unfollow accounts the bot followed [unfollow_gap] ago that don't follow you back</string>
                           </property>
                           <item>
                            <property name="text">
@@ -1142,14 +1169,26 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Titillium Web</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
     <widget class="QMenu" name="menuOpen_Bot">
+     <property name="font">
+      <font>
+       <family>Titillium Web</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="title">
       <string>Open Bot</string>
      </property>
@@ -1170,30 +1209,67 @@
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="font">
+    <font>
+     <family>Titillium Web</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </widget>
   <action name="actionInstagram_Bot">
    <property name="text">
     <string>InstaBot</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Titillium Web</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Titillium Web</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionPreferences">
    <property name="text">
     <string>Preferences</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Titillium Web</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionWhitelist">
    <property name="text">
     <string>Whitelist</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Titillium Web</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionHashtags">
    <property name="text">
     <string>Hashtags</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Titillium Web</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
  </widget>
