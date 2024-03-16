@@ -13,10 +13,7 @@ class Ui_listEdit(object):
     def setupUi(self, listEdit):
         listEdit.setObjectName("listEdit")
         listEdit.resize(400, 450)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(listEdit.sizePolicy().hasHeightForWidth())
@@ -39,10 +36,7 @@ class Ui_listEdit(object):
         self.horizontalLayout.setContentsMargins(-1, -1, -1, 3)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.deleteBtn = QtWidgets.QPushButton(parent=listEdit)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.deleteBtn.sizePolicy().hasHeightForWidth())
@@ -50,12 +44,7 @@ class Ui_listEdit(object):
         self.deleteBtn.setMinimumSize(QtCore.QSize(0, 0))
         self.deleteBtn.setObjectName("deleteBtn")
         self.horizontalLayout.addWidget(self.deleteBtn)
-        spacerItem = QtWidgets.QSpacerItem(
-            30,
-            20,
-            QtWidgets.QSizePolicy.Policy.Fixed,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem = QtWidgets.QSpacerItem(30, 20, QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.addBtn = QtWidgets.QPushButton(parent=listEdit)
         self.addBtn.setObjectName("addBtn")
@@ -78,7 +67,6 @@ class Ui_listEdit(object):
 
 if __name__ == "__main__":
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     listEdit = QtWidgets.QDialog()
     ui = Ui_listEdit()

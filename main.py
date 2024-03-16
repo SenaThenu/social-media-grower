@@ -1,11 +1,17 @@
+import sys
 from bots.config import load_config
-from bots.instagram import InstagramBot
-import time
+from PyQt6.QtWidgets import QApplication, QMainWindow
+import gui
 
 config = load_config()
 
-instabot = InstagramBot(config)
-time.sleep(1)
-instabot.unfollow_users(3, "dynamic")
-print("Done")
-time.sleep(100)
+if __name__ == "__main__":
+    # configuring lower level stuff
+    app = QApplication(sys.argv)
+
+    # binding the ui
+    main_gui = gui.create_functional_main_gui(config)
+
+    # showing it to the users
+    main_gui.show()
+    sys.exit(app.exec())
