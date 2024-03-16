@@ -74,15 +74,10 @@ class Ui_MainWindow(object):
         self.instaUsername.setContentsMargins(25, 100, 25, -1)
         self.instaUsername.setObjectName("instaUsername")
         self.instaUsernameLabel = QtWidgets.QLabel(parent=self.instaLogin)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(30)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaUsernameLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaUsernameLabel.sizePolicy().hasHeightForWidth())
         self.instaUsernameLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Titillium Web")
@@ -90,22 +85,13 @@ class Ui_MainWindow(object):
         self.instaUsernameLabel.setFont(font)
         self.instaUsernameLabel.setObjectName("instaUsernameLabel")
         self.instaUsername.addWidget(self.instaUsernameLabel)
-        spacerItem = QtWidgets.QSpacerItem(
-            40,
-            20,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.instaUsername.addItem(spacerItem)
         self.instaUsernameInput = QtWidgets.QLineEdit(parent=self.instaLogin)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(50)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaUsernameInput.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaUsernameInput.sizePolicy().hasHeightForWidth())
         self.instaUsernameInput.setSizePolicy(sizePolicy)
         self.instaUsernameInput.setMinimumSize(QtCore.QSize(0, 30))
         self.instaUsernameInput.setObjectName("instaUsernameInput")
@@ -115,15 +101,10 @@ class Ui_MainWindow(object):
         self.instaPassword.setContentsMargins(25, 0, 25, 100)
         self.instaPassword.setObjectName("instaPassword")
         self.instaPasswordLabel = QtWidgets.QLabel(parent=self.instaLogin)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(30)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaPasswordLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaPasswordLabel.sizePolicy().hasHeightForWidth())
         self.instaPasswordLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Titillium Web")
@@ -131,46 +112,26 @@ class Ui_MainWindow(object):
         self.instaPasswordLabel.setFont(font)
         self.instaPasswordLabel.setObjectName("instaPasswordLabel")
         self.instaPassword.addWidget(self.instaPasswordLabel)
-        spacerItem1 = QtWidgets.QSpacerItem(
-            40,
-            20,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.instaPassword.addItem(spacerItem1)
         self.instaPasswordInput = QtWidgets.QLineEdit(parent=self.instaLogin)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(50)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaPasswordInput.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaPasswordInput.sizePolicy().hasHeightForWidth())
         self.instaPasswordInput.setSizePolicy(sizePolicy)
         self.instaPasswordInput.setMinimumSize(QtCore.QSize(0, 30))
-        self.instaPasswordInput.setContextMenuPolicy(
-            QtCore.Qt.ContextMenuPolicy.DefaultContextMenu
-        )
-        self.instaPasswordInput.setInputMethodHints(
-            QtCore.Qt.InputMethodHint.ImhHiddenText
-            | QtCore.Qt.InputMethodHint.ImhNoAutoUppercase
-            | QtCore.Qt.InputMethodHint.ImhNoPredictiveText
-            | QtCore.Qt.InputMethodHint.ImhSensitiveData
-        )
+        self.instaPasswordInput.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.DefaultContextMenu)
+        self.instaPasswordInput.setInputMethodHints(QtCore.Qt.InputMethodHint.ImhHiddenText|QtCore.Qt.InputMethodHint.ImhNoAutoUppercase|QtCore.Qt.InputMethodHint.ImhNoPredictiveText|QtCore.Qt.InputMethodHint.ImhSensitiveData)
         self.instaPasswordInput.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.instaPasswordInput.setObjectName("instaPasswordInput")
         self.instaPassword.addWidget(self.instaPasswordInput)
         self.verticalLayout.addLayout(self.instaPassword)
         self.instaLoginSaveBtn = QtWidgets.QPushButton(parent=self.instaLogin)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaLoginSaveBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaLoginSaveBtn.sizePolicy().hasHeightForWidth())
         self.instaLoginSaveBtn.setSizePolicy(sizePolicy)
         self.instaLoginSaveBtn.setMinimumSize(QtCore.QSize(0, 30))
         font = QtGui.QFont()
@@ -183,35 +144,24 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.instaLoginSaveBtn)
         self.instaLoginSavedMessage = QtWidgets.QLabel(parent=self.instaLogin)
         self.instaLoginSavedMessage.setEnabled(True)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaLoginSavedMessage.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaLoginSavedMessage.sizePolicy().hasHeightForWidth())
         self.instaLoginSavedMessage.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Titillium Web")
         font.setPointSize(11)
         self.instaLoginSavedMessage.setFont(font)
-        self.instaLoginSavedMessage.setAlignment(
-            QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignTop
-        )
+        self.instaLoginSavedMessage.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
         self.instaLoginSavedMessage.setObjectName("instaLoginSavedMessage")
         self.verticalLayout.addWidget(self.instaLoginSavedMessage)
         self.instabotFuncTabs.addTab(self.instaLogin, "")
         self.instaHashtagBased = QtWidgets.QWidget()
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaHashtagBased.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaHashtagBased.sizePolicy().hasHeightForWidth())
         self.instaHashtagBased.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Titillium Web")
@@ -230,15 +180,10 @@ class Ui_MainWindow(object):
         self.nInstaFollows = QtWidgets.QHBoxLayout()
         self.nInstaFollows.setObjectName("nInstaFollows")
         self.nInstaFollowsLabel = QtWidgets.QLabel(parent=self.instaHashtagBased)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(100)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.nInstaFollowsLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.nInstaFollowsLabel.sizePolicy().hasHeightForWidth())
         self.nInstaFollowsLabel.setSizePolicy(sizePolicy)
         self.nInstaFollowsLabel.setMinimumSize(QtCore.QSize(200, 0))
         font = QtGui.QFont()
@@ -248,43 +193,25 @@ class Ui_MainWindow(object):
         self.nInstaFollowsLabel.setFont(font)
         self.nInstaFollowsLabel.setObjectName("nInstaFollowsLabel")
         self.nInstaFollows.addWidget(self.nInstaFollowsLabel)
-        spacerItem2 = QtWidgets.QSpacerItem(
-            40,
-            20,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.nInstaFollows.addItem(spacerItem2)
         self.nInstaFollowsSlider = QtWidgets.QSlider(parent=self.instaHashtagBased)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(200)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.nInstaFollowsSlider.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.nInstaFollowsSlider.sizePolicy().hasHeightForWidth())
         self.nInstaFollowsSlider.setSizePolicy(sizePolicy)
         self.nInstaFollowsSlider.setMinimumSize(QtCore.QSize(200, 0))
         self.nInstaFollowsSlider.setOrientation(QtCore.Qt.Orientation.Horizontal)
         self.nInstaFollowsSlider.setObjectName("nInstaFollowsSlider")
         self.nInstaFollows.addWidget(self.nInstaFollowsSlider)
-        spacerItem3 = QtWidgets.QSpacerItem(
-            20,
-            20,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem3 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.nInstaFollows.addItem(spacerItem3)
         self.nInstaFollowsSpinBox = QtWidgets.QSpinBox(parent=self.instaHashtagBased)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.nInstaFollowsSpinBox.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.nInstaFollowsSpinBox.sizePolicy().hasHeightForWidth())
         self.nInstaFollowsSpinBox.setSizePolicy(sizePolicy)
         self.nInstaFollowsSpinBox.setMinimumSize(QtCore.QSize(40, 0))
         self.nInstaFollowsSpinBox.setObjectName("nInstaFollowsSpinBox")
@@ -293,15 +220,10 @@ class Ui_MainWindow(object):
         self.nInstaLikes = QtWidgets.QHBoxLayout()
         self.nInstaLikes.setObjectName("nInstaLikes")
         self.nInstaLikesLabel = QtWidgets.QLabel(parent=self.instaHashtagBased)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(100)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.nInstaLikesLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.nInstaLikesLabel.sizePolicy().hasHeightForWidth())
         self.nInstaLikesLabel.setSizePolicy(sizePolicy)
         self.nInstaLikesLabel.setMinimumSize(QtCore.QSize(200, 0))
         font = QtGui.QFont()
@@ -311,43 +233,25 @@ class Ui_MainWindow(object):
         self.nInstaLikesLabel.setFont(font)
         self.nInstaLikesLabel.setObjectName("nInstaLikesLabel")
         self.nInstaLikes.addWidget(self.nInstaLikesLabel)
-        spacerItem4 = QtWidgets.QSpacerItem(
-            40,
-            20,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.nInstaLikes.addItem(spacerItem4)
         self.nInstaLikesSlider = QtWidgets.QSlider(parent=self.instaHashtagBased)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(200)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.nInstaLikesSlider.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.nInstaLikesSlider.sizePolicy().hasHeightForWidth())
         self.nInstaLikesSlider.setSizePolicy(sizePolicy)
         self.nInstaLikesSlider.setMinimumSize(QtCore.QSize(200, 0))
         self.nInstaLikesSlider.setOrientation(QtCore.Qt.Orientation.Horizontal)
         self.nInstaLikesSlider.setObjectName("nInstaLikesSlider")
         self.nInstaLikes.addWidget(self.nInstaLikesSlider)
-        spacerItem5 = QtWidgets.QSpacerItem(
-            20,
-            20,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem5 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.nInstaLikes.addItem(spacerItem5)
         self.nInstaLikesSpinBox = QtWidgets.QSpinBox(parent=self.instaHashtagBased)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.nInstaLikesSpinBox.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.nInstaLikesSpinBox.sizePolicy().hasHeightForWidth())
         self.nInstaLikesSpinBox.setSizePolicy(sizePolicy)
         self.nInstaLikesSpinBox.setMinimumSize(QtCore.QSize(40, 0))
         self.nInstaLikesSpinBox.setObjectName("nInstaLikesSpinBox")
@@ -356,63 +260,38 @@ class Ui_MainWindow(object):
         self.instaEditHashtags = QtWidgets.QHBoxLayout()
         self.instaEditHashtags.setObjectName("instaEditHashtags")
         self.instaEditHashtagsLabel = QtWidgets.QLabel(parent=self.instaHashtagBased)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaEditHashtagsLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaEditHashtagsLabel.sizePolicy().hasHeightForWidth())
         self.instaEditHashtagsLabel.setSizePolicy(sizePolicy)
         self.instaEditHashtagsLabel.setMinimumSize(QtCore.QSize(200, 0))
         self.instaEditHashtagsLabel.setObjectName("instaEditHashtagsLabel")
         self.instaEditHashtags.addWidget(self.instaEditHashtagsLabel)
-        spacerItem6 = QtWidgets.QSpacerItem(
-            40,
-            20,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.instaEditHashtags.addItem(spacerItem6)
         self.instaEditHashtagsBtn = QtWidgets.QPushButton(parent=self.instaHashtagBased)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaEditHashtagsBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaEditHashtagsBtn.sizePolicy().hasHeightForWidth())
         self.instaEditHashtagsBtn.setSizePolicy(sizePolicy)
         self.instaEditHashtagsBtn.setMinimumSize(QtCore.QSize(100, 40))
         self.instaEditHashtagsBtn.setObjectName("instaEditHashtagsBtn")
         self.instaEditHashtags.addWidget(self.instaEditHashtagsBtn)
-        spacerItem7 = QtWidgets.QSpacerItem(
-            180,
-            20,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem7 = QtWidgets.QSpacerItem(180, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.instaEditHashtags.addItem(spacerItem7)
         self.instaHashtagBasedForm.addLayout(self.instaEditHashtags)
         self.instaHashtagBasedLayout.addLayout(self.instaHashtagBasedForm)
         self.instaHashtagBasedProcess = QtWidgets.QVBoxLayout()
         self.instaHashtagBasedProcess.setContentsMargins(50, 75, 50, -1)
         self.instaHashtagBasedProcess.setObjectName("instaHashtagBasedProcess")
-        self.instaHashtagBasedProgressBar = QtWidgets.QProgressBar(
-            parent=self.instaHashtagBased
-        )
+        self.instaHashtagBasedProgressBar = QtWidgets.QProgressBar(parent=self.instaHashtagBased)
         self.instaHashtagBasedProgressBar.setEnabled(True)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaHashtagBasedProgressBar.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaHashtagBasedProgressBar.sizePolicy().hasHeightForWidth())
         self.instaHashtagBasedProgressBar.setSizePolicy(sizePolicy)
         self.instaHashtagBasedProgressBar.setProperty("value", 42)
         self.instaHashtagBasedProgressBar.setTextVisible(True)
@@ -420,37 +299,23 @@ class Ui_MainWindow(object):
         self.instaHashtagBasedProgressBar.setObjectName("instaHashtagBasedProgressBar")
         self.instaHashtagBasedProcess.addWidget(self.instaHashtagBasedProgressBar)
         self.instaHashtagBasedProcessBtns = QtWidgets.QHBoxLayout()
-        self.instaHashtagBasedProcessBtns.setSizeConstraint(
-            QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint
-        )
+        self.instaHashtagBasedProcessBtns.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
         self.instaHashtagBasedProcessBtns.setContentsMargins(125, -1, 125, 0)
         self.instaHashtagBasedProcessBtns.setSpacing(100)
         self.instaHashtagBasedProcessBtns.setObjectName("instaHashtagBasedProcessBtns")
-        self.instaHashtagBasedCancel = QtWidgets.QPushButton(
-            parent=self.instaHashtagBased
-        )
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        self.instaHashtagBasedCancel = QtWidgets.QPushButton(parent=self.instaHashtagBased)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaHashtagBasedCancel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaHashtagBasedCancel.sizePolicy().hasHeightForWidth())
         self.instaHashtagBasedCancel.setSizePolicy(sizePolicy)
         self.instaHashtagBasedCancel.setObjectName("instaHashtagBasedCancel")
         self.instaHashtagBasedProcessBtns.addWidget(self.instaHashtagBasedCancel)
-        self.instaHashtagBasedStart = QtWidgets.QPushButton(
-            parent=self.instaHashtagBased
-        )
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        self.instaHashtagBasedStart = QtWidgets.QPushButton(parent=self.instaHashtagBased)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaHashtagBasedStart.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaHashtagBasedStart.sizePolicy().hasHeightForWidth())
         self.instaHashtagBasedStart.setSizePolicy(sizePolicy)
         self.instaHashtagBasedStart.setObjectName("instaHashtagBasedStart")
         self.instaHashtagBasedProcessBtns.addWidget(self.instaHashtagBasedStart)
@@ -470,15 +335,10 @@ class Ui_MainWindow(object):
         self.nInstaUnfollows = QtWidgets.QHBoxLayout()
         self.nInstaUnfollows.setObjectName("nInstaUnfollows")
         self.nInstaUnfollowsLabel = QtWidgets.QLabel(parent=self.instaUnfollow)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(100)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.nInstaUnfollowsLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.nInstaUnfollowsLabel.sizePolicy().hasHeightForWidth())
         self.nInstaUnfollowsLabel.setSizePolicy(sizePolicy)
         self.nInstaUnfollowsLabel.setMinimumSize(QtCore.QSize(200, 0))
         font = QtGui.QFont()
@@ -488,43 +348,25 @@ class Ui_MainWindow(object):
         self.nInstaUnfollowsLabel.setFont(font)
         self.nInstaUnfollowsLabel.setObjectName("nInstaUnfollowsLabel")
         self.nInstaUnfollows.addWidget(self.nInstaUnfollowsLabel)
-        spacerItem8 = QtWidgets.QSpacerItem(
-            40,
-            20,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.nInstaUnfollows.addItem(spacerItem8)
         self.nInstaUnfollowsSlider = QtWidgets.QSlider(parent=self.instaUnfollow)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(200)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.nInstaUnfollowsSlider.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.nInstaUnfollowsSlider.sizePolicy().hasHeightForWidth())
         self.nInstaUnfollowsSlider.setSizePolicy(sizePolicy)
         self.nInstaUnfollowsSlider.setMinimumSize(QtCore.QSize(200, 0))
         self.nInstaUnfollowsSlider.setOrientation(QtCore.Qt.Orientation.Horizontal)
         self.nInstaUnfollowsSlider.setObjectName("nInstaUnfollowsSlider")
         self.nInstaUnfollows.addWidget(self.nInstaUnfollowsSlider)
-        spacerItem9 = QtWidgets.QSpacerItem(
-            20,
-            20,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem9 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.nInstaUnfollows.addItem(spacerItem9)
         self.nInstaUnfollowsSpinBox = QtWidgets.QSpinBox(parent=self.instaUnfollow)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.nInstaUnfollowsSpinBox.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.nInstaUnfollowsSpinBox.sizePolicy().hasHeightForWidth())
         self.nInstaUnfollowsSpinBox.setSizePolicy(sizePolicy)
         self.nInstaUnfollowsSpinBox.setMinimumSize(QtCore.QSize(40, 0))
         font = QtGui.QFont()
@@ -537,15 +379,10 @@ class Ui_MainWindow(object):
         self.instaUnfollowMode = QtWidgets.QHBoxLayout()
         self.instaUnfollowMode.setObjectName("instaUnfollowMode")
         self.instaUnfollowModeLabel = QtWidgets.QLabel(parent=self.instaUnfollow)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(100)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaUnfollowModeLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaUnfollowModeLabel.sizePolicy().hasHeightForWidth())
         self.instaUnfollowModeLabel.setSizePolicy(sizePolicy)
         self.instaUnfollowModeLabel.setMinimumSize(QtCore.QSize(200, 0))
         font = QtGui.QFont()
@@ -554,22 +391,13 @@ class Ui_MainWindow(object):
         self.instaUnfollowModeLabel.setFont(font)
         self.instaUnfollowModeLabel.setObjectName("instaUnfollowModeLabel")
         self.instaUnfollowMode.addWidget(self.instaUnfollowModeLabel)
-        spacerItem10 = QtWidgets.QSpacerItem(
-            40,
-            20,
-            QtWidgets.QSizePolicy.Policy.Fixed,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Minimum)
         self.instaUnfollowMode.addItem(spacerItem10)
         self.instaUnfollowModeComboBox = QtWidgets.QComboBox(parent=self.instaUnfollow)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(100)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaUnfollowModeComboBox.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaUnfollowModeComboBox.sizePolicy().hasHeightForWidth())
         self.instaUnfollowModeComboBox.setSizePolicy(sizePolicy)
         self.instaUnfollowModeComboBox.setMinimumSize(QtCore.QSize(275, 0))
         font = QtGui.QFont()
@@ -580,30 +408,19 @@ class Ui_MainWindow(object):
         self.instaUnfollowModeComboBox.addItem("")
         self.instaUnfollowModeComboBox.addItem("")
         self.instaUnfollowMode.addWidget(self.instaUnfollowModeComboBox)
-        spacerItem11 = QtWidgets.QSpacerItem(
-            60,
-            20,
-            QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Minimum,
-        )
+        spacerItem11 = QtWidgets.QSpacerItem(60, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.instaUnfollowMode.addItem(spacerItem11)
         self.instaUnfollowForm.addLayout(self.instaUnfollowMode)
         self.instaUnfollowLayout.addLayout(self.instaUnfollowForm)
         self.instaUnfollowProcess = QtWidgets.QVBoxLayout()
         self.instaUnfollowProcess.setContentsMargins(50, 75, 50, -1)
         self.instaUnfollowProcess.setObjectName("instaUnfollowProcess")
-        self.instaHashtagUnfollowProgressBar = QtWidgets.QProgressBar(
-            parent=self.instaUnfollow
-        )
+        self.instaHashtagUnfollowProgressBar = QtWidgets.QProgressBar(parent=self.instaUnfollow)
         self.instaHashtagUnfollowProgressBar.setEnabled(True)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaHashtagUnfollowProgressBar.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaHashtagUnfollowProgressBar.sizePolicy().hasHeightForWidth())
         self.instaHashtagUnfollowProgressBar.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Titillium Web")
@@ -612,26 +429,18 @@ class Ui_MainWindow(object):
         self.instaHashtagUnfollowProgressBar.setProperty("value", 42)
         self.instaHashtagUnfollowProgressBar.setTextVisible(True)
         self.instaHashtagUnfollowProgressBar.setInvertedAppearance(False)
-        self.instaHashtagUnfollowProgressBar.setObjectName(
-            "instaHashtagUnfollowProgressBar"
-        )
+        self.instaHashtagUnfollowProgressBar.setObjectName("instaHashtagUnfollowProgressBar")
         self.instaUnfollowProcess.addWidget(self.instaHashtagUnfollowProgressBar)
         self.instaUnfollowProcessBtns = QtWidgets.QHBoxLayout()
-        self.instaUnfollowProcessBtns.setSizeConstraint(
-            QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint
-        )
+        self.instaUnfollowProcessBtns.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
         self.instaUnfollowProcessBtns.setContentsMargins(125, -1, 125, 0)
         self.instaUnfollowProcessBtns.setSpacing(100)
         self.instaUnfollowProcessBtns.setObjectName("instaUnfollowProcessBtns")
         self.instaUnfollowCancel = QtWidgets.QPushButton(parent=self.instaUnfollow)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaUnfollowCancel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaUnfollowCancel.sizePolicy().hasHeightForWidth())
         self.instaUnfollowCancel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Titillium Web")
@@ -640,14 +449,10 @@ class Ui_MainWindow(object):
         self.instaUnfollowCancel.setObjectName("instaUnfollowCancel")
         self.instaUnfollowProcessBtns.addWidget(self.instaUnfollowCancel)
         self.instaUnfollowStart = QtWidgets.QPushButton(parent=self.instaUnfollow)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed
-        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.instaUnfollowStart.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.instaUnfollowStart.sizePolicy().hasHeightForWidth())
         self.instaUnfollowStart.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Titillium Web")
@@ -671,9 +476,7 @@ class Ui_MainWindow(object):
         self.instaSetWhitelistBtn.setFont(font)
         self.instaSetWhitelistBtn.setObjectName("instaSetWhitelistBtn")
         self.verticalLayout_4.addWidget(self.instaSetWhitelistBtn)
-        self.instaSetWhitelistProgressBar = QtWidgets.QProgressBar(
-            parent=self.instaSetWhitelist
-        )
+        self.instaSetWhitelistProgressBar = QtWidgets.QProgressBar(parent=self.instaSetWhitelist)
         font = QtGui.QFont()
         font.setFamily("Titillium Web")
         font.setPointSize(11)
@@ -697,14 +500,16 @@ class Ui_MainWindow(object):
         self.menuBar.setObjectName("menuBar")
         self.menuFile = QtWidgets.QMenu(parent=self.menuBar)
         self.menuFile.setObjectName("menuFile")
-        self.menuOpen_Bot = QtWidgets.QMenu(parent=self.menuFile)
+        self.menuOpenBot = QtWidgets.QMenu(parent=self.menuFile)
         font = QtGui.QFont()
         font.setFamily("Titillium Web")
         font.setPointSize(10)
-        self.menuOpen_Bot.setFont(font)
-        self.menuOpen_Bot.setObjectName("menuOpen_Bot")
+        self.menuOpenBot.setFont(font)
+        self.menuOpenBot.setObjectName("menuOpenBot")
         self.menuEdit = QtWidgets.QMenu(parent=self.menuBar)
         self.menuEdit.setObjectName("menuEdit")
+        self.menuWhitelist = QtWidgets.QMenu(parent=self.menuEdit)
+        self.menuWhitelist.setObjectName("menuWhitelist")
         MainWindow.setMenuBar(self.menuBar)
         self.statusBar = QtWidgets.QStatusBar(parent=MainWindow)
         font = QtGui.QFont()
@@ -731,130 +536,90 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         self.actionPreferences.setFont(font)
         self.actionPreferences.setObjectName("actionPreferences")
-        self.actionWhitelist = QtGui.QAction(parent=MainWindow)
-        font = QtGui.QFont()
-        font.setFamily("Titillium Web")
-        font.setPointSize(10)
-        self.actionWhitelist.setFont(font)
-        self.actionWhitelist.setObjectName("actionWhitelist")
         self.actionHashtags = QtGui.QAction(parent=MainWindow)
         font = QtGui.QFont()
         font.setFamily("Titillium Web")
         font.setPointSize(10)
         self.actionHashtags.setFont(font)
         self.actionHashtags.setObjectName("actionHashtags")
-        self.menuOpen_Bot.addAction(self.actionInstagram_Bot)
-        self.menuFile.addAction(self.menuOpen_Bot.menuAction())
+        self.actionWhitelistInstaBot = QtGui.QAction(parent=MainWindow)
+        font = QtGui.QFont()
+        font.setFamily("Titillium Web")
+        font.setPointSize(10)
+        self.actionWhitelistInstaBot.setFont(font)
+        self.actionWhitelistInstaBot.setObjectName("actionWhitelistInstaBot")
+        self.actionOpenInstaBot = QtGui.QAction(parent=MainWindow)
+        font = QtGui.QFont()
+        font.setFamily("Titillium Web")
+        font.setPointSize(10)
+        self.actionOpenInstaBot.setFont(font)
+        self.actionOpenInstaBot.setObjectName("actionOpenInstaBot")
+        self.menuOpenBot.addAction(self.actionOpenInstaBot)
+        self.menuFile.addAction(self.menuOpenBot.menuAction())
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
+        self.menuWhitelist.addAction(self.actionWhitelistInstaBot)
         self.menuEdit.addAction(self.actionPreferences)
         self.menuEdit.addAction(self.actionHashtags)
-        self.menuEdit.addAction(self.actionWhitelist)
+        self.menuEdit.addAction(self.menuWhitelist.menuAction())
         self.menuBar.addAction(self.menuFile.menuAction())
         self.menuBar.addAction(self.menuEdit.menuAction())
 
         self.retranslateUi(MainWindow)
         self.mainTabsWidget.setCurrentIndex(0)
         self.instabotFuncTabs.setCurrentIndex(0)
-        self.nInstaLikesSlider.valueChanged["int"].connect(self.nInstaLikesSpinBox.setValue)  # type: ignore
-        self.nInstaFollowsSlider.valueChanged["int"].connect(self.nInstaFollowsSpinBox.setValue)  # type: ignore
-        self.nInstaLikesSpinBox.valueChanged["int"].connect(self.nInstaLikesSlider.setValue)  # type: ignore
-        self.nInstaFollowsSpinBox.valueChanged["int"].connect(self.nInstaFollowsSlider.setValue)  # type: ignore
-        self.nInstaUnfollowsSlider.valueChanged["int"].connect(self.nInstaUnfollowsSpinBox.setValue)  # type: ignore
-        self.nInstaUnfollowsSpinBox.valueChanged["int"].connect(self.nInstaUnfollowsSlider.setValue)  # type: ignore
+        self.nInstaLikesSlider.valueChanged['int'].connect(self.nInstaLikesSpinBox.setValue) # type: ignore
+        self.nInstaFollowsSlider.valueChanged['int'].connect(self.nInstaFollowsSpinBox.setValue) # type: ignore
+        self.nInstaLikesSpinBox.valueChanged['int'].connect(self.nInstaLikesSlider.setValue) # type: ignore
+        self.nInstaFollowsSpinBox.valueChanged['int'].connect(self.nInstaFollowsSlider.setValue) # type: ignore
+        self.nInstaUnfollowsSlider.valueChanged['int'].connect(self.nInstaUnfollowsSpinBox.setValue) # type: ignore
+        self.nInstaUnfollowsSpinBox.valueChanged['int'].connect(self.nInstaUnfollowsSlider.setValue) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Social Media Grower"))
-        self.instaLogin.setStatusTip(
-            _translate("MainWindow", "Enter your credentials to access your account")
-        )
+        self.instaLogin.setStatusTip(_translate("MainWindow", "Enter your credentials to access your account"))
         self.instaUsernameLabel.setText(_translate("MainWindow", "Username"))
         self.instaPasswordLabel.setText(_translate("MainWindow", "Password"))
         self.instaLoginSaveBtn.setText(_translate("MainWindow", "Save (locally)"))
         self.instaLoginSavedMessage.setText(_translate("MainWindow", "Saved!👍"))
-        self.instabotFuncTabs.setTabText(
-            self.instabotFuncTabs.indexOf(self.instaLogin),
-            _translate("MainWindow", "Login"),
-        )
-        self.instaHashtagBased.setStatusTip(
-            _translate(
-                "MainWindow",
-                "Follow and Like the top-left post of users who are interested in the specified hashtags",
-            )
-        )
-        self.nInstaFollowsLabel.setText(
-            _translate("MainWindow", "Number of Users to Follow")
-        )
-        self.nInstaLikesLabel.setText(
-            _translate("MainWindow", "Number of Users to Like")
-        )
+        self.instabotFuncTabs.setTabText(self.instabotFuncTabs.indexOf(self.instaLogin), _translate("MainWindow", "Login"))
+        self.instaHashtagBased.setStatusTip(_translate("MainWindow", "Follow and Like the top-left post of users who are interested in the specified hashtags"))
+        self.nInstaFollowsLabel.setText(_translate("MainWindow", "Number of Users to Follow"))
+        self.nInstaLikesLabel.setText(_translate("MainWindow", "Number of Users to Like"))
         self.instaEditHashtagsLabel.setText(_translate("MainWindow", "Hashtags"))
         self.instaEditHashtagsBtn.setText(_translate("MainWindow", "Edit Hashtags"))
         self.instaHashtagBasedCancel.setText(_translate("MainWindow", "Cancel"))
         self.instaHashtagBasedStart.setText(_translate("MainWindow", "Start"))
-        self.instabotFuncTabs.setTabText(
-            self.instabotFuncTabs.indexOf(self.instaHashtagBased),
-            _translate("MainWindow", "Hashtag Based"),
-        )
-        self.instaUnfollow.setStatusTip(
-            _translate(
-                "MainWindow",
-                "2 Modes: all (except whitelisted) or dynamic (accounts the bot followed [unfollow_gap] ago that don't follow you back)",
-            )
-        )
-        self.nInstaUnfollowsLabel.setText(
-            _translate("MainWindow", "Number of Users to Unfollow")
-        )
+        self.instabotFuncTabs.setTabText(self.instabotFuncTabs.indexOf(self.instaHashtagBased), _translate("MainWindow", "Hashtag Based"))
+        self.instaUnfollow.setStatusTip(_translate("MainWindow", "2 Modes: all (except whitelisted) or dynamic (accounts the bot followed [unfollow_gap] ago that don\'t follow you back)"))
+        self.nInstaUnfollowsLabel.setText(_translate("MainWindow", "Number of Users to Unfollow"))
         self.instaUnfollowModeLabel.setText(_translate("MainWindow", "Unfollow Mode"))
-        self.instaUnfollowModeComboBox.setToolTip(
-            _translate(
-                "MainWindow",
-                "dynamic unfollow - unfollow accounts the bot followed [unfollow_gap] ago that don't follow you back",
-            )
-        )
-        self.instaUnfollowModeComboBox.setItemText(
-            0, _translate("MainWindow", "Dynamic Unfollow")
-        )
-        self.instaUnfollowModeComboBox.setItemText(
-            1, _translate("MainWindow", "Unfollow All (except whitelisted)")
-        )
+        self.instaUnfollowModeComboBox.setToolTip(_translate("MainWindow", "dynamic unfollow - unfollow accounts the bot followed [unfollow_gap] ago that don\'t follow you back"))
+        self.instaUnfollowModeComboBox.setItemText(0, _translate("MainWindow", "Dynamic Unfollow"))
+        self.instaUnfollowModeComboBox.setItemText(1, _translate("MainWindow", "Unfollow All (except whitelisted)"))
         self.instaUnfollowCancel.setText(_translate("MainWindow", "Cancel"))
         self.instaUnfollowStart.setText(_translate("MainWindow", "Start"))
-        self.instabotFuncTabs.setTabText(
-            self.instabotFuncTabs.indexOf(self.instaUnfollow),
-            _translate("MainWindow", "Unfollow"),
-        )
-        self.instaSetWhitelist.setStatusTip(
-            _translate(
-                "MainWindow", "Add the users you currently follow to the whitelist"
-            )
-        )
-        self.instaSetWhitelistBtn.setText(
-            _translate("MainWindow", "Whitelist all the users you follow right now!")
-        )
-        self.instabotFuncTabs.setTabText(
-            self.instabotFuncTabs.indexOf(self.instaSetWhitelist),
-            _translate("MainWindow", "Set Whitelist"),
-        )
-        self.mainTabsWidget.setTabText(
-            self.mainTabsWidget.indexOf(self.instagram),
-            _translate("MainWindow", "Instagram"),
-        )
+        self.instabotFuncTabs.setTabText(self.instabotFuncTabs.indexOf(self.instaUnfollow), _translate("MainWindow", "Unfollow"))
+        self.instaSetWhitelist.setStatusTip(_translate("MainWindow", "Add the users you currently follow to the whitelist"))
+        self.instaSetWhitelistBtn.setText(_translate("MainWindow", "Whitelist all the users you follow right now!"))
+        self.instabotFuncTabs.setTabText(self.instabotFuncTabs.indexOf(self.instaSetWhitelist), _translate("MainWindow", "Set Whitelist"))
+        self.mainTabsWidget.setTabText(self.mainTabsWidget.indexOf(self.instagram), _translate("MainWindow", "Instagram"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
-        self.menuOpen_Bot.setTitle(_translate("MainWindow", "Open Bot"))
+        self.menuOpenBot.setTitle(_translate("MainWindow", "OpenBot"))
         self.menuEdit.setTitle(_translate("MainWindow", "Edit"))
+        self.menuWhitelist.setTitle(_translate("MainWindow", "Whitelist"))
         self.actionInstagram_Bot.setText(_translate("MainWindow", "InstaBot"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
         self.actionPreferences.setText(_translate("MainWindow", "Preferences"))
-        self.actionWhitelist.setText(_translate("MainWindow", "Whitelist"))
         self.actionHashtags.setText(_translate("MainWindow", "Hashtags"))
+        self.actionWhitelistInstaBot.setText(_translate("MainWindow", "InstaBot"))
+        self.actionOpenInstaBot.setText(_translate("MainWindow", "InstaBot"))
 
 
 if __name__ == "__main__":
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()

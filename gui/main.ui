@@ -1182,7 +1182,7 @@
     <property name="title">
      <string>File</string>
     </property>
-    <widget class="QMenu" name="menuOpen_Bot">
+    <widget class="QMenu" name="menuOpenBot">
      <property name="font">
       <font>
        <family>Titillium Web</family>
@@ -1190,11 +1190,11 @@
       </font>
      </property>
      <property name="title">
-      <string>Open Bot</string>
+      <string>OpenBot</string>
      </property>
-     <addaction name="actionInstagram_Bot"/>
+     <addaction name="actionOpenInstaBot"/>
     </widget>
-    <addaction name="menuOpen_Bot"/>
+    <addaction name="menuOpenBot"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -1202,9 +1202,15 @@
     <property name="title">
      <string>Edit</string>
     </property>
+    <widget class="QMenu" name="menuWhitelist">
+     <property name="title">
+      <string>Whitelist</string>
+     </property>
+     <addaction name="actionWhitelistInstaBot"/>
+    </widget>
     <addaction name="actionPreferences"/>
     <addaction name="actionHashtags"/>
-    <addaction name="actionWhitelist"/>
+    <addaction name="menuWhitelist"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -1250,9 +1256,9 @@
     </font>
    </property>
   </action>
-  <action name="actionWhitelist">
+  <action name="actionHashtags">
    <property name="text">
-    <string>Whitelist</string>
+    <string>Hashtags</string>
    </property>
    <property name="font">
     <font>
@@ -1261,9 +1267,20 @@
     </font>
    </property>
   </action>
-  <action name="actionHashtags">
+  <action name="actionWhitelistInstaBot">
    <property name="text">
-    <string>Hashtags</string>
+    <string>InstaBot</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Titillium Web</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionOpenInstaBot">
+   <property name="text">
+    <string>InstaBot</string>
    </property>
    <property name="font">
     <font>

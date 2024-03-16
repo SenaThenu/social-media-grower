@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>441</width>
+    <width>443</width>
     <height>288</height>
    </rect>
   </property>
@@ -26,12 +26,12 @@
    <item>
     <layout class="QVBoxLayout" name="preferencesForm">
      <item>
-      <layout class="QHBoxLayout" name="acceptedRatio">
+      <layout class="QHBoxLayout" name="acceptedFollowRatio">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
        <item>
-        <widget class="QLabel" name="acceptedRatioLabel">
+        <widget class="QLabel" name="acceptedFollowRatioLabel">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -50,7 +50,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="acceptedRatioInfo">
+        <widget class="QLabel" name="acceptedFollowRatioInfo">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>2</horstretch>
@@ -87,7 +87,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="acceptedRatioSpacer">
+        <spacer name="acceptedFollowRatioSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -100,7 +100,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="acceptedRatioInput">
+        <widget class="QLineEdit" name="acceptedFollowRatioInput">
          <property name="font">
           <font>
            <family>Titillium Web</family>
@@ -229,12 +229,12 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="baseWaiting">
+      <layout class="QHBoxLayout" name="baseWaitingTime">
        <property name="sizeConstraint">
         <enum>QLayout::SetFixedSize</enum>
        </property>
        <item>
-        <widget class="QLabel" name="baseWaitingLabel">
+        <widget class="QLabel" name="baseWaitingTimeLabel">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -253,7 +253,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="baseWaitingInfo">
+        <widget class="QLabel" name="baseWaitingTimeInfo">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>2</horstretch>
@@ -290,7 +290,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="baseWaitingSpacer">
+        <spacer name="baseWaitingTimeSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -303,7 +303,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="baseWaitingInput">
+        <widget class="QLineEdit" name="baseWaitingTimeInput">
          <property name="font">
           <font>
            <family>Titillium Web</family>
@@ -313,7 +313,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="baseWaitingUnit">
+        <widget class="QLabel" name="baseWaitingTimeUnit">
          <property name="font">
           <font>
            <family>Titillium Web</family>
@@ -375,17 +375,20 @@
          <property name="text">
           <string/>
          </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="followPrivate">
+      <layout class="QHBoxLayout" name="followPrivateAccounts">
        <property name="sizeConstraint">
         <enum>QLayout::SetFixedSize</enum>
        </property>
        <item>
-        <widget class="QLabel" name="followPrivateLabel">
+        <widget class="QLabel" name="followPrivateAccountsLabel">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -404,7 +407,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="followPrivateSpacer">
+        <spacer name="followPrivateAccountsSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -417,7 +420,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QCheckBox" name="followPrivateCheckbox">
+        <widget class="QCheckBox" name="followPrivateAccountsCheckbox">
          <property name="font">
           <font>
            <family>Titillium Web</family>
