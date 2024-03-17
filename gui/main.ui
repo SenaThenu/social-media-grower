@@ -361,7 +361,7 @@
                    </layout>
                   </item>
                   <item>
-                   <widget class="QCheckBox" name="instaLoginSaveCheckBox">
+                   <widget class="QCheckBox" name="instaLoginsSaveCheckBox">
                     <property name="font">
                      <font>
                       <family>Segoe UI</family>
@@ -369,7 +369,7 @@
                      </font>
                     </property>
                     <property name="text">
-                     <string>Save the password for future usage (locally)</string>
+                     <string>Save for future usage (locally)</string>
                     </property>
                    </widget>
                   </item>
@@ -405,7 +405,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="instaLoginSavedMessage">
+                   <widget class="QLabel" name="instaLoggedInMessage">
                     <property name="enabled">
                      <bool>true</bool>
                     </property>

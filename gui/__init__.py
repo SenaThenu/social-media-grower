@@ -11,6 +11,9 @@ from ._main_ui import Ui_MainWindow
 from ._list_editor_ui import Ui_listEdit
 from ._preferences_ui import Ui_Preferences
 
+# importing the functional UIs in modules of the current directory
+from .insta_ui import setup_instagram_ui
+
 MAIN_GUI = Ui_MainWindow()
 HASHTAGS_GUI = Ui_listEdit()
 WHITELIST_GUI = Ui_listEdit()
@@ -23,12 +26,13 @@ CONFIG = None
 LOGO_PATH = "readme_assets/logo.png"  # from the root directory
 
 
-def create_gui(config: dict) -> object:
+def create_gui(config: dict, insta_bot: object) -> object:
     """
     Creates and returns a functional main GUI
 
     Args:
         config (dict): global configuration folder
+        insta_bot (object): instance of the InstagramBot class
 
     Returns:
         object: main window of the functional GUI
@@ -43,6 +47,7 @@ def create_gui(config: dict) -> object:
 
     # making UI static elements functional
     _setup_menubar()
+    setup_instagram_ui(MAIN_GUI, insta_bot)
 
     # basic main window configurations
     main_window.setWindowIcon(QtGui.QIcon(LOGO_PATH))

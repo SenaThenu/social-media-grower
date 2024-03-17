@@ -6,7 +6,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from selenium.webdriver.common.by import By  # locates elements within a web page
 
-from PyQt6.QtWidgets import QErrorMessage
+from PyQt6 import QtGui
+from PyQt6.QtWidgets import QMessageBox
 
 import time
 import os
@@ -20,25 +21,27 @@ from .user_related_actions import (
     get_user_url_list,
 )
 
+# Logo
+LOGO_PATH = "readme_assets/logo.png"  # from the root directory
+
 
 class InstagramBot:
     def __init__(self, config):
         self.config = config
         self.last_action_time = time.time()
 
-        self.driver = webdriver.Chrome(
-            service=Service(ChromeDriverManager().install()), options=Options()
-        )
-        self.driver.implicitly_wait(
-            self.config["user_preferences"]["base_waiting_time"]
-        )  # configuring waiting time period till elements appear
-
         # loading today's actions
         self._today_actions = self._load_today_actions()
 
-    def _show_error_message(self, text):
-        error_dialog = QErrorMessage()
-        error_dialog.showMessage(text)
+    def _show_error_message(self, title, explanation):
+        error_box = QMessageBox()
+        error_box.setIcon(QMessageBox.Icon.Warning)
+        error_box.setWindowIcon(QtGui.QIcon(LOGO_PATH))
+
+        error_box.setText(title)
+        error_box.setInformativeText(explanation)
+        error_box.setWindowTitle("Error")
+        error_box.exec()
 
     def _load_today_actions(self) -> dict:
         """
@@ -75,9 +78,8 @@ class InstagramBot:
         Returns:
             object -> The div container which contains the list of users.
         """
-        following_link = (
-            f"https://www.instagram.com/{self.config["login"]["insta_username"]}/following/"
-        )
+        username = self.config["login"]["insta_username"]
+        following_link = f"https://www.instagram.com/{username}/following/"
 
         self.driver.get(following_link)
 
@@ -104,9 +106,8 @@ class InstagramBot:
         Returns:
             object -> The div container which contains the list of users.
         """
-        followers_link = (
-            f"https://www.instagram.com/{self.config["login"]["insta_username"]}/followers/"
-        )
+        username = self.config["login"]["insta_username"]
+        followers_link = f"https://www.instagram.com/{username}/followers/"
 
         self.driver.get(followers_link)
 
@@ -200,6 +201,14 @@ class InstagramBot:
             and self.config["login"]["insta_password"]
         ):
             try:
+                # configuring the driver
+                self.driver = webdriver.Chrome(
+                    service=Service(ChromeDriverManager().install()), options=Options()
+                )
+                self.driver.implicitly_wait(
+                    self.config["user_preferences"]["base_waiting_time"]
+                )  # configuring waiting time period till elements appear
+
                 self.driver.get("https://instagram.com")
                 username_field = self.driver.find_element(
                     By.XPATH, "//*[@id='loginForm']/div/div[1]/div/label/input"
@@ -229,11 +238,14 @@ class InstagramBot:
                 return True
             except:
                 self._show_error_message(
-                    "Instagram login details are invalid! \nIf this error keeps occurring, try changing Base Waiting Time (in Preferences) or updating the application!"
+                    "Error Logging In!",
+                    "Check whether your credentials are valid! \nIf the error persists, try changing Base Waiting Time (in Preferences) or updating the application!",
                 )
+                self.driver.close()
         else:
-            self._show_error_message("Instagram login details are missing!")
-
+            self._show_error_message(
+                "Error Logging In!", "Instagram login details are missing!"
+            )
         return False
 
     def like_and_follow_by_hashtag(self, n_likes: int, n_follows: int):
