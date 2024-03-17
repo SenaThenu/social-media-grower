@@ -10,7 +10,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # binding the ui
-    main_gui = gui.create_functional_main_gui(config)
+    main_gui = gui.create_gui(config)
 
     # showing it to the users
     main_gui.show()

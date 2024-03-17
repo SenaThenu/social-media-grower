@@ -361,7 +361,20 @@
                    </layout>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="instaLoginSaveBtn">
+                   <widget class="QCheckBox" name="instaLoginSaveCheckBox">
+                    <property name="font">
+                     <font>
+                      <family>Segoe UI</family>
+                      <pointsize>11</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Save the password for future usage (locally)</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="instaLoginBtn">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -384,7 +397,7 @@
                      <bool>false</bool>
                     </property>
                     <property name="text">
-                     <string>Save (locally)</string>
+                     <string>Log In</string>
                     </property>
                     <property name="autoDefault">
                      <bool>false</bool>
@@ -409,7 +422,7 @@
                      </font>
                     </property>
                     <property name="text">
-                     <string>Saved!👍</string>
+                     <string>Logged In!👍</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -1394,7 +1407,7 @@
   <widget class="QStatusBar" name="statusBar">
    <property name="font">
     <font>
-     <family>Titillium Web</family>
+     <family>Segoe UI</family>
      <pointsize>10</pointsize>
     </font>
    </property>

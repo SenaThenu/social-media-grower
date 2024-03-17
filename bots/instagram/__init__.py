@@ -4,8 +4,9 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
-from selenium.webdriver.common.keys import Keys  # provides keyboard elements
 from selenium.webdriver.common.by import By  # locates elements within a web page
+
+from PyQt6.QtWidgets import QErrorMessage
 
 import time
 import os
@@ -25,7 +26,6 @@ class InstagramBot:
         self.config = config
         self.last_action_time = time.time()
 
-        print("Initialising the Driver!")
         self.driver = webdriver.Chrome(
             service=Service(ChromeDriverManager().install()), options=Options()
         )
@@ -33,40 +33,12 @@ class InstagramBot:
             self.config["user_preferences"]["base_waiting_time"]
         )  # configuring waiting time period till elements appear
 
-        print("Going to instagram.com")
-        self.driver.get("https://instagram.com")
-
-        print("Logging in!")
-        self._login()
-
         # loading today's actions
         self._today_actions = self._load_today_actions()
 
-    def _login(self):
-        username_field = self.driver.find_element(
-            By.XPATH, "//*[@id='loginForm']/div/div[1]/div/label/input"
-        )
-        username_field.clear()
-        username_field.send_keys(os.getenv("INSTAGRAM_USERNAME"))
-
-        password_field = self.driver.find_element(
-            By.XPATH, "//*[@id='loginForm']/div/div[2]/div/label/input"
-        )
-        password_field.clear()
-        password_field.send_keys(os.getenv("INSTAGRAM_PASSWORD"))
-
-        login_button = self.driver.find_element(
-            By.XPATH, "//*[@id='loginForm']/div/div[3]/button"
-        )
-        login_button.click()
-
-        time.sleep(self.config["user_preferences"]["base_waiting_time"])
-
-        save_login_info_button = self.driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/section/div/button",
-        )
-        save_login_info_button.click()
+    def _show_error_message(self, text):
+        error_dialog = QErrorMessage()
+        error_dialog.showMessage(text)
 
     def _load_today_actions(self) -> dict:
         """
@@ -104,7 +76,7 @@ class InstagramBot:
             object -> The div container which contains the list of users.
         """
         following_link = (
-            f"https://www.instagram.com/{os.getenv('INSTAGRAM_USERNAME')}/following/"
+            f"https://www.instagram.com/{self.config["login"]["insta_username"]}/following/"
         )
 
         self.driver.get(following_link)
@@ -133,7 +105,7 @@ class InstagramBot:
             object -> The div container which contains the list of users.
         """
         followers_link = (
-            f"https://www.instagram.com/{os.getenv('INSTAGRAM_USERNAME')}/followers/"
+            f"https://www.instagram.com/{self.config["login"]["insta_username"]}/followers/"
         )
 
         self.driver.get(followers_link)
@@ -215,6 +187,54 @@ class InstagramBot:
                     }
                     _update_follow_history(easter_egg_follow)
                     break
+
+    def login(self) -> bool:
+        """
+        Opens Instagram and logs in!
+
+        Returns:
+            bool: whether the logging in was successful
+        """
+        if (
+            self.config["login"]["insta_username"]
+            and self.config["login"]["insta_password"]
+        ):
+            try:
+                self.driver.get("https://instagram.com")
+                username_field = self.driver.find_element(
+                    By.XPATH, "//*[@id='loginForm']/div/div[1]/div/label/input"
+                )
+                username_field.clear()
+                username_field.send_keys(self.config["login"]["insta_username"])
+
+                password_field = self.driver.find_element(
+                    By.XPATH, "//*[@id='loginForm']/div/div[2]/div/label/input"
+                )
+                password_field.clear()
+                password_field.send_keys(self.config["login"]["insta_password"])
+
+                login_button = self.driver.find_element(
+                    By.XPATH, "//*[@id='loginForm']/div/div[3]/button"
+                )
+                login_button.click()
+
+                time.sleep(self.config["user_preferences"]["base_waiting_time"])
+
+                save_login_info_button = self.driver.find_element(
+                    By.XPATH,
+                    "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/section/div/button",
+                )
+                save_login_info_button.click()
+
+                return True
+            except:
+                self._show_error_message(
+                    "Instagram login details are invalid! \nIf this error keeps occurring, try changing Base Waiting Time (in Preferences) or updating the application!"
+                )
+        else:
+            self._show_error_message("Instagram login details are missing!")
+
+        return False
 
     def like_and_follow_by_hashtag(self, n_likes: int, n_follows: int):
         """

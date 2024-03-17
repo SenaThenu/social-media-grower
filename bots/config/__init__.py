@@ -1,9 +1,5 @@
 import yaml
 import os
-from dotenv import load_dotenv
-
-# user logins should be stored in .env in the config directory for privacy!
-load_dotenv()
 
 
 def _get_filename(file):

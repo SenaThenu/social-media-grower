@@ -3,10 +3,10 @@ automatic_muting: true
 base_waiting_time: 10.0
 follow_private_accounts: true
 hashtags:
-    - visionpro
-    - mkbhd
-    - programming
-    - python
-    - automation
+- visionpro
+- mkbhd
+- programming
+- python
+- automation
 only_follow: true
 unfollow_gap: 7.0
