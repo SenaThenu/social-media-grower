@@ -23,7 +23,7 @@ CONFIG = None
 LOGO_PATH = "readme_assets/logo.png"  # from the root directory
 
 
-def create_functional_main_gui(config: dict) -> object:
+def create_gui(config: dict) -> object:
     """
     Creates and returns a functional main GUI
 

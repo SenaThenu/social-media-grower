@@ -38,6 +38,11 @@
     </property>
     <item>
      <widget class="QFrame" name="mainFrame">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+       </font>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -61,7 +66,7 @@
         <widget class="QTabWidget" name="mainTabsWidget">
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -89,7 +94,7 @@
          <widget class="QWidget" name="instagram">
           <property name="font">
            <font>
-            <family>Titillium Web</family>
+            <family>Segoe UI</family>
             <pointsize>10</pointsize>
            </font>
           </property>
@@ -114,6 +119,12 @@
            </property>
            <item>
             <widget class="QFrame" name="instabotFuncFrame">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -138,6 +149,12 @@
               </property>
               <item>
                <widget class="QTabWidget" name="instabotFuncTabs">
+                <property name="font">
+                 <font>
+                  <family>Segoe UI</family>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
                 <property name="statusTip">
                  <string/>
                 </property>
@@ -200,7 +217,7 @@
                       </property>
                       <property name="font">
                        <font>
-                        <family>Titillium Web</family>
+                        <family>Segoe UI</family>
                         <pointsize>11</pointsize>
                        </font>
                       </property>
@@ -211,6 +228,12 @@
                     </item>
                     <item>
                      <spacer name="instaUsernameSpacer">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>10</pointsize>
+                       </font>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -238,6 +261,12 @@
                         <width>0</width>
                         <height>30</height>
                        </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>10</pointsize>
+                       </font>
                       </property>
                      </widget>
                     </item>
@@ -267,7 +296,7 @@
                       </property>
                       <property name="font">
                        <font>
-                        <family>Titillium Web</family>
+                        <family>Segoe UI</family>
                         <pointsize>11</pointsize>
                        </font>
                       </property>
@@ -278,6 +307,12 @@
                     </item>
                     <item>
                      <spacer name="instaPasswordSpacer">
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>10</pointsize>
+                       </font>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -305,6 +340,12 @@
                         <width>0</width>
                         <height>30</height>
                        </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Segoe UI</family>
+                        <pointsize>10</pointsize>
+                       </font>
                       </property>
                       <property name="contextMenuPolicy">
                        <enum>Qt::DefaultContextMenu</enum>
@@ -335,7 +376,7 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Titillium Web</family>
+                      <family>Segoe UI</family>
                       <pointsize>11</pointsize>
                      </font>
                     </property>
@@ -363,7 +404,7 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Titillium Web</family>
+                      <family>Segoe UI</family>
                       <pointsize>11</pointsize>
                      </font>
                     </property>
@@ -438,7 +479,7 @@
                           </property>
                           <property name="font">
                            <font>
-                            <family>Titillium Web</family>
+                            <family>Segoe UI</family>
                             <pointsize>11</pointsize>
                             <bold>false</bold>
                            </font>
@@ -450,6 +491,13 @@
                         </item>
                         <item>
                          <spacer name="nInstaFollowsSpacer_1">
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -478,6 +526,13 @@
                             <height>0</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -485,6 +540,13 @@
                         </item>
                         <item>
                          <spacer name="nInstaFollowsSpacer_2">
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -513,6 +575,13 @@
                             <height>0</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                          </widget>
                         </item>
                        </layout>
@@ -535,7 +604,7 @@
                           </property>
                           <property name="font">
                            <font>
-                            <family>Titillium Web</family>
+                            <family>Segoe UI</family>
                             <pointsize>11</pointsize>
                             <bold>false</bold>
                            </font>
@@ -547,6 +616,13 @@
                         </item>
                         <item>
                          <spacer name="nInstaLikesSpacer_1">
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -575,6 +651,13 @@
                             <height>0</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -582,6 +665,13 @@
                         </item>
                         <item>
                          <spacer name="nInstaLikesSpacer_2">
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -610,6 +700,13 @@
                             <height>0</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                          </widget>
                         </item>
                        </layout>
@@ -630,6 +727,13 @@
                             <height>0</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>Hashtags</string>
                           </property>
@@ -637,6 +741,13 @@
                         </item>
                         <item>
                          <spacer name="horizontalSpacer">
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -665,6 +776,13 @@
                             <height>40</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>Edit Hashtags</string>
                           </property>
@@ -672,6 +790,13 @@
                         </item>
                         <item>
                          <spacer name="instaEditHashtagsSpacer">
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -712,6 +837,13 @@
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
+                        <property name="font">
+                         <font>
+                          <family>Segoe UI</family>
+                          <pointsize>11</pointsize>
+                          <bold>false</bold>
+                         </font>
+                        </property>
                         <property name="value">
                          <number>42</number>
                         </property>
@@ -748,6 +880,13 @@
                             <verstretch>0</verstretch>
                            </sizepolicy>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>Cancel</string>
                           </property>
@@ -760,6 +899,13 @@
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>11</pointsize>
+                            <bold>false</bold>
+                           </font>
                           </property>
                           <property name="text">
                            <string>Start</string>
@@ -816,7 +962,7 @@
                           </property>
                           <property name="font">
                            <font>
-                            <family>Titillium Web</family>
+                            <family>Segoe UI</family>
                             <pointsize>11</pointsize>
                             <bold>false</bold>
                            </font>
@@ -828,6 +974,12 @@
                         </item>
                         <item>
                          <spacer name="nInstaUnfollowsSpacer_1">
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>10</pointsize>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -856,6 +1008,12 @@
                             <height>0</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>10</pointsize>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -863,6 +1021,12 @@
                         </item>
                         <item>
                          <spacer name="nInstaUnfollowsSpacer_2">
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>10</pointsize>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -893,7 +1057,7 @@
                           </property>
                           <property name="font">
                            <font>
-                            <family>Titillium Web</family>
+                            <family>Segoe UI</family>
                             <pointsize>11</pointsize>
                            </font>
                           </property>
@@ -919,7 +1083,7 @@
                           </property>
                           <property name="font">
                            <font>
-                            <family>Titillium Web</family>
+                            <family>Segoe UI</family>
                             <pointsize>11</pointsize>
                            </font>
                           </property>
@@ -930,6 +1094,12 @@
                         </item>
                         <item>
                          <spacer name="instaUnfollowModeSpacer_1">
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>10</pointsize>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -960,7 +1130,7 @@
                           </property>
                           <property name="font">
                            <font>
-                            <family>Titillium Web</family>
+                            <family>Segoe UI</family>
                             <pointsize>11</pointsize>
                            </font>
                           </property>
@@ -981,6 +1151,12 @@
                         </item>
                         <item>
                          <spacer name="instaUnfollowModeSpacer_2">
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI</family>
+                            <pointsize>10</pointsize>
+                           </font>
+                          </property>
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
                           </property>
@@ -1023,7 +1199,7 @@
                         </property>
                         <property name="font">
                          <font>
-                          <family>Titillium Web</family>
+                          <family>Segoe UI</family>
                           <pointsize>11</pointsize>
                          </font>
                         </property>
@@ -1065,7 +1241,7 @@
                           </property>
                           <property name="font">
                            <font>
-                            <family>Titillium Web</family>
+                            <family>Segoe UI</family>
                             <pointsize>11</pointsize>
                            </font>
                           </property>
@@ -1084,7 +1260,7 @@
                           </property>
                           <property name="font">
                            <font>
-                            <family>Titillium Web</family>
+                            <family>Segoe UI</family>
                             <pointsize>11</pointsize>
                            </font>
                           </property>
@@ -1125,7 +1301,7 @@
                    <widget class="QPushButton" name="instaSetWhitelistBtn">
                     <property name="font">
                      <font>
-                      <family>Titillium Web</family>
+                      <family>Segoe UI</family>
                       <pointsize>11</pointsize>
                      </font>
                     </property>
@@ -1138,7 +1314,7 @@
                    <widget class="QProgressBar" name="instaSetWhitelistProgressBar">
                     <property name="font">
                      <font>
-                      <family>Titillium Web</family>
+                      <family>Segoe UI</family>
                       <pointsize>11</pointsize>
                      </font>
                     </property>
@@ -1169,12 +1345,12 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>26</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <family>Titillium Web</family>
+     <family>Segoe UI</family>
      <pointsize>10</pointsize>
     </font>
    </property>
@@ -1185,7 +1361,7 @@
     <widget class="QMenu" name="menuOpenBot">
      <property name="font">
       <font>
-       <family>Titillium Web</family>
+       <family>Segoe UI</family>
        <pointsize>10</pointsize>
       </font>
      </property>
@@ -1240,7 +1416,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Titillium Web</family>
+     <family>Segoe UI</family>
      <pointsize>10</pointsize>
     </font>
    </property>
@@ -1251,7 +1427,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Titillium Web</family>
+     <family>Segoe UI</family>
      <pointsize>10</pointsize>
     </font>
    </property>
@@ -1262,7 +1438,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Titillium Web</family>
+     <family>Segoe UI</family>
      <pointsize>10</pointsize>
     </font>
    </property>
@@ -1273,7 +1449,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Titillium Web</family>
+     <family>Segoe UI</family>
      <pointsize>10</pointsize>
     </font>
    </property>
@@ -1284,7 +1460,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Titillium Web</family>
+     <family>Segoe UI</family>
      <pointsize>10</pointsize>
     </font>
    </property>
