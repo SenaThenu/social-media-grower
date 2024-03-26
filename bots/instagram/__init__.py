@@ -6,13 +6,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from selenium.webdriver.common.by import By  # locates elements within a web page
 
-from PyQt6 import QtGui
-from PyQt6.QtWidgets import QMessageBox
-
 import time
 import os
 import yaml
 import datetime
+import math
 
 from .hashtag_based import like_follow_by_hashtag
 from .user_related_actions import (
@@ -20,9 +18,6 @@ from .user_related_actions import (
     unfollow_a_user,
     get_user_url_list,
 )
-
-# Logo
-LOGO_PATH = "readme_assets/logo.png"  # from the root directory
 
 
 class InstagramBot:
@@ -33,15 +28,9 @@ class InstagramBot:
         # loading today's actions
         self._today_actions = self._load_today_actions()
 
-    def _show_error_message(self, title, explanation):
-        error_box = QMessageBox()
-        error_box.setIcon(QMessageBox.Icon.Warning)
-        error_box.setWindowIcon(QtGui.QIcon(LOGO_PATH))
-
-        error_box.setText(title)
-        error_box.setInformativeText(explanation)
-        error_box.setWindowTitle("Error")
-        error_box.exec()
+        self.driver = (
+            None  # this is only configured once in login(). so always perform it first!
+        )
 
     def _load_today_actions(self) -> dict:
         """
@@ -127,10 +116,31 @@ class InstagramBot:
 
         return followers_list
 
-    def _perform_dynamic_unfollow(self, n: int):
+    def _perform_dynamic_unfollow(
+        self,
+        n: int,
+        update_progress_bar: object,
+        cancel_flag: object,
+        start_progress: float,
+        end_progress: float,
+    ):
         """
         Reads the follow history and dynamically unfollows n number of users who don't follow back!
+
+        Args:
+        n (int): number of users to unfollow
+        update_progress_bar (object): the signal to emit to update the progress bar (accepts an integer argument between 0 and 100 (percentage))
+        cancel_flag (object): flag object indicating whether to cancel the process
+        start_progress (float): the start percentage for the progress bar
+        end_progress (float): the end percentage for the progress bar
         """
+        _delta_progress = end_progress - start_progress
+        _current_progress = start_progress
+
+        # progress percentage allocated for the querying part
+        _query_progress = _delta_progress * 0.4
+        # progress percentage per action performed
+        _per_action_progress = (_delta_progress * 0.6) / n
 
         def _update_follow_history(his):
             with open(os.path.join("bots/instagram", "_follow_history.yaml"), "w") as f:
@@ -156,7 +166,14 @@ class InstagramBot:
             self._get_followers_container(),
             # we pass in the maximum following to ensure we get all the users!
             self.config["restrictions"]["instagram"]["max_following"],
+            update_progress_bar,
+            cancel_flag,
+            _current_progress,
+            _current_progress + _query_progress,
         )
+
+        _current_progress += _query_progress
+        update_progress_bar.emit(round(_current_progress))
 
         if len(follow_history) > 0:
             n_done = 0
@@ -173,6 +190,8 @@ class InstagramBot:
                             self._today_actions["n_follows"] += 1
                             self._update_today_actions(self._today_actions)
                             n_done += 1
+                            _current_progress += _per_action_progress
+                            update_progress_bar.emit(round(_current_progress))
 
                     # removing this user_link because there's no further use of it!
                     follow_history[oldest_date].pop(0)
@@ -237,34 +256,51 @@ class InstagramBot:
 
                 return True
             except:
-                self._show_error_message(
-                    "Error Logging In!",
-                    "Check whether your credentials are valid! \nIf the error persists, try changing Base Waiting Time (in Preferences) or updating the application!",
-                )
                 self.driver.close()
-        else:
-            self._show_error_message(
-                "Error Logging In!", "Instagram login details are missing!"
-            )
         return False
 
-    def like_and_follow_by_hashtag(self, n_likes: int, n_follows: int):
+    def like_and_follow_by_hashtag(
+        self,
+        n_likes: int,
+        n_follows: int,
+        update_progress_bar: object,
+        cancel_flag: object,
+    ):
         """
         Likes/follows n number of users!
 
         Args:
             n_likes (int): number of users whose posts should be liked
             n_follows (int): number of users to follow
+            update_progress_bar (object): the signal to emit to update the progress bar (accepts an integer argument between 0 and 100 (percentage))
+            cancel_flag (object): flag object indicating whether to cancel the process
         """
-        like_follow_by_hashtag(self, n_likes, n_follows)
+        like_follow_by_hashtag(
+            self,
+            n_likes,
+            n_follows,
+            update_progress_bar,
+            cancel_flag,
+            0,
+            100,
+        )
+        update_progress_bar.emit(100)
 
-    def unfollow_users(self, n: int, mode: str):
+    def unfollow_users(
+        self,
+        n: int,
+        mode: str,
+        update_progress_bar: object,
+        cancel_flag: object,
+    ):
         """
         Unfollows the specified number of users.
 
         Args:
             n (int): number of users to unfollow
             mode (str): mode used to unfollow users (either dynamic or all)
+            update_progress_bar (object): the signal to emit to update the progress bar (accepts an integer argument between 0 and 100 (percentage))
+            cancel_flag (object): flag object indicating whether to cancel the process
         """
         if mode == "all":
             following_list = self._get_following_users_container()
@@ -276,14 +312,33 @@ class InstagramBot:
                 n,
                 self._today_actions,
                 self._update_today_actions,
+                update_progress_bar,
+                cancel_flag,
+                0,
+                100,
             )
         else:
             # mode should be "dynamic" as there are only 2 modes
-            self._perform_dynamic_unfollow(n)
+            self._perform_dynamic_unfollow(
+                n,
+                update_progress_bar,
+                cancel_flag,
+                0,
+                100,
+            )
+            update_progress_bar.emit(100)
 
-    def whitelist_following_users(self):
+    def whitelist_following_users(
+        self,
+        update_progress_bar: object,
+        cancel_flag: object,
+    ):
         """
         Adds all the "following" users to the whitelist.
+
+        Args:
+            update_progress_bar (object): the signal to emit to update the progress bar (accepts an integer argument between 0 and 100 (percentage))
+            cancel_flag (object): flag object indicating whether to cancel the process
         """
         following_list = self._get_following_users_container()
         perform_action_on_n_users(
@@ -294,7 +349,13 @@ class InstagramBot:
             self.config["restrictions"]["instagram"]["max_following"],
             self._today_actions,
             self._update_today_actions,
+            update_progress_bar,
+            cancel_flag,
+            0,
+            100,
         )
+
+        update_progress_bar.emit(100)
 
     def quit(self):
         """

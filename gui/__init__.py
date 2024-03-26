@@ -19,11 +19,16 @@ HASHTAGS_GUI = Ui_listEdit()
 WHITELIST_GUI = Ui_listEdit()
 PREFERENCES_GUI = Ui_Preferences()
 
+
 # Configurations Object (automatically filled assigned when create_functional_gui is called)
 CONFIG = None
 
 # Logo
 LOGO_PATH = "readme_assets/logo.png"  # from the root directory
+
+# Styles
+ERROR_STYLE = "color: red;\nfont-weight: bold;"
+SUCCESS_STYLE = "color: green;\nfont-weight: bold;"
 
 
 def create_gui(config: dict, insta_bot: object) -> object:
@@ -45,8 +50,13 @@ def create_gui(config: dict, insta_bot: object) -> object:
     main_window = QtWidgets.QMainWindow()
     MAIN_GUI.setupUi(main_window)
 
+    # attaching the styles to the MAIN_GUI
+    MAIN_GUI.error_style = ERROR_STYLE
+    MAIN_GUI.success_style = SUCCESS_STYLE
+
     # making UI static elements functional
     _setup_menubar()
+    _map_interface_btns_with_menu_actions()
     setup_instagram_ui(MAIN_GUI, insta_bot)
 
     # basic main window configurations
@@ -54,7 +64,16 @@ def create_gui(config: dict, insta_bot: object) -> object:
     return main_window
 
 
-def snake_to_camel(snake_case_str: str):
+def snake_to_camel(snake_case_str: str) -> str:
+    """
+    Converts snake case to came case
+
+    Args:
+        snake_case_str (str): the string to be converted to camel case
+
+    Returns:
+        str: camel case converted string
+    """
     parts = snake_case_str.split("_")
     camel_case_str = parts[0] + "".join(word.title() for word in parts[1:])
     return camel_case_str
@@ -76,6 +95,14 @@ def _setup_menubar():
     MAIN_GUI.actionWhitelistInstaBot.triggered.connect(
         partial(_open_whitelist_editor, "instagram")
     )
+
+
+def _map_interface_btns_with_menu_actions():
+    """
+    Maps menu bar actions with buttons in the interface
+    """
+    # edit hashtags
+    MAIN_GUI.instaEditHashtagsBtn.clicked.connect(_open_hashtags_editor)
 
 
 def _setup_preferences_editor():

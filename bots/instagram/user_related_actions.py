@@ -21,7 +21,7 @@ else:
     pass
 
 # general user account xpaths (note: some xpaths depend on the resolution)
-LANDSCAPE_FOLLOW_BTN_XPATH = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button"
+LANDSCAPE_FOLLOW_BTN_XPATH = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[2]/div/div[1]/button"
 PORTRAIT_FOLLOW_BTN_XPATH = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button"
 
 LIKE_BUTTON_OF_A_POST = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/div/div[3]/div[1]/div[1]/span[1]/div"
@@ -30,7 +30,7 @@ POST_COUNT_OF_A_USER = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/d
 TOP_LEFT_POST_OF_A_USER_LANDSCAPE = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[3]/div/div[1]/div[1]/a"
 TOP_LEFT_POST_OF_A_USER_PORTRAIT = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[2]/div/div[1]/div[1]/a"
 
-PRIVATE_ACCOUNT_STATEMENT = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[1]/div/h2"
+PRIVATE_ACCOUNT_STATEMENT = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[1]/div/div/h2"
 
 UNFOLLOW_BUTTON_WHEN_FOLLOWING = (
     "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]"
@@ -366,7 +366,12 @@ def like_the_last_post_of_a_user(driver: object, accepted_ratio: int) -> bool:
         return False
 
 
-def get_user_url_list(driver: object, user_elements_container: object, n: int) -> list:
+def get_user_url_list(
+    driver: object,
+    user_elements_container: object,
+    n: int,
+    cancel_flag: object,
+) -> list:
     """
     Scrolls down the list of users displayed as a floating panel in Instagram.
     Returns a list urls of n number of users from that!
@@ -374,13 +379,14 @@ def get_user_url_list(driver: object, user_elements_container: object, n: int) -
     Args:
         driver (object): the gateway to interact with instagram.com
         user_list_container (object): div that contains the every user element as a child
-        n (int): _description_
+        n (int): number of users whose urls should be queried
+        cancel_flag (object): flag object indicating whether to cancel the process
     """
-
     user_elements = user_elements_container.find_elements(By.XPATH, "./div")
     user_urls = []
 
     def _scrape_url_from_user_elements(user_elements, user_urls):
+        # user_urls list is constant updated after each scroll.
         for user_element in user_elements:
             anchor = user_element.find_element(
                 By.XPATH, "./div/div/div/div[2]/div/div/div/div/div/a"
@@ -406,22 +412,28 @@ def get_user_url_list(driver: object, user_elements_container: object, n: int) -
     # the maximum number of user_elements that are available at a given time is 17
     # when you scroll a particular element into view, it becomes the middle one!
     while len(user_urls) < n:
-        driver.execute_script("arguments[0].scrollIntoView(true);", user_elements[-1])
-        time.sleep(2)
-        user_elements = user_elements_container.find_elements(By.XPATH, "./div")
+        if not cancel_flag.check():
+            driver.execute_script(
+                "arguments[0].scrollIntoView(true);", user_elements[-1]
+            )
 
-        # making sure we haven't reached the end of the document
-        if last_username == get_last_username(user_elements):
+            time.sleep(2)
+            user_elements = user_elements_container.find_elements(By.XPATH, "./div")
+
+            # making sure we haven't reached the end of the document
+            if last_username == get_last_username(user_elements):
+                break
+            else:
+                last_username = get_last_username(user_elements)
+
+            if len(user_elements) == 17:
+                user_elements = user_elements[-10:]
+            else:
+                pass
+
+            user_urls = _scrape_url_from_user_elements(user_elements, user_urls)
+        else:
             break
-        else:
-            last_username = get_last_username(user_elements)
-
-        if len(user_elements) == 17:
-            user_elements = user_elements[-10:]
-        else:
-            pass
-
-        user_urls = _scrape_url_from_user_elements(user_elements, user_urls)
 
     return user_urls
 
@@ -434,6 +446,10 @@ def perform_action_on_n_users(
     n: int,
     today_actions: dict,
     today_actions_updater: object,
+    update_progress_bar: object,
+    cancel_flag: object,
+    start_progress: float,
+    end_progress: float,
 ) -> int:
     """
     Performs the defined action on n users in the user_elements_container.
@@ -451,20 +467,42 @@ def perform_action_on_n_users(
         n (int): number of users to perform the action on
         today_actions (dict): the record of actions performed today
         today_actions_updater (function): a function that writes the today_actions to _today_actions.yaml
+        update_progress_bar (object): PyQt progress bar object
+        cancel_flag (object): flag object indicating whether to cancel the process
+        start_progress (float): the start percentage for the progress bar
+        end_progress (float): the end percentage for the progress bar
 
     Returns:
         int: number of users the action was successfully done to
     """
+    _delta_progress = end_progress - start_progress
+    _current_progress = start_progress
+
+    # progress percentage allocated for the querying part
+    _query_progress = _delta_progress * 0.4
+    # progress percentage per action performed
+    _per_action_progress = (_delta_progress * 0.6) / n
+
     if action != "unfollow" and action != "set_whitelist":
         # we query 2 times the n number of users for backup!
-        user_urls = get_user_url_list(driver, user_elements_container, n * 2)
+        user_urls = get_user_url_list(
+            driver,
+            user_elements_container,
+            n * 2,
+            cancel_flag,
+        )
     else:
         # when it comes to unfollowing users, we can't rely on n*2...
         user_urls = get_user_url_list(
             driver,
             user_elements_container,
             config["restrictions"]["instagram"]["max_following"],
+            cancel_flag,
         )
+
+    _current_progress += _query_progress
+    update_progress_bar.emit(round(_current_progress))
+
     n_done = 0
 
     last_action_time = time.time()
@@ -473,55 +511,63 @@ def perform_action_on_n_users(
     user_urls = list(set(user_urls) - set(config["whitelist"]["instagram"]))
 
     for user_url in user_urls:
-        # we can perform some actions (set_whitelist) without navigating to the user_url
-        # plus, they don't even involve following/liking
-        # they don't have to go through the bot-masking security layers :)
-        if action == "set_whitelist":
-            if user_url not in config["whitelist"]["instagram"]:
-                config["whitelist"]["instagram"].append(user_url)
-            _update_whitelist(config["whitelist"])
-            continue
+        if not cancel_flag.check():
+            # we can perform some actions (set_whitelist) without navigating to the user_url
+            # plus, they don't even involve following/liking
+            # so, they don't have to go through the bot-masking security layers :)
+            if action == "set_whitelist":
+                if user_url not in config["whitelist"]["instagram"]:
+                    config["whitelist"]["instagram"].append(user_url)
+                _update_whitelist(config["whitelist"])
+                continue
 
-        elapsed_time = math.floor(time.time() - last_action_time)
-        required_waiting_time = config["restrictions"]["instagram"][
-            "min_time_between_actions"
-        ]
-        if elapsed_time < required_waiting_time:
-            time.sleep(required_waiting_time - elapsed_time)
-        else:
-            last_action_time = time.time()
-            if n_done >= n:
-                # breaking the loop once we have done the specified number of actions
-                break
+            elapsed_time = math.floor(time.time() - last_action_time)
+            required_waiting_time = config["restrictions"]["instagram"][
+                "min_time_between_actions"
+            ]
+            if elapsed_time < required_waiting_time:
+                time.sleep(required_waiting_time - elapsed_time)
             else:
-                # navigating to the user_url
-                driver.get(user_url)
-
-                if action == "like":
-                    was_successful = like_the_last_post_of_a_user(
-                        driver, config["user_preferences"]["accepted_follow_ratio"]
-                    )
-                elif action == "unfollow":
-                    was_successful = unfollow_a_user(driver, user_url)
+                last_action_time = time.time()
+                if n_done >= n:
+                    # breaking the loop once we have done the specified number of actions
+                    break
                 else:
-                    was_successful = follow_a_user(
-                        driver,
-                        config["user_preferences"]["accepted_follow_ratio"],
-                        config["user_preferences"]["automatic_muting"],
-                        config["user_preferences"]["follow_private_accounts"],
-                    )
-                    # updating the follow history
-                    if was_successful:
-                        FOLLOW_HISTORY[TODAY].append(user_url)
-                        _update_the_follow_history()
+                    # navigating to the user_url
+                    driver.get(user_url)
 
-                # updating the actions quota for today
-                if was_successful:
-                    n_done += 1
-                    if action != "unfollow":
-                        today_actions[f"n_{action}s"] += 1
+                    if action == "like":
+                        was_successful = like_the_last_post_of_a_user(
+                            driver, config["user_preferences"]["accepted_follow_ratio"]
+                        )
+                    elif action == "unfollow":
+                        was_successful = unfollow_a_user(driver, user_url)
                     else:
-                        # the number of unfollows goes under n_follows
-                        today_actions["n_follows"] += 1
-                    today_actions_updater(today_actions)
+                        was_successful = follow_a_user(
+                            driver,
+                            config["user_preferences"]["accepted_follow_ratio"],
+                            config["user_preferences"]["automatic_muting"],
+                            config["user_preferences"]["follow_private_accounts"],
+                        )
+                        # updating the follow history
+                        if was_successful:
+                            FOLLOW_HISTORY[TODAY].append(user_url)
+                            _update_the_follow_history()
+
+                    # updating the actions quota for today
+                    if was_successful:
+                        n_done += 1
+
+                        # updating the progress
+                        _current_progress += _per_action_progress
+                        update_progress_bar.emit(round(_current_progress))
+
+                        if action != "unfollow":
+                            today_actions[f"n_{action}s"] += 1
+                        else:
+                            # the number of unfollows goes under n_follows
+                            today_actions["n_follows"] += 1
+                        today_actions_updater(today_actions)
+        else:
+            break
     return n_done
