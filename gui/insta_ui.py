@@ -100,23 +100,25 @@ class WorkerThread(QThread):
         MAIN_GUI.__getattribute__(f"insta{CURRENT_PROCESS}Message").setHidden(False)
 
     def run(self):
-        if self.callback_args:
-            self.insta_callback(**self.callback_args)
-        else:
-            if self.insta_callback:
-                try:
-                    self.insta_callback()
-                    self.update_progress.emit(100)
-                    self._display_message("🍀Success!", "success")
-                except:
-                    self._display_message(
-                        "⚠️Error Occurred :(\nMake sure you have the latest version and haven't accidentally closed the browser window (if you have, reopen the app)!",
-                        "error",
-                    )
+        try:
+            if self.callback_args:
+                self.insta_callback(**self.callback_args)
             else:
-                raise (
-                    "You have to call the configure_insta_func function before starting the thread!"
-                )
+                if self.insta_callback:
+                    self.insta_callback()
+                else:
+                    raise (
+                        "You have to call the configure_insta_func function before starting the thread!"
+                    )
+
+            self.update_progress.emit(100)
+            self._display_message("🍀Success!", "success")
+        except:
+            self._display_message(
+                "⚠️Error Occurred :(\nPossible Reasons:\n1. You've closed or interacted with the program's browser window (if you have, reopen the app)\n2. You haven't specified the hashtags\n3. You don't have the latest version",
+                "error",
+            )
+
         _set_state_to_logged_in()
         # updating the tabs since we have consumed some of the quota
         _set_up_instabot_function_tabs()
@@ -215,12 +217,22 @@ def _set_up_hashtag_based_tab():
     MAIN_GUI.nInstaFollowsSlider.setMinimum(n_follows_min)
     MAIN_GUI.nInstaFollowsSpinBox.setMaximum(n_follows_max)
     MAIN_GUI.nInstaFollowsSpinBox.setMinimum(n_follows_min)
+    # the step should be equal to the number of hashtags (because actions are divided into them)
+    if n_follows_min:
+        MAIN_GUI.nInstaFollowsSlider.setSingleStep(n_follows_min)
+        MAIN_GUI.nInstaFollowsSlider.setPageStep(n_follows_min)
+        MAIN_GUI.nInstaFollowsSpinBox.setSingleStep(n_follows_min)
 
     # n_likes input handling
     MAIN_GUI.nInstaLikesSlider.setMaximum(n_likes_max)
     MAIN_GUI.nInstaLikesSlider.setMinimum(n_likes_min)
     MAIN_GUI.nInstaLikesSpinBox.setMaximum(n_likes_max)
     MAIN_GUI.nInstaLikesSpinBox.setMinimum(n_likes_min)
+    # the step should be equal to the number of hashtags (because actions are divided into them)
+    if n_likes_min:
+        MAIN_GUI.nInstaLikesSlider.setSingleStep(n_likes_min)
+        MAIN_GUI.nInstaLikesSlider.setPageStep(n_likes_min)
+        MAIN_GUI.nInstaLikesSpinBox.setSingleStep(n_likes_min)
 
     def _execute():
         n_follows_left, n_likes_left = _get_remaining_actions()
