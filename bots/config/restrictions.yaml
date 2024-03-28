@@ -1,6 +1,5 @@
 instagram:
-    # TODO: set this to 5
-    min_time_between_actions: 1 # in seconds
+    min_time_between_actions: 5 # in seconds
     n_likes: 150
     n_comments: 150
     n_follows: 100 # this contains n(unfollows) too!
