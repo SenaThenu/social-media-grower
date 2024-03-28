@@ -10,7 +10,6 @@ import time
 import os
 import yaml
 import datetime
-import math
 
 from .hashtag_based import like_follow_by_hashtag
 from .user_related_actions import (
@@ -18,6 +17,18 @@ from .user_related_actions import (
     unfollow_a_user,
     get_user_url_list,
 )
+
+# XPATHs stored in global variables
+
+# following users container (3 possibilities)
+FOLLOWING_USERS_CONTAINER_LANDSCAPE_1 = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[4]/div[1]/div"
+FOLLOWING_USERS_CONTAINER_LANDSCAPE_2 = "/html/body/div[5]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[4]/div[1]/div"
+FOLLOWING_USERS_CONTAINER_PORTRAIT = "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[4]/div[1]/div"
+
+# followers container (3 possibilities)
+FOLLOWERS_CONTAINER_LANDSCAPE_1 = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div[1]/div"
+FOLLOWERS_CONTAINER_LANDSCAPE_2 = "/html/body/div[5]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div[1]/div"
+FOLLOWERS_CONTAINER_PORTRAIT = "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div[1]/div"
 
 
 class InstagramBot:
@@ -74,17 +85,23 @@ class InstagramBot:
 
         time.sleep(self.config["user_preferences"]["base_waiting_time"] * 0.8)
 
-        # there are 2 possibilities
+        # there are 3 possibilities
         try:
             following_list = self.driver.find_element(
                 By.XPATH,
-                "/html/body/div[5]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[4]/div[1]/div",
+                FOLLOWING_USERS_CONTAINER_LANDSCAPE_1,
             )
         except:
-            following_list = self.driver.find_element(
-                By.XPATH,
-                "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[4]/div[1]/div",
-            )
+            try:
+                following_list = self.driver.find_element(
+                    By.XPATH,
+                    FOLLOWING_USERS_CONTAINER_PORTRAIT,
+                )
+            except:
+                following_list = self.driver.find_element(
+                    By.XPATH,
+                    FOLLOWING_USERS_CONTAINER_LANDSCAPE_2,
+                )
 
         return following_list
 
@@ -102,17 +119,23 @@ class InstagramBot:
 
         time.sleep(self.config["user_preferences"]["base_waiting_time"] * 0.8)
 
-        # there are 2 possibilities
+        # there are 3 possibilities
         try:
             followers_list = self.driver.find_element(
                 By.XPATH,
-                "/html/body/div[5]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div[1]/div",
+                FOLLOWERS_CONTAINER_LANDSCAPE_1,
             )
         except:
-            followers_list = self.driver.find_element(
-                By.XPATH,
-                "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div[1]/div",
-            )
+            try:
+                followers_list = self.driver.find_element(
+                    By.XPATH,
+                    FOLLOWERS_CONTAINER_PORTRAIT,
+                )
+            except:
+                followers_list = self.driver.find_element(
+                    By.XPATH,
+                    FOLLOWERS_CONTAINER_LANDSCAPE_2,
+                )
 
         return followers_list
 
@@ -166,10 +189,7 @@ class InstagramBot:
             self._get_followers_container(),
             # we pass in the maximum following to ensure we get all the users!
             self.config["restrictions"]["instagram"]["max_following"],
-            update_progress_bar,
             cancel_flag,
-            _current_progress,
-            _current_progress + _query_progress,
         )
 
         _current_progress += _query_progress
@@ -326,7 +346,6 @@ class InstagramBot:
                 0,
                 100,
             )
-            update_progress_bar.emit(100)
 
     def whitelist_following_users(
         self,

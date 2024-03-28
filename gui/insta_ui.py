@@ -1,6 +1,7 @@
 import os
 import yaml
-from PyQt6.QtCore import QThread, pyqtSignal, pyqtSlot
+from functools import partial
+from PyQt6.QtCore import QThread, pyqtSignal
 
 LOGGED_IN = False
 
@@ -115,7 +116,7 @@ class WorkerThread(QThread):
             self._display_message("🍀Success!", "success")
         except:
             self._display_message(
-                "⚠️Error Occurred :(\nPossible Reasons:\n1. You've closed or interacted with the program's browser window (if you have, reopen the app)\n2. You haven't specified the hashtags\n3. You don't have the latest version",
+                "⚠️Error Occurred :(\nPossible Reasons:\n1. You've closed or interacted with the program's browser window (if you have, reopen the app)\n2. You haven't specified the hashtags (in hashtag based actions)\n3. You don't have the latest version",
                 "error",
             )
 
@@ -192,9 +193,14 @@ def _save_credentials_and_login():
 
 def _set_up_instabot_function_tabs():
     _set_up_hashtag_based_tab()
+    _set_up_unfollow_tab()
+    _set_up_whitelist_tab()
 
 
 def _set_up_hashtag_based_tab():
+    """
+    Makes the hashtag based liking/following tab functional
+    """
     n_follows_left, n_likes_left = _get_remaining_actions()
 
     # limits for the input values
@@ -239,43 +245,124 @@ def _set_up_hashtag_based_tab():
         n_follows = MAIN_GUI.nInstaFollowsSpinBox.value()
         n_likes = MAIN_GUI.nInstaLikesSpinBox.value()
 
+        # if there are remaining actions,
         if n_follows_left or n_likes_left:
-            # if there are remaining actions,
-            global CURRENT_PROCESS
-            CURRENT_PROCESS = "HashtagBased"
-
-            # unhiding the progress bar
-            MAIN_GUI.instaHashtagBasedProgressBar.setValue(0)
-            MAIN_GUI.instaHashtagBasedProgressBar.setHidden(False)
-
-            # executing the function in a separate thread
-            MAIN_GUI.worker_thread = WorkerThread()
-            MAIN_GUI.worker_thread.update_progress.connect(
-                MAIN_GUI.instaHashtagBasedProgressBar.setValue
-            )
-
-            MAIN_GUI.cancel_flag = CancelFlag()
-
-            MAIN_GUI.worker_thread.configure_insta_func(
+            _execute_action(
+                "HashtagBased",
                 INSTA_BOT.like_and_follow_by_hashtag,
                 {
                     "n_likes": n_likes,
                     "n_follows": n_follows,
-                    "update_progress_bar": MAIN_GUI.worker_thread.update_progress,
-                    "cancel_flag": MAIN_GUI.cancel_flag,
                 },
             )
-
-            MAIN_GUI.instaHashtagBasedCancel.clicked.connect(MAIN_GUI.cancel_flag.set)
-            _set_state_to_in_progress()
-            MAIN_GUI.worker_thread.start()
         else:
-            MAIN_GUI.instaLogInMessage.setText(
-                "😢Instagram has limits on the number of people you can follow/unfollow and the number of posts you can like :("
+            MAIN_GUI.instaHashtagBasedMessage.setText(
+                "😢Instagram has limits on the number of people you can follow and the posts you can like :("
             )
-            MAIN_GUI.instaLogInMessage.setStyleSheet(MAIN_GUI.error_style)
+            MAIN_GUI.instaHashtagBasedMessage.setStyleSheet(MAIN_GUI.error_style)
 
     MAIN_GUI.instaHashtagBasedStart.clicked.connect(_execute)
+
+
+def _set_up_unfollow_tab():
+    """
+    Makes the user unfollowing tab functional
+    """
+    n_unfollows_left, n_likes_left = _get_remaining_actions()
+
+    # limits for the input values
+    if n_unfollows_left > 0:
+        n_unfollows_min = 1
+        n_unfollows_max = n_unfollows_left
+    else:
+        n_unfollows_max = 0
+        n_unfollows_min = 0
+
+    # n_follows input handling
+    MAIN_GUI.nInstaUnfollowsSlider.setMaximum(n_unfollows_max)
+    MAIN_GUI.nInstaUnfollowsSlider.setMinimum(n_unfollows_min)
+    MAIN_GUI.nInstaUnfollowsSpinBox.setMaximum(n_unfollows_max)
+    MAIN_GUI.nInstaUnfollowsSpinBox.setMinimum(n_unfollows_min)
+    # the step should be equal to the number of hashtags (because actions are divided into them)
+    if n_unfollows_min:
+        MAIN_GUI.nInstaUnfollowsSlider.setSingleStep(n_unfollows_min)
+        MAIN_GUI.nInstaUnfollowsSlider.setPageStep(n_unfollows_min)
+        MAIN_GUI.nInstaUnfollowsSpinBox.setSingleStep(n_unfollows_min)
+
+    def _execute():
+        n_unfollows_left, n_likes_left = _get_remaining_actions()
+        n_unfollows = MAIN_GUI.nInstaUnfollowsSpinBox.value()
+
+        # mode_indices: 0th = dynamic & 1st = unfollow all
+        mode_index = MAIN_GUI.instaUnfollowModeComboBox.currentIndex()
+        mode = "dynamic" if mode_index == 0 else "all"
+
+        if n_unfollows_left:
+            _execute_action(
+                "Unfollow",
+                INSTA_BOT.unfollow_users,
+                {
+                    "n": n_unfollows,
+                    "mode": mode,
+                },
+            )
+        else:
+            MAIN_GUI.instaUnfollowMessage.setText(
+                "😢Instagram has limits on the number of people you can unfollow :("
+            )
+            MAIN_GUI.setStyleSheet(MAIN_GUI.error_style)
+
+    MAIN_GUI.instaUnfollowStart.clicked.connect(_execute)
+
+
+def _set_up_whitelist_tab():
+    """
+    Makes the set_whitelist_following_users tab functional.
+    """
+    # passing the arguments for _execute_action using functools.partial
+    MAIN_GUI.instaSetWhitelistStart.clicked.connect(
+        partial(
+            _execute_action, "SetWhitelist", INSTA_BOT.whitelist_following_users, {}
+        )
+    )
+
+
+def _execute_action(process_name: str, insta_func: object, insta_func_args_dict: dict):
+    """
+    Executes the follow/unfollow/like actions through the given insta_func
+
+    Args:
+        process_name (str): the name of the process (either Unfollow or HashtagBased)
+        insta_func (object): the function that executes the action
+        insta_func_args_dict (dict): arguments for the function (don't include the cancel flag and update_progress bar signals since they are automatically added)
+    """
+    global CURRENT_PROCESS
+    CURRENT_PROCESS = process_name
+
+    # unhiding the progress bar
+    MAIN_GUI.__getattribute__(f"insta{CURRENT_PROCESS}ProgressBar").setValue(0)
+    MAIN_GUI.__getattribute__(f"insta{CURRENT_PROCESS}ProgressBar").setHidden(False)
+
+    # executing the function in a separate thread
+    MAIN_GUI.worker_thread = WorkerThread()
+    MAIN_GUI.worker_thread.update_progress.connect(
+        MAIN_GUI.__getattribute__(f"insta{CURRENT_PROCESS}ProgressBar").setValue
+    )
+
+    MAIN_GUI.cancel_flag = CancelFlag()
+
+    # adding default args to the dictionary
+    insta_func_args_dict["update_progress_bar"] = MAIN_GUI.worker_thread.update_progress
+    insta_func_args_dict["cancel_flag"] = MAIN_GUI.cancel_flag
+
+    MAIN_GUI.worker_thread.configure_insta_func(
+        insta_func,
+        insta_func_args_dict,
+    )
+
+    MAIN_GUI.instaHashtagBasedCancel.clicked.connect(MAIN_GUI.cancel_flag.set)
+    _set_state_to_in_progress()
+    MAIN_GUI.worker_thread.start()
 
 
 def _get_remaining_actions() -> tuple:
@@ -336,6 +423,11 @@ def _set_state_to_logged_in():
         MAIN_GUI.__getattribute__(f"insta{func}Start").setEnabled(True)
         MAIN_GUI.__getattribute__(f"insta{func}Start").setText("Start")
         MAIN_GUI.__getattribute__(f"insta{func}Start").setToolTip(start_tool_tip)
+        # custom start button texts
+        if func == "SetWhitelist":
+            MAIN_GUI.__getattribute__(f"insta{func}Start").setText(
+                "Whitelist all the users you follow right now!"
+            )
 
         # cancel button
         MAIN_GUI.__getattribute__(f"insta{func}Cancel").setEnabled(False)
