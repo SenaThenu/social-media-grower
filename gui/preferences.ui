@@ -40,7 +40,7 @@
          </property>
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -69,6 +69,11 @@
            <height>15</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+          </font>
+         </property>
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Only follows/likes if n(following)/n(followers) is greater than the specified value!&lt;/p&gt;&lt;p&gt;(Greater this is, more likely they would follow back!)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
@@ -88,6 +93,11 @@
        </item>
        <item>
         <spacer name="acceptedFollowRatioSpacer">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+          </font>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -103,7 +113,7 @@
         <widget class="QLineEdit" name="acceptedFollowRatioInput">
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -126,7 +136,7 @@
          </property>
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -155,6 +165,11 @@
            <height>15</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+          </font>
+         </property>
          <property name="toolTip">
           <string>Time to wait before unfollowing a user if they don't follow you back!</string>
          </property>
@@ -174,6 +189,11 @@
        </item>
        <item>
         <spacer name="unfollowGapSpacer_1">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+          </font>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -195,7 +215,7 @@
          </property>
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -217,7 +237,7 @@
         <widget class="QLabel" name="unfollowGapUnit">
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -243,7 +263,7 @@
          </property>
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -272,6 +292,11 @@
            <height>15</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+          </font>
+         </property>
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Approximate waiting time period till an element appears!&lt;/p&gt;&lt;p&gt;(find a sweet spot that suits your connection speed)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
@@ -291,6 +316,11 @@
        </item>
        <item>
         <spacer name="baseWaitingTimeSpacer">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+          </font>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -306,7 +336,7 @@
         <widget class="QLineEdit" name="baseWaitingTimeInput">
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -316,7 +346,7 @@
         <widget class="QLabel" name="baseWaitingTimeUnit">
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -342,7 +372,7 @@
          </property>
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -353,6 +383,11 @@
        </item>
        <item>
         <spacer name="automaticMutingSpacer">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+          </font>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -368,7 +403,7 @@
         <widget class="QCheckBox" name="automaticMutingCheckbox">
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -397,7 +432,7 @@
          </property>
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -408,6 +443,11 @@
        </item>
        <item>
         <spacer name="followPrivateAccountsSpacer">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+          </font>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -423,7 +463,7 @@
         <widget class="QCheckBox" name="followPrivateAccountsCheckbox">
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -449,7 +489,7 @@
          </property>
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -460,6 +500,11 @@
        </item>
        <item>
         <spacer name="onlyFollowSpacer">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+          </font>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -475,7 +520,7 @@
         <widget class="QCheckBox" name="onlyFollowCheckbox">
          <property name="font">
           <font>
-           <family>Titillium Web</family>
+           <family>Segoe UI</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -498,7 +543,7 @@
      </property>
      <property name="font">
       <font>
-       <family>Titillium Web</family>
+       <family>Segoe UI</family>
        <pointsize>11</pointsize>
       </font>
      </property>
@@ -529,7 +574,7 @@
      </property>
      <property name="font">
       <font>
-       <family>Titillium Web</family>
+       <family>Segoe UI</family>
        <pointsize>11</pointsize>
       </font>
      </property>

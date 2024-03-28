@@ -4,7 +4,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
-from selenium.webdriver.common.keys import Keys  # provides keyboard elements
 from selenium.webdriver.common.by import By  # locates elements within a web page
 
 import time
@@ -19,54 +18,30 @@ from .user_related_actions import (
     get_user_url_list,
 )
 
+# XPATHs stored in global variables
+
+# following users container (3 possibilities)
+FOLLOWING_USERS_CONTAINER_LANDSCAPE_1 = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[4]/div[1]/div"
+FOLLOWING_USERS_CONTAINER_LANDSCAPE_2 = "/html/body/div[5]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[4]/div[1]/div"
+FOLLOWING_USERS_CONTAINER_PORTRAIT = "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[4]/div[1]/div"
+
+# followers container (3 possibilities)
+FOLLOWERS_CONTAINER_LANDSCAPE_1 = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div[1]/div"
+FOLLOWERS_CONTAINER_LANDSCAPE_2 = "/html/body/div[5]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div[1]/div"
+FOLLOWERS_CONTAINER_PORTRAIT = "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div[1]/div"
+
 
 class InstagramBot:
     def __init__(self, config):
         self.config = config
         self.last_action_time = time.time()
 
-        print("Initialising the Driver!")
-        self.driver = webdriver.Chrome(
-            service=Service(ChromeDriverManager().install()), options=Options()
-        )
-        self.driver.implicitly_wait(
-            self.config["user_preferences"]["base_waiting_time"]
-        )  # configuring waiting time period till elements appear
-
-        print("Going to instagram.com")
-        self.driver.get("https://instagram.com")
-
-        print("Logging in!")
-        self._login()
-
         # loading today's actions
         self._today_actions = self._load_today_actions()
 
-    def _login(self):
-        username_field = self.driver.find_element(
-            By.XPATH, "//*[@id='loginForm']/div/div[1]/div/label/input"
+        self.driver = (
+            None  # this is only configured once in login(). so always perform it first!
         )
-        username_field.clear()
-        username_field.send_keys(os.getenv("INSTAGRAM_USERNAME"))
-
-        password_field = self.driver.find_element(
-            By.XPATH, "//*[@id='loginForm']/div/div[2]/div/label/input"
-        )
-        password_field.clear()
-        password_field.send_keys(os.getenv("INSTAGRAM_PASSWORD"))
-
-        login_button = self.driver.find_element(
-            By.XPATH, "//*[@id='loginForm']/div/div[3]/button"
-        )
-        login_button.click()
-
-        time.sleep(self.config["user_preferences"]["base_waiting_time"])
-
-        save_login_info_button = self.driver.find_element(
-            By.XPATH,
-            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/section/div/button",
-        )
-        save_login_info_button.click()
 
     def _load_today_actions(self) -> dict:
         """
@@ -103,25 +78,30 @@ class InstagramBot:
         Returns:
             object -> The div container which contains the list of users.
         """
-        following_link = (
-            f"https://www.instagram.com/{os.getenv('INSTAGRAM_USERNAME')}/following/"
-        )
+        username = self.config["login"]["insta_username"]
+        following_link = f"https://www.instagram.com/{username}/following/"
 
         self.driver.get(following_link)
 
         time.sleep(self.config["user_preferences"]["base_waiting_time"] * 0.8)
 
-        # there are 2 possibilities
+        # there are 3 possibilities
         try:
             following_list = self.driver.find_element(
                 By.XPATH,
-                "/html/body/div[5]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[4]/div[1]/div",
+                FOLLOWING_USERS_CONTAINER_LANDSCAPE_1,
             )
         except:
-            following_list = self.driver.find_element(
-                By.XPATH,
-                "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[4]/div[1]/div",
-            )
+            try:
+                following_list = self.driver.find_element(
+                    By.XPATH,
+                    FOLLOWING_USERS_CONTAINER_PORTRAIT,
+                )
+            except:
+                following_list = self.driver.find_element(
+                    By.XPATH,
+                    FOLLOWING_USERS_CONTAINER_LANDSCAPE_2,
+                )
 
         return following_list
 
@@ -132,32 +112,58 @@ class InstagramBot:
         Returns:
             object -> The div container which contains the list of users.
         """
-        followers_link = (
-            f"https://www.instagram.com/{os.getenv('INSTAGRAM_USERNAME')}/followers/"
-        )
+        username = self.config["login"]["insta_username"]
+        followers_link = f"https://www.instagram.com/{username}/followers/"
 
         self.driver.get(followers_link)
 
         time.sleep(self.config["user_preferences"]["base_waiting_time"] * 0.8)
 
-        # there are 2 possibilities
+        # there are 3 possibilities
         try:
             followers_list = self.driver.find_element(
                 By.XPATH,
-                "/html/body/div[5]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div[1]/div",
+                FOLLOWERS_CONTAINER_LANDSCAPE_1,
             )
         except:
-            followers_list = self.driver.find_element(
-                By.XPATH,
-                "/html/body/div[7]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/div[1]/div",
-            )
+            try:
+                followers_list = self.driver.find_element(
+                    By.XPATH,
+                    FOLLOWERS_CONTAINER_PORTRAIT,
+                )
+            except:
+                followers_list = self.driver.find_element(
+                    By.XPATH,
+                    FOLLOWERS_CONTAINER_LANDSCAPE_2,
+                )
 
         return followers_list
 
-    def _perform_dynamic_unfollow(self, n: int):
+    def _perform_dynamic_unfollow(
+        self,
+        n: int,
+        update_progress_bar: object,
+        cancel_flag: object,
+        start_progress: float,
+        end_progress: float,
+    ):
         """
         Reads the follow history and dynamically unfollows n number of users who don't follow back!
+
+        Args:
+        n (int): number of users to unfollow
+        update_progress_bar (object): the signal to emit to update the progress bar (accepts an integer argument between 0 and 100 (percentage))
+        cancel_flag (object): flag object indicating whether to cancel the process
+        start_progress (float): the start percentage for the progress bar
+        end_progress (float): the end percentage for the progress bar
         """
+        _delta_progress = end_progress - start_progress
+        _current_progress = start_progress
+
+        # progress percentage allocated for the querying part
+        _query_progress = _delta_progress * 0.4
+        # progress percentage per action performed
+        _per_action_progress = (_delta_progress * 0.6) / n
 
         def _update_follow_history(his):
             with open(os.path.join("bots/instagram", "_follow_history.yaml"), "w") as f:
@@ -183,7 +189,11 @@ class InstagramBot:
             self._get_followers_container(),
             # we pass in the maximum following to ensure we get all the users!
             self.config["restrictions"]["instagram"]["max_following"],
+            cancel_flag,
         )
+
+        _current_progress += _query_progress
+        update_progress_bar.emit(round(_current_progress))
 
         if len(follow_history) > 0:
             n_done = 0
@@ -200,6 +210,8 @@ class InstagramBot:
                             self._today_actions["n_follows"] += 1
                             self._update_today_actions(self._today_actions)
                             n_done += 1
+                            _current_progress += _per_action_progress
+                            update_progress_bar.emit(round(_current_progress))
 
                     # removing this user_link because there's no further use of it!
                     follow_history[oldest_date].pop(0)
@@ -216,23 +228,99 @@ class InstagramBot:
                     _update_follow_history(easter_egg_follow)
                     break
 
-    def like_and_follow_by_hashtag(self, n_likes: int, n_follows: int):
+    def login(self) -> bool:
+        """
+        Opens Instagram and logs in!
+
+        Returns:
+            bool: whether the logging in was successful
+        """
+        if (
+            self.config["login"]["insta_username"]
+            and self.config["login"]["insta_password"]
+        ):
+            try:
+                # configuring the driver
+                self.driver = webdriver.Chrome(
+                    service=Service(ChromeDriverManager().install()), options=Options()
+                )
+                self.driver.implicitly_wait(
+                    self.config["user_preferences"]["base_waiting_time"]
+                )  # configuring waiting time period till elements appear
+
+                self.driver.get("https://instagram.com")
+                username_field = self.driver.find_element(
+                    By.XPATH, "//*[@id='loginForm']/div/div[1]/div/label/input"
+                )
+                username_field.clear()
+                username_field.send_keys(self.config["login"]["insta_username"])
+
+                password_field = self.driver.find_element(
+                    By.XPATH, "//*[@id='loginForm']/div/div[2]/div/label/input"
+                )
+                password_field.clear()
+                password_field.send_keys(self.config["login"]["insta_password"])
+
+                login_button = self.driver.find_element(
+                    By.XPATH, "//*[@id='loginForm']/div/div[3]/button"
+                )
+                login_button.click()
+
+                time.sleep(self.config["user_preferences"]["base_waiting_time"])
+
+                save_login_info_button = self.driver.find_element(
+                    By.XPATH,
+                    "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/section/div/button",
+                )
+                save_login_info_button.click()
+
+                return True
+            except:
+                self.driver.close()
+        return False
+
+    def like_and_follow_by_hashtag(
+        self,
+        n_likes: int,
+        n_follows: int,
+        update_progress_bar: object,
+        cancel_flag: object,
+    ):
         """
         Likes/follows n number of users!
 
         Args:
             n_likes (int): number of users whose posts should be liked
             n_follows (int): number of users to follow
+            update_progress_bar (object): the signal to emit to update the progress bar (accepts an integer argument between 0 and 100 (percentage))
+            cancel_flag (object): flag object indicating whether to cancel the process
         """
-        like_follow_by_hashtag(self, n_likes, n_follows)
+        like_follow_by_hashtag(
+            self,
+            n_likes,
+            n_follows,
+            update_progress_bar,
+            cancel_flag,
+            0,
+            100,
+        )
+        update_progress_bar.emit(100)
 
-    def unfollow_users(self, n: int, mode: str):
+    def unfollow_users(
+        self,
+        n: int,
+        mode: str,
+        update_progress_bar: object,
+        cancel_flag: object,
+    ):
         """
         Unfollows the specified number of users.
 
         Args:
             n (int): number of users to unfollow
             mode (str): mode used to unfollow users (either dynamic or all)
+            update_progress_bar (object): the signal to emit to update the progress bar (accepts an integer argument between 0 and 100 (percentage))
+            cancel_flag (object): flag object indicating whether to cancel the process
         """
         if mode == "all":
             following_list = self._get_following_users_container()
@@ -244,14 +332,32 @@ class InstagramBot:
                 n,
                 self._today_actions,
                 self._update_today_actions,
+                update_progress_bar,
+                cancel_flag,
+                0,
+                100,
             )
         else:
             # mode should be "dynamic" as there are only 2 modes
-            self._perform_dynamic_unfollow(n)
+            self._perform_dynamic_unfollow(
+                n,
+                update_progress_bar,
+                cancel_flag,
+                0,
+                100,
+            )
 
-    def whitelist_following_users(self):
+    def whitelist_following_users(
+        self,
+        update_progress_bar: object,
+        cancel_flag: object,
+    ):
         """
         Adds all the "following" users to the whitelist.
+
+        Args:
+            update_progress_bar (object): the signal to emit to update the progress bar (accepts an integer argument between 0 and 100 (percentage))
+            cancel_flag (object): flag object indicating whether to cancel the process
         """
         following_list = self._get_following_users_container()
         perform_action_on_n_users(
@@ -262,7 +368,13 @@ class InstagramBot:
             self.config["restrictions"]["instagram"]["max_following"],
             self._today_actions,
             self._update_today_actions,
+            update_progress_bar,
+            cancel_flag,
+            0,
+            100,
         )
+
+        update_progress_bar.emit(100)
 
     def quit(self):
         """
