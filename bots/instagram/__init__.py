@@ -7,9 +7,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By  # locates elements within a web page
 
 import time
-import os
 import yaml
 import datetime
+from os import path
 
 from .hashtag_based import like_follow_by_hashtag
 from .user_related_actions import (
@@ -51,7 +51,10 @@ class InstagramBot:
             dict: actions done today
         """
         # using the absolute path since this is being called from main.py
-        with open(os.path.join("bots/instagram", "_today_actions.yaml"), "r") as f:
+        with open(
+            path.abspath(path.join(path.dirname(__file__), "_today_actions.yaml")),
+            "r",
+        ) as f:
             actions = yaml.safe_load(f)
             f.close()
 
@@ -59,15 +62,16 @@ class InstagramBot:
         if actions["date"] != today:
             actions = {"date": today, "n_likes": 0, "n_follows": 0, "n_comments": 0}
 
-            with open(os.path.join("bots/instagram", "_today_actions.yaml"), "w") as f:
-                yaml.dump(actions, f)
-                f.close()
+        self._update_today_actions(actions)
 
         return actions
 
     def _update_today_actions(self, today_actions):
         self._today_actions = today_actions
-        with open(os.path.join("bots/instagram", "_today_actions.yaml"), "w") as f:
+        with open(
+            path.abspath(path.join(path.dirname(__file__), "_today_actions.yaml")),
+            "w",
+        ) as f:
             yaml.dump(self._today_actions, f)
             f.close()
 
@@ -166,11 +170,17 @@ class InstagramBot:
         _per_action_progress = (_delta_progress * 0.6) / n
 
         def _update_follow_history(his):
-            with open(os.path.join("bots/instagram", "_follow_history.yaml"), "w") as f:
+            with open(
+                path.abspath(path.join(path.dirname(__file__), "_follow_history.yaml")),
+                "w",
+            ) as f:
                 yaml.dump(his, f)
                 f.close()
 
-        with open("bots/instagram/_follow_history.yaml", "r") as f:
+        with open(
+            path.abspath(path.join(path.dirname(__file__), "_follow_history.yaml")),
+            "r",
+        ) as f:
             follow_history = yaml.safe_load(f)
             f.close()
 

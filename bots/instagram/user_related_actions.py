@@ -3,11 +3,14 @@ import time
 import datetime
 import math
 import yaml
-import os
+from os import path
 
 
 def _read_the_follow_history() -> dict:
-    with open(os.path.join("bots/instagram", "_follow_history.yaml"), "r") as f:
+    with open(
+        path.abspath(path.join(path.dirname(__file__), "_follow_history.yaml")),
+        "r",
+    ) as f:
         follow_history = yaml.safe_load(f)
         f.close()
     return follow_history
@@ -73,13 +76,22 @@ MUTE_SETTINGS_SAVE_BUTTON_XPATH = "/html/body/div[6]/div[1]/div/div[2]/div/div/d
 
 
 def _update_the_follow_history():
-    with open(os.path.join("bots/instagram", "_follow_history.yaml"), "w") as f:
+    with open(
+        path.abspath(path.join(path.dirname(__file__), "_follow_history.yaml")),
+        "w",
+    ) as f:
         yaml.dump(FOLLOW_HISTORY, f)
         f.close()
 
 
 def _update_whitelist(new_whitelist):
-    with open(os.path.join("bots/config", "whitelist.yaml"), "w") as f:
+    with open(
+        # accessing the parent directory through 2 dirnames
+        path.abspath(
+            path.join(path.dirname(path.dirname(__file__)), "config/whitelist.yaml")
+        ),
+        "w",
+    ) as f:
         yaml.dump(new_whitelist, f)
         f.close()
 

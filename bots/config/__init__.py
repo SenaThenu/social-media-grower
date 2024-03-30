@@ -20,7 +20,10 @@ def load_config() -> dict:
     for file in os.listdir("bots/config"):
         # making sure it is a yaml file that's not private (private = an underscore/period at the start)!
         if (file[-4:] == "yaml") and (file[0] != "_" and file[0] != "."):
-            with open(os.path.join("bots/config", file), "r") as f:
+            with open(
+                os.path.abspath(os.path.join(os.path.dirname(__file__), file)),
+                "r",
+            ) as f:
                 data = yaml.safe_load(f)
                 config[_get_filename(file)] = data
                 f.close()

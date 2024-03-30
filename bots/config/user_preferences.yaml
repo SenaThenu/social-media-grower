@@ -1,4 +1,4 @@
-accepted_follow_ratio: 2
+accepted_follow_ratio: 1.2
 automatic_muting: true
 base_waiting_time: 8.0
 follow_private_accounts: false
