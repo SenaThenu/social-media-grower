@@ -62,7 +62,7 @@ This program allows you to automate actions on various social media platforms to
 
 ## Features 🌟
 
-- Automatic & intelligent following (i.e. only follows people who are more likely to follow you back)
+- Automatic & intelligent following & liking (i.e. only follows/likes the posts of people who are more likely to follow you back)
 - Dynamic unfollowing to clear cluttered "following" counts
 - Modern and intuitive graphical user interface (always responsive through multi-threading)
 - Allows you to separate your personal activity from automated tasks through whitelists.
@@ -90,14 +90,14 @@ This program allows you to automate actions on various social media platforms to
 Simple. Go to the *Releases* section of this repository and go to the latest release page. Under assets, download the `social_media_grower_for_windows.zip`. Then, extract it and run `social_media_grower.exe`!
 
 ### MacOS 🍎 | Linux 🐧
-Oops. Unfortunately, there isn't a bundled up executable for these operating systems, yet.
-So, you need python installed on your computer. Afterwards, follow these steps:
+Oops. Unfortunately, there isn't a bundled-up executable for these operating systems, yet.
+So, you need Python installed on your computer. Afterwards, follow these steps:
 1.  Download the source code from the *Releases* section and open the directory
 2.  Run `pip install -r requirements.txt` to install dependencies
 3.  Then, execute the application: `python main.py`
 
 ## Privacy Policy 🔏
-All your credentials are stored within the source code and aren't shared with anyone. You can prove this by reading the source code. As long as you keep this program in your computer, they can be exposed.
+All your credentials are stored within the source code and aren't shared with anyone. You can prove this by reading the source code. As long as you keep this program on your computer, they can't be exposed.
 
 <!-- CONTRIBUTING -->
 ## Contributing 👋
