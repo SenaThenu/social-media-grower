@@ -516,8 +516,7 @@ def perform_action_on_n_users(
     update_progress_bar.emit(round(_current_progress))
 
     n_done = 0
-
-    last_action_time = time.time()
+    last_action_time = None
 
     # removing the whitelisted user_urls
     user_urls = list(set(user_urls) - set(config["whitelist"]["instagram"]))
@@ -528,19 +527,23 @@ def perform_action_on_n_users(
             # plus, they don't even involve following/liking
             # so, they don't have to go through the bot-masking security layers :)
             if action == "set_whitelist":
-                if user_url not in config["whitelist"]["instagram"]:
-                    config["whitelist"]["instagram"].append(user_url)
+                config["whitelist"]["instagram"].append(user_url)
                 _update_whitelist(config["whitelist"])
                 continue
 
-            elapsed_time = math.floor(time.time() - last_action_time)
-            required_waiting_time = config["restrictions"]["instagram"][
-                "min_time_between_actions"
-            ]
+            if last_action_time == None:
+                # the first action is deployed immediately
+                elapsed_time = 1
+                required_waiting_time = 0
+            else:
+                elapsed_time = math.floor(time.time() - last_action_time)
+                required_waiting_time = config["restrictions"]["instagram"][
+                    "min_time_between_actions"
+                ]
+
             if elapsed_time < required_waiting_time:
                 time.sleep(required_waiting_time - elapsed_time)
             else:
-                last_action_time = time.time()
                 if n_done >= n:
                     # breaking the loop once we have done the specified number of actions
                     break
@@ -569,6 +572,7 @@ def perform_action_on_n_users(
                     # updating the actions quota for today
                     if was_successful:
                         n_done += 1
+                        last_action_time = time.time()
 
                         # updating the progress
                         _current_progress += _per_action_progress
