@@ -40,12 +40,11 @@
 - [Features 🌟](#features-)
 - [Built With 🔧](#built-with-)
 - [Getting Started 🌱](#getting-started-)
-  - [Prerequisites 📋](#prerequisites-)
-  - [Installation 🛠️](#installation-️)
-- [How to Use 🚀](#how-to-use-)
+  - [Using Windows 🪟](#using-windows-)
+  - [MacOS 🍎 | Linux 🐧](#macos---linux-)
+- [Privacy Policy 🔏](#privacy-policy-)
 - [Contributing 👋](#contributing-)
 - [Current Contributors 🧙‍♂️](#current-contributors-️)
-- [Acknowledgments 💝](#acknowledgments-)
 
 
 <!-- PROJECT PREVIEW -->
@@ -54,8 +53,10 @@
 
 This program allows you to automate actions on various social media platforms to grow your audience swiftly. It is designed to imitate human interactions to bypass bot detection rules.
 
-> [!NOTE] 
-> Since this is a work-in-progress project, it only supports Instagram for now. Stay tuned for future features... (exciting ones are on the way!)
+> \[!IMPORTANT]
+>
+> Since this is a work-in-progress project, it only supports Instagram for now.
+> <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Glowing%20Star.png" alt="Glowing Star" width="20" height="20" /> Star this repository for future updates! (exciting ones are on the way!)
 
 <p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
 
@@ -64,8 +65,14 @@ This program allows you to automate actions on various social media platforms to
 - Automatic & intelligent following (i.e. only follows people who are more likely to follow you back)
 - Dynamic unfollowing to clear cluttered "following" counts
 - Modern and intuitive graphical user interface (always responsive through multi-threading)
-- Allows you to separate your personal activity from automated through whitelists.
+- Allows you to separate your personal activity from automated tasks through whitelists.
 - Is aware of the user-activity restrictions of all the *available* social media platforms to prevent your account from getting banned.
+- Designed to maximise productivity within those restrictions!
+
+> \[!NOTE]
+>
+> To imitate human behaviour, there's a time gap between actions (around 6 minutes). Thus, it takes a considerable amount of time to complete the whole task. So, don't be alarmed if there's no change. Just let the program do its job and go on with your day...
+> *Tweak this time gap through the source code at your own risk! (recommended to preserve the default)*
 
 <p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
 
@@ -79,21 +86,18 @@ This program allows you to automate actions on various social media platforms to
 
 ## Getting Started 🌱
 
-### Prerequisites 📋
+### Using Windows 🪟
+Simple. Go to the *Releases* section of this repository and go to the latest release page. Under assets, download the executable!
 
-### Installation 🛠️
+### MacOS 🍎 | Linux 🐧
+Oops. Unfortunately, there isn't a bundled up executable for these operating systems, yet.
+So, you need python installed on your computer. Afterwards, follow these steps:
+1.  Download the source code from the *Releases* section and open the directory
+2.  Run `pip install -r requirements.txt` to install dependencies
+3.  Then, execute the application: `python main.py`
 
-<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
-
-<!-- USAGE EXAMPLES -->
-
-## How to Use 🚀
-
-<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
-
-> \[!IMPORTANT]
->
-> <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Glowing%20Star.png" alt="Glowing Star" width="20" height="20" /> **Star Us** to receive the latest updates of this project from GitHub!
+## Privacy Policy 🔏
+All your credentials are stored within the source code and aren't shared with anyone. You can prove this by reading the source code. As long as you keep this program in your computer, they can be exposed.
 
 <!-- CONTRIBUTING -->
 ## Contributing 👋
@@ -137,11 +141,3 @@ _Let's show the power <img src="https://raw.githubusercontent.com/Tarikul-Islam-
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments 💝
-
--   []()
-
-<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
