@@ -3,11 +3,14 @@ import time
 import datetime
 import math
 import yaml
-import os
+from os import path
 
 
 def _read_the_follow_history() -> dict:
-    with open(os.path.join("bots/instagram", "_follow_history.yaml"), "r") as f:
+    with open(
+        path.abspath(path.join(path.dirname(__file__), "_follow_history.yaml")),
+        "r",
+    ) as f:
         follow_history = yaml.safe_load(f)
         f.close()
     return follow_history
@@ -19,6 +22,8 @@ if TODAY not in FOLLOW_HISTORY.keys():
     FOLLOW_HISTORY[TODAY] = []
 else:
     pass
+
+LAST_ACTION_TIME = None  # the last time an action was performed
 
 # general user account xpaths (note: some xpaths depend on the resolution)
 LANDSCAPE_FOLLOW_BTN_XPATH = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[2]/div/div[1]/button"
@@ -73,13 +78,22 @@ MUTE_SETTINGS_SAVE_BUTTON_XPATH = "/html/body/div[6]/div[1]/div/div[2]/div/div/d
 
 
 def _update_the_follow_history():
-    with open(os.path.join("bots/instagram", "_follow_history.yaml"), "w") as f:
+    with open(
+        path.abspath(path.join(path.dirname(__file__), "_follow_history.yaml")),
+        "w",
+    ) as f:
         yaml.dump(FOLLOW_HISTORY, f)
         f.close()
 
 
 def _update_whitelist(new_whitelist):
-    with open(os.path.join("bots/config", "whitelist.yaml"), "w") as f:
+    with open(
+        # accessing the parent directory through 2 dirnames
+        path.abspath(
+            path.join(path.dirname(path.dirname(__file__)), "config/whitelist.yaml")
+        ),
+        "w",
+    ) as f:
         yaml.dump(new_whitelist, f)
         f.close()
 
@@ -195,7 +209,11 @@ def _not_private_account(driver: object) -> bool:
 
 
 def follow_a_user(
-    driver: object, accepted_ratio: int, mute: bool, follow_private_accounts: bool
+    driver: object,
+    accepted_ratio: int,
+    mute: bool,
+    follow_private_accounts: bool,
+    time_to_wait: float,
 ) -> bool:
     """
     Checks whether the user meets the accepted ratio. If so, follows and mutes them.
@@ -205,6 +223,7 @@ def follow_a_user(
         accepted_ratio (int): n(following)/n(followers) threshold to perform the action
         mute (bool): whether to mute the user after following
         follow_private_accounts (bool): whether to follow private accounts
+        time_to_wait (float): the amount of time to wait before performing the action
 
     Returns:
         bool: whether the user was followed
@@ -243,6 +262,8 @@ def follow_a_user(
                         By.XPATH,
                         PORTRAIT_FOLLOW_BTN_XPATH,
                     )
+
+                time.sleep(time_to_wait)
                 following_button.click()
 
                 mute_button = driver.find_element(
@@ -277,13 +298,14 @@ def follow_a_user(
         return False
 
 
-def unfollow_a_user(driver: object, user_url: str) -> bool:
+def unfollow_a_user(driver: object, user_url: str, time_to_wait: float) -> bool:
     """
     Unfollows the given user.
 
     Args:
         driver (object): gateway to interact with the browser
         user_url (str): link to the profile of the user
+        time_to_wait (float): the amount of time to wait before performing the action
 
     Returns:
         bool: whether the user was unfollowed
@@ -313,6 +335,8 @@ def unfollow_a_user(driver: object, user_url: str) -> bool:
                 unfollow_btn_xpath = UNFOLLOW_BUTTON_WHEN_REQUESTED_TO_FOLLOW
 
             unfollow_btn = driver.find_element(By.XPATH, unfollow_btn_xpath)
+
+            time.sleep(time_to_wait)
             unfollow_btn.click()
 
             time.sleep(3)
@@ -323,12 +347,15 @@ def unfollow_a_user(driver: object, user_url: str) -> bool:
         return False
 
 
-def like_the_last_post_of_a_user(driver: object, accepted_ratio: int) -> bool:
+def like_the_last_post_of_a_user(
+    driver: object, accepted_ratio: int, time_to_wait: float
+) -> bool:
     """
     Checks whether the user meets the accepted ratio. If so, likes their their post. Here, the last post means the top-left post of a user.
 
     Args:
         accepted_ratio (int): n(following)/n(followers) threshold to perform the action
+        time_to_wait (float): the amount of time to wait before performing the action
 
     Returns:
         bool: _description_
@@ -357,6 +384,8 @@ def like_the_last_post_of_a_user(driver: object, accepted_ratio: int) -> bool:
                 By.XPATH,
                 LIKE_BUTTON_OF_A_POST,
             )
+
+            time.sleep(time_to_wait)
             like_button.click()
 
             return True
@@ -475,6 +504,8 @@ def perform_action_on_n_users(
     Returns:
         int: number of users the action was successfully done to
     """
+    global LAST_ACTION_TIME
+
     _delta_progress = end_progress - start_progress
     _current_progress = start_progress
 
@@ -505,8 +536,6 @@ def perform_action_on_n_users(
 
     n_done = 0
 
-    last_action_time = time.time()
-
     # removing the whitelisted user_urls
     user_urls = list(set(user_urls) - set(config["whitelist"]["instagram"]))
 
@@ -516,58 +545,68 @@ def perform_action_on_n_users(
             # plus, they don't even involve following/liking
             # so, they don't have to go through the bot-masking security layers :)
             if action == "set_whitelist":
-                if user_url not in config["whitelist"]["instagram"]:
-                    config["whitelist"]["instagram"].append(user_url)
+                config["whitelist"]["instagram"].append(user_url)
                 _update_whitelist(config["whitelist"])
                 continue
 
-            elapsed_time = math.floor(time.time() - last_action_time)
-            required_waiting_time = config["restrictions"]["instagram"][
-                "min_time_between_actions"
-            ]
-            if elapsed_time < required_waiting_time:
-                time.sleep(required_waiting_time - elapsed_time)
+            if LAST_ACTION_TIME == None:
+                # the first action is deployed immediately
+                elapsed_time = 1
+                required_waiting_time = 0
             else:
-                last_action_time = time.time()
-                if n_done >= n:
-                    # breaking the loop once we have done the specified number of actions
-                    break
+                elapsed_time = time.time() - LAST_ACTION_TIME
+                required_waiting_time = config["restrictions"]["instagram"][
+                    "min_time_between_actions"
+                ]
+
+            if n_done >= n:
+                # breaking the loop once we have done the specified number of actions
+                break
+            else:
+                # navigating to the user_url
+                driver.get(user_url)
+
+                if elapsed_time < required_waiting_time:
+                    time_to_wait = required_waiting_time - elapsed_time
                 else:
-                    # navigating to the user_url
-                    driver.get(user_url)
+                    time_to_wait = 0
 
-                    if action == "like":
-                        was_successful = like_the_last_post_of_a_user(
-                            driver, config["user_preferences"]["accepted_follow_ratio"]
-                        )
-                    elif action == "unfollow":
-                        was_successful = unfollow_a_user(driver, user_url)
-                    else:
-                        was_successful = follow_a_user(
-                            driver,
-                            config["user_preferences"]["accepted_follow_ratio"],
-                            config["user_preferences"]["automatic_muting"],
-                            config["user_preferences"]["follow_private_accounts"],
-                        )
-                        # updating the follow history
-                        if was_successful:
-                            FOLLOW_HISTORY[TODAY].append(user_url)
-                            _update_the_follow_history()
-
-                    # updating the actions quota for today
+                if action == "like":
+                    was_successful = like_the_last_post_of_a_user(
+                        driver,
+                        config["user_preferences"]["accepted_follow_ratio"],
+                        time_to_wait,
+                    )
+                elif action == "unfollow":
+                    was_successful = unfollow_a_user(driver, user_url, time_to_wait)
+                else:
+                    was_successful = follow_a_user(
+                        driver,
+                        config["user_preferences"]["accepted_follow_ratio"],
+                        config["user_preferences"]["automatic_muting"],
+                        config["user_preferences"]["follow_private_accounts"],
+                        time_to_wait,
+                    )
+                    # updating the follow history
                     if was_successful:
-                        n_done += 1
+                        FOLLOW_HISTORY[TODAY].append(user_url)
+                        _update_the_follow_history()
 
-                        # updating the progress
-                        _current_progress += _per_action_progress
-                        update_progress_bar.emit(round(_current_progress))
+                # updating the actions quota for today
+                if was_successful:
+                    n_done += 1
+                    LAST_ACTION_TIME = time.time()
 
-                        if action != "unfollow":
-                            today_actions[f"n_{action}s"] += 1
-                        else:
-                            # the number of unfollows goes under n_follows
-                            today_actions["n_follows"] += 1
-                        today_actions_updater(today_actions)
+                    # updating the progress
+                    _current_progress += _per_action_progress
+                    update_progress_bar.emit(round(_current_progress))
+
+                    if action != "unfollow":
+                        today_actions[f"n_{action}s"] += 1
+                    else:
+                        # the number of unfollows goes under n_follows
+                        today_actions["n_follows"] += 1
+                    today_actions_updater(today_actions)
         else:
             break
     return n_done

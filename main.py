@@ -17,4 +17,7 @@ if __name__ == "__main__":
 
     # showing it to the users
     main_gui.show()
+
+    # closing the browser window when quitting
+    app.aboutToQuit.connect(insta_bot.quit)
     sys.exit(app.exec())

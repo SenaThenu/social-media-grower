@@ -1,5 +1,5 @@
 import sys
-import os
+from os import path
 import yaml
 from functools import partial
 
@@ -20,11 +20,13 @@ WHITELIST_GUI = Ui_listEdit()
 PREFERENCES_GUI = Ui_Preferences()
 
 
-# Configurations Object (automatically filled assigned when create_functional_gui is called)
+# Configurations Object (automatically filled when create_functional_gui is called)
 CONFIG = None
 
-# Logo
-LOGO_PATH = "readme_assets/logo.png"  # from the root directory
+# Logo (by going to the parent directory!)
+LOGO_PATH = path.abspath(
+    path.join(path.dirname(path.dirname(__file__)), "readme_assets/logo.png")
+)
 
 # Styles
 ERROR_STYLE = "color: red;\nfont-weight: bold;"
@@ -129,7 +131,16 @@ def _setup_preferences_editor():
                 pass
 
         # saving
-        with open(os.path.join("bots/config", "user_preferences.yaml"), "w") as f:
+        with open(
+            path.abspath(
+                # accessing the parent directory through 2 dirnames
+                path.join(
+                    path.dirname(path.dirname(__file__)),
+                    "bots/config/user_preferences.yaml",
+                )
+            ),
+            "w",
+        ) as f:
             yaml.dump(CONFIG["user_preferences"], f)
             f.close()
 
@@ -191,14 +202,23 @@ def _setup_list_editor(
     Args:
         gui (object)
         main_dict (dict): dict containing items
-        filename_to_update (str): name of the file that should be updated in the config folder
+        filename_to_update (str): name of the file that should be updated in the config folder (with extension: yaml)
         subindex (str): the keyword to index the main_dict
     """
 
     focus_list = main_dict[subindex]
 
     def _update_list():
-        with open(os.path.join("bots/config", filename_to_update), "w") as f:
+        with open(
+            path.abspath(
+                # accessing the parent directory through 2 dirnames
+                path.join(
+                    path.dirname(path.dirname(__file__)),
+                    f"bots/config/{filename_to_update}",
+                )
+            ),
+            "w",
+        ) as f:
             yaml.dump(main_dict, f)
             f.close()
 

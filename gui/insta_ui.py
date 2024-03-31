@@ -1,5 +1,5 @@
-import os
 import yaml
+from os import path
 from functools import partial
 from PyQt6.QtCore import QThread, pyqtSignal
 
@@ -49,8 +49,11 @@ class LoginThread(QThread):
         # checking whether they are empty
         if self.username and self.password:
             try:
-                # making sure there's n key in the configs to save login details
-                INSTA_BOT.config["login"]
+                # making sure there's a key in the configs to save login details
+                if type(INSTA_BOT.config["login"]) == dict:
+                    pass
+                else:
+                    INSTA_BOT.config["login"] = {}
             except:
                 # if not, we are gonna create a new key!
                 INSTA_BOT.config["login"] = {}
@@ -58,19 +61,31 @@ class LoginThread(QThread):
             INSTA_BOT.config["login"]["insta_password"] = self.password
 
             if self.save_credentials:
-                with open(os.path.join("bots/config", "login.yaml"), "w") as f:
+                with open(
+                    path.abspath(
+                        # accessing the parent directory through 2 dirnames
+                        path.join(
+                            path.dirname(path.dirname(__file__)),
+                            "bots/config/login.yaml",
+                        )
+                    ),
+                    "w",
+                ) as f:
                     yaml.dump(INSTA_BOT.config["login"], f)
                     f.close()
 
-            # starting the logging process
-            login_successful = INSTA_BOT.login()
+            try:
+                # starting the logging process
+                login_successful = INSTA_BOT.login()
 
-            if login_successful:
-                _set_state_to_logged_in()
-            else:
-                self._set_login_btn_to_retry(
-                    "⚠️Check whether your credentials are valid! \nIf the error persists, try changing Base Waiting Time (in Preferences) or updating the application!"
-                )
+                if login_successful:
+                    _set_state_to_logged_in()
+                else:
+                    self._set_login_btn_to_retry(
+                        "⚠️Check whether your credentials are valid! \nIf the error persists, try changing Base Waiting Time (in Preferences) or updating the application!"
+                    )
+            except:
+                self._set_login_btn_to_retry("⚠️Oops! You closed the browser window!")
         else:
             self._set_login_btn_to_retry("⚠️Instagram login details are missing!")
 
