@@ -17,7 +17,7 @@ def load_config() -> dict:
     """
     config = {}
 
-    for file in os.listdir("bots/config"):
+    for file in os.listdir(os.path.dirname(__file__)):
         # making sure it is a yaml file that's not private (private = an underscore/period at the start)!
         if (file[-4:] == "yaml") and (file[0] != "_" and file[0] != "."):
             with open(
