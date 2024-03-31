@@ -1,4 +1,25 @@
 {
-    "projectName": "social-media-grower",
-    "projectOwner": "SenaThenu"
+  "projectName": "social-media-grower",
+  "projectOwner": "SenaThenu",
+  "files": [
+    "README.md"
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "SenaThenu",
+      "name": "Senash Thenuja",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98274844?v=4",
+      "profile": "https://github.com/SenaThenu",
+      "contributions": [
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "maintenance"
+      ]
+    }
+  ]
 }
