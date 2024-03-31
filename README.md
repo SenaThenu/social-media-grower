@@ -36,29 +36,49 @@
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents 📜
 - [Table of Contents 📜](#table-of-contents-)
-- [About The Project 📖](#about-the-project-)
-  - [Built With 🔧](#built-with-)
+- [Project Preview 📖](#project-preview-)
+- [Features 🌟](#features-)
+- [Built With 🔧](#built-with-)
 - [Getting Started 🌱](#getting-started-)
-  - [Prerequisites 📋](#prerequisites-)
-  - [Installation 🛠️](#installation-️)
-- [Usage 🚀](#usage-)
-- [Settings ⚙️](#settings-️)
+  - [Using Windows 🪟](#using-windows-)
+  - [MacOS 🍎 | Linux 🐧](#macos---linux-)
+- [Privacy Policy 🔏](#privacy-policy-)
 - [Contributing 👋](#contributing-)
 - [Current Contributors 🧙‍♂️](#current-contributors-️)
-- [Acknowledgments \\w 💝](#acknowledgments-w-)
 
 
-<!-- ABOUT THE PROJECT -->
+<!-- PROJECT PREVIEW -->
 
-## About The Project 📖
+## Project Preview 📖
 
-This is currently a Work-in-Progress project!
+This program allows you to automate actions on various social media platforms to grow your audience swiftly. It is designed to imitate human interactions to bypass bot detection rules.
+
+> \[!IMPORTANT]
+>
+> Since this is a work-in-progress project, it only supports Instagram for now.
+> <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Glowing%20Star.png" alt="Glowing Star" width="20" height="20" /> Star this repository for future updates! (exciting ones are on the way!)
 
 <p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
 
-### Built With 🔧
+## Features 🌟
 
-<img src="https://img.shields.io/badge/Python-3570a0?style=for-the-badge&logo=python&logoColor=ffffff" alt="Python"> <img src="https://img.shields.io/badge/JavaScript-efd81d?style=for-the-badge&logo=javascript&logoColor=000" alt="JavaScript"> <img src="https://img.shields.io/badge/Express.js-c3c3c3?style=for-the-badge&logo=express&logoColor=000" alt="Express.js">
+- Automatic & intelligent following (i.e. only follows people who are more likely to follow you back)
+- Dynamic unfollowing to clear cluttered "following" counts
+- Modern and intuitive graphical user interface (always responsive through multi-threading)
+- Allows you to separate your personal activity from automated tasks through whitelists.
+- Is aware of the user-activity restrictions of all the *available* social media platforms to prevent your account from getting banned.
+- Designed to maximise productivity within those restrictions!
+
+> \[!NOTE]
+>
+> To imitate human behaviour, there's a time gap between actions (around 6 minutes). Thus, it takes a considerable amount of time to complete the whole task. So, don't be alarmed if there's no change. Just let the program do its job and go on with your day...
+> *Tweak this time gap through the source code at your own risk! (recommended to preserve the default)*
+
+<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
+
+## Built With 🔧
+
+<img src="https://img.shields.io/badge/PyQt6-2eab3d?style=for-the-badge&logo=qt&logoColor=fff" alt="PyQt"> <img src="https://img.shields.io/badge/Python-3570a0?style=for-the-badge&logo=python&logoColor=ffffff" alt="Python"> <img src="https://img.shields.io/badge/Selenium-00b400?style=for-the-badge&logo=selenium&logoColor=fff" alt="Selenium">
 
 <p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
 
@@ -66,49 +86,18 @@ This is currently a Work-in-Progress project!
 
 ## Getting Started 🌱
 
-### Prerequisites 📋
+### Using Windows 🪟
+Simple. Go to the *Releases* section of this repository and go to the latest release page. Under assets, download the executable!
 
-### Installation 🛠️
+### MacOS 🍎 | Linux 🐧
+Oops. Unfortunately, there isn't a bundled up executable for these operating systems, yet.
+So, you need python installed on your computer. Afterwards, follow these steps:
+1.  Download the source code from the *Releases* section and open the directory
+2.  Run `pip install -r requirements.txt` to install dependencies
+3.  Then, execute the application: `python main.py`
 
-<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
-
-<!-- USAGE EXAMPLES -->
-
-## Usage 🚀
-
-> \[!NOTE]
->
-> Your logging details are stored locally on your computer and won't be shared with anyone else. You can find them in the `config.json` file in the settings folder. Your safety is our priority! You can even check the source code to make sure of this.
-
-> \[!NOTE]
->
-> Most social media platforms have restrictions to minimise bots using them. This application is aware of those restrictions and is designed to mimic human engagements. That way, you won't be banned. Stull, you can change these via the `config.json` file. (we highly recommend you don't)
-
-<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
-
-> \[!IMPORTANT]
->
-> <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Glowing%20Star.png" alt="Glowing Star" width="20" height="20" /> **Star Us** to receive the latest updates of this project from GitHub!
-
-<!-- Settings -->
-## Settings ⚙️
-All the user preferences are stored locally in the: `user_preferences.json`
-
-| Name               | Default          | Description      |
-|--------------------|------------------|------------------|
-| n\_likes           | 375              | number of likes per day |
-| n\_follows         | 125              | number of accounts followed per day |
-| n\_comments        | 0                | number of comments per day |
-| unfollow\_all      | false            | whether to unfollow all the users apart from whitelist users |
-| dynamic\_unfollow  | true             | strategically unfollow users (more info below) |
-| unfollow_gap       | 7                | the minium time period to keep following a user (in days)
-| custom\_links      | []               | follows all the users in a given web page (of a specific social media platform)                 |
-| priority\_tags     | []               | prioritised tags to engage with   |
-
-> \[!NOTE]
->
-> Dynamic Follow strategically unfollows all users who don't follow back after you following them for more than the `unfollow_gap`. Plus, it makes sure you don't reach the maximum number of accounts you can follow. During the process, whitelisted accounts won't be affected.
-
+## Privacy Policy 🔏
+All your credentials are stored within the source code and aren't shared with anyone. You can prove this by reading the source code. As long as you keep this program in your computer, they can be exposed.
 
 <!-- CONTRIBUTING -->
 ## Contributing 👋
@@ -125,18 +114,13 @@ _Let's show the power <img src="https://raw.githubusercontent.com/Tarikul-Islam-
 <br>
 
 -   Ways to Contribute <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Smiling Face with Open Hands.png" alt="Hugging Face" width="25" height="25" />
-    -   [Open Issues](https://github.com/SenaThenu/social-media-grower/issues)
-    -   [Update Readme](https://github.com/SenaThenu/social-media-grower/blob/main/README.md)
-    -   [Make the Logo and the Assets Cooler](https://github.com/SenaThenu/social-media-grower/tree/main/slides)
-    -   Introduce an **_awesome feature_** <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel and places/Glowing Star.png" alt="Glowing Star" width="25" height="25" />
-        1. Fork the Project <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food/Fork and Knife.png" alt="Fork" width="25" height="25" />
-        2. Create your Feature Branch (`git checkout -b my_awesome_feature_branch`)
-        3. Commit your Changes (`git commit -m 'Add some awesome features'`)
-        4. Upstream this repository (`git remote add origin https://github.com/SenaThenu/social-media-grower.git`)
-        5. Push to the Main Branch of this repo (`git push origin my_awesome_feature_branch`)
-        6. Open a Pull Request <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel and places/Rocket.png" alt="Rocket" width="25" height="25" />
+    -   Introduce **_Awesome Features_**
+    -   [Open Issues](https://github.com/SenaThenu/snake/issues)
+    -   [Update Readme](https://github.com/SenaThenu/snake/blob/main/README.md)
+    -   [Make the Logo and the Assets Cooler](https://github.com/SenaThenu/snake/tree/main/slides) 
+
 - What to Contribute <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Thinking%20Face.png" alt="Thinking Face" width="25" height="25" />
-  - You can find some proposed features in the [Projects](https://github.com/SenaThenu/social-media-grower/projects) pane of this repository!
+  - You can find some proposed features in the [Projects](https://github.com/SenaThenu/snake/projects) pane of this repository! (your proposals are welcome)
 
 <p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
 
@@ -157,11 +141,3 @@ _Let's show the power <img src="https://raw.githubusercontent.com/Tarikul-Islam-
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments \w 💝
-
--   []()
-
-<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
