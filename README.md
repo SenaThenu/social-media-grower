@@ -87,7 +87,7 @@ This program allows you to automate actions on various social media platforms to
 ## Getting Started 🌱
 
 ### Using Windows 🪟
-Simple. Go to the *Releases* section of this repository and go to the latest release page. Under assets, download the executable!
+Simple. Go to the *Releases* section of this repository and go to the latest release page. Under assets, download the `social_media_grower_for_windows.zip`. Then, extract it and run `social_media_grower.exe`!
 
 ### MacOS 🍎 | Linux 🐧
 Oops. Unfortunately, there isn't a bundled up executable for these operating systems, yet.
@@ -110,8 +110,6 @@ _Let's show the power <img src="https://raw.githubusercontent.com/Tarikul-Islam-
     <summary>Why are open-source developers the sweetest folks in tech? <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food/Lollipop.png" alt="Lollipop" width="25" height="25" /></summary>
     <p> Because they believe in sharing not only code but also <i>smiles <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Face with Hand Over Mouth.png" alt="Laugh" width="25" height="25" /></i> and <i>love <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Beating Heart.png" alt="Beating Heart" width="25" height="25" /></i> through 0s and 1s!</p>
 </details>
-
-<br>
 
 -   Ways to Contribute <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Smiling Face with Open Hands.png" alt="Hugging Face" width="25" height="25" />
     -   Introduce **_Awesome Features_**
