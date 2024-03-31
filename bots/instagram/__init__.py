@@ -34,7 +34,6 @@ FOLLOWERS_CONTAINER_PORTRAIT = "/html/body/div[7]/div[1]/div/div[2]/div/div/div/
 class InstagramBot:
     def __init__(self, config):
         self.config = config
-        self.last_action_time = time.time()
 
         # loading today's actions
         self._today_actions = self._load_today_actions()
@@ -390,4 +389,5 @@ class InstagramBot:
         """
         Quits the browser
         """
-        self.driver.close()
+        if self.driver:
+            self.driver.close()
