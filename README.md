@@ -40,7 +40,7 @@
 - [Features 🌟](#features-)
 - [Built With 🔧](#built-with-)
 - [Getting Started 🌱](#getting-started-)
-  - [Using Windows 🪟](#using-windows-)
+  - [Windows 🪟](#windows-)
   - [MacOS 🍎 | Linux 🐧](#macos---linux-)
 - [Privacy Policy 🔏](#privacy-policy-)
 - [Contributing 👋](#contributing-)
@@ -50,6 +50,8 @@
 <!-- PROJECT PREVIEW -->
 
 ## Project Preview 📖
+
+<img src="https://github.com/SenaThenu/social-media-grower/blob/main/readme_assets/preview.png" alt="Project Preview">
 
 This program allows you to automate actions on various social media platforms to grow your audience swiftly. It is designed to imitate human interactions to bypass bot detection rules.
 
@@ -86,7 +88,7 @@ This program allows you to automate actions on various social media platforms to
 
 ## Getting Started 🌱
 
-### Using Windows 🪟
+### Windows 🪟
 Simple. Go to the *Releases* section of this repository and go to the latest release page. Under assets, download the `social_media_grower_for_windows.zip`. Then, extract it and run `social_media_grower.exe`!
 
 ### MacOS 🍎 | Linux 🐧
@@ -96,8 +98,12 @@ So, you need Python installed on your computer. Afterwards, follow these steps:
 2.  Run `pip install -r requirements.txt` to install dependencies
 3.  Then, execute the application: `python main.py`
 
+<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
+
 ## Privacy Policy 🔏
 All your credentials are stored within the source code and aren't shared with anyone. You can prove this by reading the source code. As long as you keep this program on your computer, they can't be exposed.
+
+<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
 
 <!-- CONTRIBUTING -->
 ## Contributing 👋
@@ -146,3 +152,5 @@ _Let's show the power <img src="https://raw.githubusercontent.com/Tarikul-Islam-
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
