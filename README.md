@@ -51,7 +51,9 @@
 
 ## Project Preview 📖
 
-<img src="https://github.com/SenaThenu/social-media-grower/blob/main/readme_assets/preview.png" alt="Project Preview">
+<div align="center">
+  <img src="https://github.com/SenaThenu/social-media-grower/blob/main/readme_assets/preview.png" alt="Project Preview">
+</div>
 
 This program allows you to automate actions on various social media platforms to grow your audience swiftly. It is designed to imitate human interactions to bypass bot detection rules.
 
