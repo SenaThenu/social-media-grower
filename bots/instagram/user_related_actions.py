@@ -515,11 +515,11 @@ def perform_action_on_n_users(
     _per_action_progress = (_delta_progress * 0.6) / n
 
     if action != "unfollow" and action != "set_whitelist":
-        # we query 2 times the n number of users for backup!
+        # we query 4 times the n number of users for backup!
         user_urls = get_user_url_list(
             driver,
             user_elements_container,
-            n * 2,
+            n * 4,
             cancel_flag,
         )
     else:

@@ -2,6 +2,7 @@ import yaml
 from os import path
 from functools import partial
 from PyQt6.QtCore import QThread, pyqtSignal
+from notifypy import Notify
 
 LOGGED_IN = False
 
@@ -80,12 +81,18 @@ class LoginThread(QThread):
 
                 if login_successful:
                     _set_state_to_logged_in()
+                    logged_in_notification = Notify()
+                    logged_in_notification.title = "Successfully Logged In!"
+                    logged_in_notification.message = "You can now perform any action!"
+                    logged_in_notification.send()
                 else:
                     self._set_login_btn_to_retry(
                         "⚠️Check whether your credentials are valid! \nIf the error persists, try changing Base Waiting Time (in Preferences) or updating the application!"
                     )
             except:
-                self._set_login_btn_to_retry("⚠️Oops! You closed the browser window!")
+                self._set_login_btn_to_retry(
+                    "⚠️Oops! You closed the browser window! \nIf the error persists, make sure you have Chrome installed on your device!"
+                )
         else:
             self._set_login_btn_to_retry("⚠️Instagram login details are missing!")
 
@@ -129,11 +136,21 @@ class WorkerThread(QThread):
 
             self.update_progress.emit(100)
             self._display_message("🍀Success!", "success")
+            success_notification = Notify()
+            success_notification.title = "Successfully Completed the Task!"
+            success_notification.message = "Why not give a go at another one?"
+            success_notification.send()
         except:
             self._display_message(
                 "⚠️Error Occurred :(\nPossible Reasons:\n1. You've closed or interacted with the program's browser window (if you have, reopen the app)\n2. You haven't specified the hashtags (in hashtag based actions)\n3. You don't have the latest version",
                 "error",
             )
+            error_notification = Notify()
+            error_notification.title = "An Error Occurred!"
+            error_notification.message = (
+                "Have a look at the possible reasons in the interface!"
+            )
+            error_notification.send()
 
         _set_state_to_logged_in()
         # updating the tabs since we have consumed some of the quota

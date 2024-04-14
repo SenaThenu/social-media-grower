@@ -24,7 +24,7 @@ CANCEL_FLAG = None  # flag object indicating whether to cancel the process
 
 
 def _get_post_urls(
-    driver: object, hashtag: str, start_progress: float, end_progress: float, n: int = 4
+    driver: object, hashtag: str, start_progress: float, end_progress: float, n: int = 5
 ) -> tuple:
     """
     Grabbing URLs of upto n posts under specified hashtag to follow and like.
@@ -241,6 +241,7 @@ def like_follow_by_hashtag(
                 current_percentage,
                 current_percentage + (progress_per_hashtag / 2),
             )
+            print(to_follow_urls)
 
             current_percentage += (
                 progress_per_hashtag / 2

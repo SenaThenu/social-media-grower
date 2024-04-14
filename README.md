@@ -40,6 +40,7 @@
 - [Features 🌟](#features-)
 - [Built With 🔧](#built-with-)
 - [Getting Started 🌱](#getting-started-)
+  - [Prerequisites 📃](#prerequisites-)
   - [Windows 🪟](#windows-)
   - [MacOS 🍎 | Linux 🐧](#macos---linux-)
 - [Privacy Policy 🔏](#privacy-policy-)
@@ -90,8 +91,15 @@ This program allows you to automate actions on various social media platforms to
 
 ## Getting Started 🌱
 
+### Prerequisites 📃
+- [Google Chrome](https://www.google.com/chrome/)
+
 ### Windows 🪟
 Simple. Go to the *Releases* section of this repository and go to the latest release page. Under assets, download the `social_media_grower_for_windows.zip`. Then, extract it and run `social_media_grower.exe`!
+
+> \[!NOTE]
+>
+> If you get an error regarding DLLs, try updating [Visual C++ Redistributable Packages](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170). If the issue still persists, unfortunately your device might not be supported!
 
 ### MacOS 🍎 | Linux 🐧
 Oops. Unfortunately, there isn't a bundled-up executable for these operating systems, yet.

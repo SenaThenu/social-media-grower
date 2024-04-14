@@ -10,6 +10,7 @@ import time
 import yaml
 import datetime
 from os import path
+from notifypy import Notify
 
 from .hashtag_based import like_follow_by_hashtag
 from .user_related_actions import (
@@ -277,11 +278,29 @@ class InstagramBot:
 
                 time.sleep(self.config["user_preferences"]["base_waiting_time"])
 
-                save_login_info_button = self.driver.find_element(
-                    By.XPATH,
-                    "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/section/div/button",
-                )
-                save_login_info_button.click()
+                try:
+                    # if this can be found, the user has enabled 2 factor authentication!
+                    two_factor_auth_statement = self.driver.find_element(
+                        By.XPATH,
+                        "/html/body/div[2]/div/div/div[2]/div/div/div[1]/section/main/div/div/div[1]/div[2]/div",
+                    ).get_attribute("innerHTML")
+
+                    request_to_verify_notification = Notify()
+                    request_to_verify_notification.title = "Verify Login!"
+                    request_to_verify_notification.message = "You have enabled two-factor authentication. You'll be given 30 seconds to verify!"
+                    request_to_verify_notification.send()
+                    time.sleep(30)
+                except:
+                    pass
+
+                try:
+                    save_login_info_button = self.driver.find_element(
+                        By.XPATH,
+                        "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/section/div/button",
+                    )
+                    save_login_info_button.click()
+                except:
+                    pass
 
                 return True
             except:
