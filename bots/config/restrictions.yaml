@@ -1,8 +1,8 @@
 instagram:
-    min_time_between_actions: 240 # in seconds
+    min_time_between_actions: 180 # in seconds
     n_likes: 150
     n_comments: 150
-    n_follows: 100 # this contains n(unfollows) too!
+    n_follows: 30 # this contains n(unfollows) too!
     max_following: 7500
 
 x:

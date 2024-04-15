@@ -38,11 +38,13 @@
 - [Table of Contents 📜](#table-of-contents-)
 - [Project Preview 📖](#project-preview-)
 - [Features 🌟](#features-)
+- [Restrictions 🚧](#restrictions-)
 - [Built With 🔧](#built-with-)
-- [Getting Started 🌱](#getting-started-)
+- [Installation 🌱](#installation-)
   - [Prerequisites 📃](#prerequisites-)
   - [Windows 🪟](#windows-)
   - [MacOS 🍎 | Linux 🐧](#macos---linux-)
+- [Updating ✨](#updating-)
 - [Privacy Policy 🔏](#privacy-policy-)
 - [Contributing 👋](#contributing-)
 - [Current Contributors 🧙‍♂️](#current-contributors-️)
@@ -74,10 +76,18 @@ This program allows you to automate actions on various social media platforms to
 - Is aware of the user-activity restrictions of all the *available* social media platforms to prevent your account from getting banned.
 - Designed to maximise productivity within those restrictions!
 
+<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
+
+## Restrictions 🚧
+
+Instagram has a pretty good bot detection algorithm. These restrictions help you to bypass it and prevent your account from getting banned!
+* Number of people you can follow/unfollow per day: 30
+* Number of likes per day: 150
+* Time gap between actions: around 3 minutes (don't be alarmed if there's no change. just let the program do its job and go on with your day...)
+
 > \[!NOTE]
->
-> To imitate human behaviour, there's a time gap between actions (around 6 minutes). Thus, it takes a considerable amount of time to complete the whole task. So, don't be alarmed if there's no change. Just let the program do its job and go on with your day...
-> *Tweak this time gap through the source code at your own risk! (recommended to preserve the default)*
+> You can always tweak these through the source code: `bots/config/restrictions.yaml`
+> It's highly recommended to preserve the defaults. But, you are welcome to experiment with them!
 
 <p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
 
@@ -89,7 +99,7 @@ This program allows you to automate actions on various social media platforms to
 
 <!-- GETTING STARTED -->
 
-## Getting Started 🌱
+## Installation 🌱
 
 ### Prerequisites 📃
 - [Google Chrome](https://www.google.com/chrome/)
@@ -107,6 +117,15 @@ So, you need Python installed on your computer. Afterwards, follow these steps:
 1.  Download the source code from the *Releases* section and open the directory
 2.  Run `pip install -r requirements.txt` to install dependencies
 3.  Then, execute the application: `python main.py`
+
+<p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
+
+## Updating ✨
+You just have to download the latest version from the *Releases* section and replace the `bots` with your old version's!
+
+> \[!NOTE]
+>
+> It's recommended to preserve the `restrictions.yaml` file of the new version, though!
 
 <p align="right"><a href="#readme-top">Jump to Top<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand gestures/Index Pointing Up.png" alt="Pointing Up" width="25" height="25" /></a></p>
 
