@@ -35,7 +35,7 @@ POST_COUNT_OF_A_USER = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/d
 TOP_LEFT_POST_OF_A_USER_LANDSCAPE = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[3]/div/div[1]/div[1]/a"
 TOP_LEFT_POST_OF_A_USER_PORTRAIT = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[2]/div/div[1]/div[1]/a"
 
-PRIVATE_ACCOUNT_STATEMENT = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[1]/div/div/h2"
+PRIVATE_ACCOUNT_STATEMENT = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[1]/div/div[1]/div[2]/div/div/span"
 
 UNFOLLOW_BUTTON_WHEN_FOLLOWING = (
     "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]"
@@ -200,10 +200,7 @@ def _not_private_account(driver: object) -> bool:
             By.XPATH,
             PRIVATE_ACCOUNT_STATEMENT,
         ).get_attribute("innerHTML")
-        if "private" in private_statement.lower():
-            return False
-        else:
-            return True
+        return False
     except:
         return True
 

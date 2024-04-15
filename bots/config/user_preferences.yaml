@@ -2,6 +2,7 @@ accepted_follow_ratio: 1.2
 automatic_muting: true
 base_waiting_time: 8.0
 follow_private_accounts: false
-hashtags: []
+hashtags:
+- landscapephotography
 only_follow: false
 unfollow_gap: 7.0

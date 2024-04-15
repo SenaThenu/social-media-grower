@@ -241,7 +241,6 @@ def like_follow_by_hashtag(
                 current_percentage,
                 current_percentage + (progress_per_hashtag / 2),
             )
-            print(to_follow_urls)
 
             current_percentage += (
                 progress_per_hashtag / 2
