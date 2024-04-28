@@ -383,8 +383,12 @@ def like_the_last_post_of_a_user(
             )
 
             time.sleep(time_to_wait)
-            like_button.click()
-            time.sleep(3)
+
+            # simulating a human click
+            action = ActionChains(driver)
+            action.click_and_hold(like_button)
+            action.release(like_button)
+            action.perform()
 
             return True
         else:
