@@ -58,6 +58,10 @@
   <img src="https://github.com/SenaThenu/social-media-grower/blob/main/readme_assets/preview.png" alt="Project Preview">
 </div>
 
+
+https://github.com/SenaThenu/social-media-grower/assets/98274844/a632aa23-ef1f-4411-aa83-7d2389e4f1ae
+
+
 This program allows you to automate actions on various social media platforms to grow your audience swiftly. It is designed to imitate human interactions to bypass bot detection rules.
 
 > \[!IMPORTANT]
