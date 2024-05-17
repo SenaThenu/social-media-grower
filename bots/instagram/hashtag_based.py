@@ -1,18 +1,14 @@
-import math
-
 from selenium.webdriver.common.keys import Keys  # provides keyboard elements
 from selenium.webdriver.common.by import By  # locates elements within a web page
 
 from .user_related_actions import perform_action_on_n_users
 
-import time
-
 # hashtag based post xpaths (these are in respect to the row number (i))
 HASHTAG_BASED_FIRST_POST_XPATH = (
-    lambda i: f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div/div/div[{i}]/div[1]/a"
+    lambda i: f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div[2]/div/div[{i}]/div[1]/a"
 )
 HASHTAG_BASED_SECOND_POST_XPATH = (
-    lambda i: f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div/div/div[{i}]/div[2]/a"
+    lambda i: f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div[2]/div/div[{i}]/div[2]/a"
 )
 
 # other xpaths used for this module
