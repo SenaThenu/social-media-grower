@@ -26,55 +26,49 @@ else:
 LAST_ACTION_TIME = None  # the last time an action was performed
 
 # general user account xpaths (note: some xpaths depend on the resolution)
-LANDSCAPE_FOLLOW_BTN_XPATH = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[1]/div[2]/div/div[1]/button"
-PORTRAIT_FOLLOW_BTN_XPATH = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button"
+LANDSCAPE_FOLLOW_BTN_XPATH = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[2]/div/div[2]/section/main/div/header/section[2]/div/div/div[2]/div/div[1]/button"
+PORTRAIT_FOLLOW_BTN_XPATH = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[2]/div/div[2]/section/main/div/header/section[2]/div/div[2]/div/div[1]/button"
 
 LIKE_BUTTON_OF_A_POST = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div[1]/div/div[2]/div/div[3]/section[1]/div[1]/span[1]/div"
-POST_COUNT_OF_A_USER = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[1]/span/span"
+POST_COUNT_OF_A_USER = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[2]/div/div[2]/section/main/div/header/section[3]/ul/li[1]/span/span"
 
-TOP_LEFT_POST_OF_A_USER_LANDSCAPE = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[3]/div/div[1]/div[1]/a"
-TOP_LEFT_POST_OF_A_USER_PORTRAIT = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[2]/div/div[1]/div[1]/a"
+TOP_LEFT_POST_OF_A_USER_LANDSCAPE = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[2]/div/div[2]/section/main/div/div[2]/div/div[1]/div[1]/a"
+TOP_LEFT_POST_OF_A_USER_PORTRAIT = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[2]/div/div[2]/section/main/div/div[2]/div/div[1]/div[1]/a"
 
-PRIVATE_ACCOUNT_STATEMENT = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/div[1]/div/div[1]/div[2]/div/div/span"
+PRIVATE_ACCOUNT_STATEMENT = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[2]/div/div[2]/section/main/div/div[1]/div/div[1]/div[2]/div/div/span"
 
-UNFOLLOW_BUTTON_WHEN_FOLLOWING = (
-    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]"
-)
-UNFOLLOW_BUTTON_WHEN_REQUESTED_TO_FOLLOW = (
-    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div/div/button[1]"
-)
+UNFOLLOW_BUTTON_WHEN_FOLLOWING = "/html/body/div[8]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[8]"
+UNFOLLOW_BUTTON_WHEN_REQUESTED_TO_FOLLOW = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[2]/div/div[2]/section/main/div/header/section[2]/div/div/div[2]/div/div/button"
 
 # dynamic xpaths
-n_count_base = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/"  # just a repetitive path :)
+n_count_base = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[2]/div/div[2]/section/main/div/"  # just a repetitive path :)
 N_FOLLOWERS_LANDSCAPE = lambda is_not_private: (
-    n_count_base + "header/section/ul/li[2]/a/span/span"
+    n_count_base + "header/section[3]/ul/li[2]/a/span/span"
     if is_not_private
-    else n_count_base + "header/section/ul/li[2]/span/span"
+    else n_count_base + "header/section[3]/ul/li[2]/span/span"
 )
 N_FOLLOWING_LANDSCAPE = lambda is_not_private: (
-    n_count_base + "header/section/ul/li[3]/a/span/span"
+    n_count_base + "header/section[3]/ul/li[3]/a/span/span"
     if is_not_private
-    else n_count_base + "header/section/ul/li[3]/span/span"
+    else n_count_base + "header/section[3]/ul/li[3]/span/span"
 )
 
 N_FOLLOWERS_PORTRAIT = lambda is_not_private: (
-    n_count_base + "ul/li[2]/a/span/span/span"
+    n_count_base + "header/section[3]/ul/li[2]/a/span/span/span"
     if is_not_private
-    else n_count_base + "ul/li[2]/span/span/span"
+    else n_count_base + "header/section[3]/ul/li[2]/span/span/span"
 )
 N_FOLLOWING_PORTRAIT = lambda is_not_private: (
-    n_count_base + "ul/li[3]/a/span/span/span"
+    n_count_base + "header/section[3]/ul/li[3]/a/span/span/span"
     if is_not_private
-    else n_count_base + "ul/li[3]/span/span/span"
+    else n_count_base + "header/section[3]/ul/li[3]/span/span/span"
 )
 
 # muting related xpaths
-USER_MUTE_BUTTON_XPATH = (
-    "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[6]"
-)
-MUTE_POSTS_BUTTON = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[1]"
-MUTE_STORIES_BUTTON = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[2]"
-MUTE_SETTINGS_SAVE_BUTTON_XPATH = "/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[4]/div"
+USER_MUTE_BUTTON_XPATH = "/html/body/div[7]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[6]"
+MUTE_POSTS_BUTTON = "/html/body/div[7]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[1]"
+MUTE_STORIES_BUTTON = "/html/body/div[7]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[2]"
+MUTE_SETTINGS_SAVE_BUTTON_XPATH = "/html/body/div[7]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div/div[2]/div[4]/div"
 
 
 def _update_the_follow_history():
@@ -248,44 +242,49 @@ def follow_a_user(
             follow_button.click()
 
             time.sleep(3)
-            if mute and is_not_private:
-                try:
-                    following_button = driver.find_element(
+
+            try:
+                if mute and is_not_private:
+                    try:
+                        following_button = driver.find_element(
+                            By.XPATH,
+                            LANDSCAPE_FOLLOW_BTN_XPATH,
+                        )
+                    except:
+                        following_button = driver.find_element(
+                            By.XPATH,
+                            PORTRAIT_FOLLOW_BTN_XPATH,
+                        )
+
+                    time.sleep(time_to_wait)
+
+                    following_button.click()
+
+                    mute_button = driver.find_element(
                         By.XPATH,
-                        LANDSCAPE_FOLLOW_BTN_XPATH,
+                        USER_MUTE_BUTTON_XPATH,
                     )
-                except:
-                    following_button = driver.find_element(
+                    mute_button.click()
+
+                    mute_posts = driver.find_element(
                         By.XPATH,
-                        PORTRAIT_FOLLOW_BTN_XPATH,
+                        MUTE_POSTS_BUTTON,
                     )
+                    mute_posts.click()
 
-                time.sleep(time_to_wait)
-                following_button.click()
+                    mute_stories = driver.find_element(
+                        By.XPATH,
+                        MUTE_STORIES_BUTTON,
+                    )
+                    mute_stories.click()
 
-                mute_button = driver.find_element(
-                    By.XPATH,
-                    USER_MUTE_BUTTON_XPATH,
-                )
-                mute_button.click()
-
-                mute_posts = driver.find_element(
-                    By.XPATH,
-                    MUTE_POSTS_BUTTON,
-                )
-                mute_posts.click()
-
-                mute_stories = driver.find_element(
-                    By.XPATH,
-                    MUTE_STORIES_BUTTON,
-                )
-                mute_stories.click()
-
-                save_button = driver.find_element(
-                    By.XPATH,
-                    MUTE_SETTINGS_SAVE_BUTTON_XPATH,
-                )
-                save_button.click()
+                    save_button = driver.find_element(
+                        By.XPATH,
+                        MUTE_SETTINGS_SAVE_BUTTON_XPATH,
+                    )
+                    save_button.click()
+            except:
+                pass
 
             return True
 
